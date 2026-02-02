@@ -15,7 +15,6 @@ export default defineConfig({
           "global-builtin",
           "color-functions",
           "if-function",
-          "mixed-decls",
         ],
       },
     },
