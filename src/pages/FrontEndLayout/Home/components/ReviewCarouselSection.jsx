@@ -1,13 +1,13 @@
 import React from "react";
 
 // --- 圖片引入 ---
-import headlineDesktop from "../../../assets/images/index/06_comment_headline_desktop.svg";
-import headlineMobile from "../../../assets/images/index/06_comment_headline_mobile.svg";
-import avatar01 from "../../../assets/images/index/comment_avatar_01.png";
-import avatar02 from "../../../assets/images/index/comment_avatar_02.png";
-import avatar03 from "../../../assets/images/index/comment_avatar_03.png";
-import avatar04 from "../../../assets/images/index/comment_avatar_04.png";
-import avatar05 from "../../../assets/images/index/comment_avatar_05.png";
+import headlineDesktop from "../../../../assets/images/index/06_comment_headline_desktop.svg";
+import headlineMobile from "../../../../assets/images/index/06_comment_headline_mobile.svg";
+import avatar01 from "../../../../assets/images/index/comment_avatar_01.png";
+import avatar02 from "../../../../assets/images/index/comment_avatar_02.png";
+import avatar03 from "../../../../assets/images/index/comment_avatar_03.png";
+import avatar04 from "../../../../assets/images/index/comment_avatar_04.png";
+import avatar05 from "../../../../assets/images/index/comment_avatar_05.png";
 
 const ReviewCarouselSection = () => {
   return (

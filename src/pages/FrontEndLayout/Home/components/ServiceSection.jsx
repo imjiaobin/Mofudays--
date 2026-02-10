@@ -1,20 +1,20 @@
 import React from "react";
 
 // --- 圖片引入 ---
-import headlineDesktop from "../../../assets/images/index/03_service_headline_desktop.svg";
-import headlineMobile from "../../../assets/images/index/03_service_headline_mobile.svg";
+import headlineDesktop from "../../../../assets/images/index/03_service_headline_desktop.svg";
+import headlineMobile from "../../../../assets/images/index/03_service_headline_mobile.svg";
 
 // 服務卡片主圖
-import service01 from "../../../assets/images/index/service_01.png";
-import service02 from "../../../assets/images/index/service_02.png";
-import service03 from "../../../assets/images/index/service_03.png";
-import service04 from "../../../assets/images/index/service_04.png";
+import service01 from "../../../../assets/images/index/service_01.png";
+import service02 from "../../../../assets/images/index/service_02.png";
+import service03 from "../../../../assets/images/index/service_03.png";
+import service04 from "../../../../assets/images/index/service_04.png";
 
 // Hover Icon
-import iconTime from "../../../assets/images/index/time.svg";
-import iconGem from "../../../assets/images/index/gem.svg";
-import iconGift from "../../../assets/images/index/gift.svg";
-import iconHeart from "../../../assets/images/index/book-heart.svg";
+import iconTime from "../../../../assets/images/index/time.svg";
+import iconGem from "../../../../assets/images/index/gem.svg";
+import iconGift from "../../../../assets/images/index/gift.svg";
+import iconHeart from "../../../../assets/images/index/book-heart.svg";
 
 const ServiceSection = () => {
   return (

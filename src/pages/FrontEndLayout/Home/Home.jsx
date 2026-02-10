@@ -7,7 +7,7 @@ import ProcessSection from "./components/ProcessSection";
 import ReviewCarouselSection from "./components/ReviewCarouselSection";
 import FloatingChat from "./components/FloatingChat";
 import NewsModal from "./components/NewsModal";
-import Announcement from "../../app/layouts/components/Announcement/Announcement";
+import Announcement from "../../../app/layouts/components/Announcement/Announcement";
 
 function Home() {
   const [isNewsModalOpen, setIsNewsModalOpen] = useState(false);

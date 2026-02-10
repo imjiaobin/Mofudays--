@@ -2,26 +2,26 @@ import { useNavigate } from "react-router-dom";
 
 // --- 圖片引入  ---
 // 標題與裝飾
-import processHeadlineDesktop from "../../../assets/images/index/04_process_headline_desktop.svg";
-import processHeadlineMobile from "../../../assets/images/index/04_process_headline_mobile.svg";
-import boxHeadlineDesktop from "../../../assets/images/index/05_box_headline_desktop.svg";
-import boxHeadlineMobile from "../../../assets/images/index/05_box_headline_mobile.svg";
-import openboxDecor from "../../../assets/images/index/process_openbox_patten.svg";
-import petsSayDecor from "../../../assets/images/index/pets_say.png";
+import processHeadlineDesktop from "../../../../assets/images/index/04_process_headline_desktop.svg";
+import processHeadlineMobile from "../../../../assets/images/index/04_process_headline_mobile.svg";
+import boxHeadlineDesktop from "../../../../assets/images/index/05_box_headline_desktop.svg";
+import boxHeadlineMobile from "../../../../assets/images/index/05_box_headline_mobile.svg";
+import openboxDecor from "../../../../assets/images/index/process_openbox_patten.svg";
+import petsSayDecor from "../../../../assets/images/index/pets_say.png";
 
 // 步驟圖與 Icon
-import step01Img from "../../../assets/images/index/step_01.png";
-import step02Img from "../../../assets/images/index/step_02.png";
-import step03Img from "../../../assets/images/index/step_03.png";
-import step01Icon from "../../../assets/images/index/service_step_1.svg";
-import step02Icon from "../../../assets/images/index/service_step_2.svg";
-import step03Icon from "../../../assets/images/index/service_step_3.svg";
-import step04Icon from "../../../assets/images/index/service_step_4.svg";
+import step01Img from "../../../../assets/images/index/step_01.png";
+import step02Img from "../../../../assets/images/index/step_02.png";
+import step03Img from "../../../../assets/images/index/step_03.png";
+import step01Icon from "../../../../assets/images/index/service_step_1.svg";
+import step02Icon from "../../../../assets/images/index/service_step_2.svg";
+import step03Icon from "../../../../assets/images/index/service_step_3.svg";
+import step04Icon from "../../../../assets/images/index/service_step_4.svg";
 
 // 盒子卡片圖
-import box01 from "../../../assets/images/index/box_01.png";
-import box02 from "../../../assets/images/index/box_02.png";
-import box03 from "../../../assets/images/index/box_03.png";
+import box01 from "../../../../assets/images/index/box_01.png";
+import box02 from "../../../../assets/images/index/box_02.png";
+import box03 from "../../../../assets/images/index/box_03.png";
 
 const ProcessSection = () => {
   const navigate = useNavigate();

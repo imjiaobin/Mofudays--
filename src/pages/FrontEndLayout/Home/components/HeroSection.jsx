@@ -1,11 +1,11 @@
 import React from "react";
 // 1. 先引入圖片
-import heroHeadlineDesktop from "../../../assets/images/index/01_hero_headline_desktop.svg";
-import heroHeadlineMobile from "../../../assets/images/index/01_hero_headline_mobile.svg";
-import heroImg from "../../../assets/images/index/hero_img.png";
-import bonePatten from "../../../assets/images/index/hero_bone_patten.svg";
-import greenPatten from "../../../assets/images/index/hero_green_patten.svg";
-import yellowPatten from "../../../assets/images/index/hero_yellow_patten.svg";
+import heroHeadlineDesktop from "../../../../assets/images/index/01_hero_headline_desktop.svg";
+import heroHeadlineMobile from "../../../../assets/images/index/01_hero_headline_mobile.svg";
+import heroImg from "../../../../assets/images/index/hero_img.png";
+import bonePatten from "../../../../assets/images/index/hero_bone_patten.svg";
+import greenPatten from "../../../../assets/images/index/hero_green_patten.svg";
+import yellowPatten from "../../../../assets/images/index/hero_yellow_patten.svg";
 
 const HeroSection = () => {
   return (

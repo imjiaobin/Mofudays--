@@ -1,11 +1,15 @@
-<<<<<<< HEAD
-export default function AuthLayout(){
-    return (
-        <h2>登入註冊 layout</h2>
-    )
-}
-=======
+import { Outlet } from "react-router-dom";
+import Header from "../app/layouts/components/Header/Header";
+import Footer from "../app/layouts/components/Footer/Footer";
+
 export default function AuthLayout() {
-  return <h2>登入註冊 layout</h2>;
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
 }
->>>>>>> feature/james

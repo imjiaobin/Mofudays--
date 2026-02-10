@@ -664,7 +664,7 @@ body::before {
 
 .review-card {
   // 假設路徑是往上跳三層到 assets (請根據你的資料夾結構調整 ../ 的數量)
-  background: url("../../assets/images/index/dog_outline_blue.png") no-repeat
+  background: url("../../../assets/images/index/dog_outline_blue.png") no-repeat
     center/contain;
   min-height: 329px;
   display: flex;
@@ -673,7 +673,7 @@ body::before {
 }
 
 .review-card-pink {
-  background: url("../../assets/images/index/dog_outline_pink.png") no-repeat
+  background: url("../../../assets/images/index/dog_outline_pink.png") no-repeat
     center/contain;
   min-height: 250px;
   display: flex;
@@ -824,7 +824,7 @@ body::before {
 
 /* Modal Header 背景圖片 */
 .modal-header {
-  background-image: url("/assets/images/index/dog.jpg");
+  background-image: url("../../../assets/images/index/dog.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

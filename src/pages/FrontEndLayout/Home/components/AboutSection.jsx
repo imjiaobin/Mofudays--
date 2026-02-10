@@ -1,7 +1,7 @@
 import React from "react";
-import aboutImg from "../../../assets/images/index/about_img.png";
-import aboutHeadline from "../../../assets/images/index/02_about_headline_desktop.svg";
-import footprintPatten from "../../../assets/images/index/about_footprint_patten.svg";
+import aboutImg from "../../../../assets/images/index/about_img.png";
+import aboutHeadline from "../../../../assets/images/index/02_about_headline_desktop.svg";
+import footprintPatten from "../../../../assets/images/index/about_footprint_patten.svg";
 
 const AboutSection = () => {
   return (
