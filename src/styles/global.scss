@@ -6,6 +6,12 @@
 // 注意：必須先載入 functions，你的 variables 才能使用 BS 的內建工具 (如 color-level)
 @import "bootstrap/scss/functions";
 @import "./variables"; // 你的自訂變數 (有底線的 _variables.scss)
+
+// ✅ Bootstrap 內建變數 / maps / mixins（這三個建議補齊）
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+
 @import "bootstrap/scss/bootstrap";
 
 // 3. 全域基礎樣式 (Base / Reset)

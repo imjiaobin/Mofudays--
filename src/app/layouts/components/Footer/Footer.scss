@@ -1,61 +1,64 @@
-.zen-maru-gothic-regular {
+@import "bootstrap/scss/functions";
+@import "../../../../styles/variables";
+
+.footer .zen-maru-gothic-regular {
   font-family: "Zen Maru Gothic", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.footer-info {
+.footer .footer-info {
   background-color: $primary-500;
   padding: 80px;
   color: white;
 }
 
-.footer-copyright {
+.footer .footer-copyright {
   background-color: $tertiary-500;
   padding: 6px 0px;
   color: white;
 }
 
-.footer-list a {
+.footer .footer-list a {
   font-size: 14px;
 }
 
-.footer-copyright p {
+.footer .footer-copyright p {
   font-size: 12px;
 }
 
-.footer-contact p {
+.footer .footer-contact p {
   font-size: 14px;
 }
 
-.footer-logo {
+.footer .footer-logo {
   max-width: 136px;
   height: 96px;
 }
 
-.footer-link {
+.footer .footer-link {
   color: white;
   text-decoration: none;
 }
 
-.footer-list {
+.footer .footer-list {
   max-width: 125px;
   list-style-type: none;
   color: white;
   padding-left: 0px;
 }
 
-.footer-list a {
+.footer .footer-list a {
   color: white;
   text-decoration: none;
 }
 
-.footer-list a:hover {
+.footer .footer-list a:hover {
   color: $secondary-300;
   font-weight: 700;
 }
 
-.social-btn {
+.footer .social-btn {
   width: 40px;
   height: 40px;
   display: inline-flex;
@@ -70,7 +73,7 @@
   transition: color 0.2s ease;
 }
 
-.social-btn::before {
+.footer .social-btn::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -81,26 +84,28 @@
   background: white;
   transform: translate(-50%, -50%) scale(0.6);
   opacity: 0;
-  transition: transform 0.22s ease, opacity 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
   z-index: -1;
 }
 
-.social-btn:hover::before,
-.social-btn:focus-visible::before {
+.footer .social-btn:hover::before,
+.footer .social-btn:focus-visible::before {
   transform: translate(-50%, -50%) scale(1);
   opacity: 20%;
 }
 
-.footer-info {
+.footer .footer-info {
   position: relative;
 }
 
-.btn-totop {
+.footer .btn-totop {
   background-color: $tertiary-500;
   color: white;
   padding: 16px;
   position: absolute;
-  top: 90%;
+  top: 80%;
   right: 10%;
   width: auto;
   height: auto;
@@ -110,7 +115,7 @@
 }
 
 @media (min-width: 576px) {
-  .btn-totop {
+  .footer.btn-totop {
     background-color: $tertiary-500;
     color: white;
     padding: 16px;
@@ -125,14 +130,14 @@
   }
 }
 
-.btn-totop:hover {
+.footer .btn-totop:hover {
   background-color: darken($tertiary-500, 10%);
 }
 
-.mb-32 {
+.footer .mb-32 {
   margin-bottom: 32px;
 }
 
-.mb-40 {
+.footer .mb-40 {
   margin-bottom: 40px;
 }

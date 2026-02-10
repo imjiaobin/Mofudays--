@@ -1,3 +1,6 @@
+@import "bootstrap/scss/functions";
+@import "../../../../styles/variables";
+
 @media (max-width: 768.98px) {
   .desktop-menu {
     display: none !important;
@@ -94,6 +97,11 @@ header .navbar {
   width: 28px;
   height: 28px;
   color: $primary-500;
+
+  svg {
+    color: inherit;
+    stroke: currentColor;
+  }
 }
 
 .nav-avatar {
@@ -126,7 +134,7 @@ header .navbar {
 }
 
 @media (min-width: 768px) {
-  .cart-btn {
+  header .cart-btn {
     display: flex;
     justify-content: center;
     width: 44px;
@@ -136,17 +144,17 @@ header .navbar {
     text-decoration: none;
   }
 
-  .cart-btn:hover {
+  header .cart-btn:hover {
     background-color: $primary-500;
   }
 }
 
-.cart-btn:hover svg {
+header .cart-btn:hover svg {
   transform: scale(1.1);
 }
 
-.cart-btn:hover svg path,
-.cart-btn:hover svg circle {
+header .cart-btn:hover svg path,
+header .cart-btn:hover svg circle {
   stroke: white;
 }
 
@@ -214,7 +222,9 @@ header .dropdown-item:hover,
   color: #fc762f;
   background: transparent;
   overflow: hidden;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .nav-link.cart-btn svg {

@@ -1,70 +1,69 @@
-.split-card{
-    max-width: 100%;
-    // max-height:724px;
-    border-radius: 80px;
-    background-color: $primary-100;
+// 記得引入變數檔，才能在頁面 SCSS 裡使用品牌色
+@import "bootstrap/scss/functions";
+@import "../../styles/variables";
+
+.split-card {
+  max-width: 100%;
+  // max-height:724px;
+  border-radius: 80px;
+  background-color: $primary-100;
 }
 
-form{
-    color: $brown-500;
+form {
+  color: $brown-500;
 }
 
-.login-form{
-    padding: 115px 110px;
+.login-form {
+  padding: 115px 110px;
 }
 
-.btn-form-login{
-    background-color: $primary-500;
-    color:white;
-    border-radius: 40px;
+button.btn-form-login {
+  background-color: $primary-500;
+  color: white;
+  border-radius: 40px;
 }
 
-.btn-form-login:hover{
-    background-color: #FBBD3F;
-    // cursor: pointer;
-    color: white; 
-    
+button.btn-form-login:hover {
+  background-color: #fbbd3f;
+  // cursor: pointer;
+  color: white;
 }
 
 a.btn-form-login:focus,
 a.btn-form-login:active {
-  outline: none !important;         
-  box-shadow: none !important;    
-  background-color: #e55e15; 
-  color: #fff;               
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #e55e15;
+  color: #fff;
 }
 
 a.btn-form-login:focus-visible {
   outline: none !important;
   box-shadow: none !important;
 }
-   
 
-.btn-form-signup{
-    border: 2px solid $primary-500;
-    color: $primary-500;
-    border-radius: 40px;
-    padding: 8px 32px;
+button.btn-form-signup {
+  border: 2px solid $primary-500;
+  color: $primary-500;
+  border-radius: 40px;
+  padding: 8px 32px;
 }
 
-.btn-form-signup:hover{
-    background-color: $primary-500;
-    cursor: pointer;
-    color: white;  
+button.btn-form-signup:hover {
+  background-color: $primary-500;
+  cursor: pointer;
+  color: white;
 }
 
-
-
-.forgot-password a{
-    color:$brown-500;
-
+.forgot-password a {
+  color: $brown-500;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block; 
+  display: block;
 }
 
 .split-card .carousel-indicators {
@@ -72,34 +71,41 @@ a.btn-form-login:focus-visible {
   bottom: 0px;
 }
 
-.carousel-indicators [data-bs-target]{
-    border-radius: 50%;
-    width:12px;
-    height: 12px;
-    margin-bottom: 32px;
+.carousel-indicators [data-bs-target] {
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 32px;
 }
 
-.was-validated .form-control:invalid, .form-control.is-invalid {
-    border: 2px solid $primary-500;
-    background-color: $primary-200;
-    background-image: none;
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  border: 2px solid $primary-500;
+  background-color: $primary-200;
+  background-image: none;
 }
 
 .invalid-feedback {
-    color:$primary-500;
-
+  color: $primary-500;
 }
 
-.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked{ 
-    background-color: $primary-500;
-    border-color: $primary-500;
-
+.was-validated .form-check-input:valid:checked,
+.form-check-input.is-valid:checked {
+  background-color: $primary-500;
+  border-color: $primary-500;
 }
 
-.was-validated .form-check-input:valid, .form-check-input.is-valid {
-   border-color: $primary-500;
+.was-validated .form-check-input:valid,
+.form-check-input.is-valid {
+  border-color: $primary-500;
 }
 
+#carouselExampleInterval {
+  position: relative;
+}
 
-
-
+#arouselExampleInterval .carousel-control-prev,
+#carouselExampleInterval .carousel-control-next {
+  z-index: 5; /* 蓋過圖片 */
+  pointer-events: auto; /* 確保可點 */
+}
