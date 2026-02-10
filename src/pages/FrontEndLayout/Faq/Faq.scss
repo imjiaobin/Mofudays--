@@ -1,0 +1,218 @@
+.faq-page-wrapper {
+  padding: 60px 0;
+  position: relative;
+}
+
+.faq {
+  padding-left: 110px;
+  padding-right: 110px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/*  FAQ Header  */
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px; // 增加間距，避免 Tab 與內容太擠
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+}
+
+.faq-title {
+  h2 {
+    font-size: 36px;
+    color: $brown-500;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 18px;
+    color: $primary-500;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+/*  Tab 樣式  */
+.faq-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 16px;
+
+  .nav-link {
+    border: 1px solid $brown-300;
+    border-radius: 50px;
+    padding: 8px 32px;
+    color: $brown-300;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 700;
+    background: white;
+    white-space: nowrap;
+
+    &.active {
+      background-color: $primary-500;
+      color: white;
+      border-color: $primary-500;
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 12px;
+
+    .nav-link {
+      padding: 10px 0;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+}
+
+/*  內容區域  */
+.faq-content {
+  background-color: $primary-100;
+  border-radius: 80px;
+  // 增加上方 padding，為突出的 bubble 留空間
+  padding: 60px 40px;
+
+  @media (max-width: 767px) {
+    border-radius: 40px;
+    padding: 40px 20px;
+  }
+}
+
+/*  卡片顏色系統  */
+.card-container {
+  &.theme-primary {
+    --theme-color: #{$primary-500};
+  }
+  &.theme-tertiary {
+    --theme-color: #{$tertiary-500};
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/*  卡片內部元件  */
+.card-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-section {
+  background-color: var(--theme-color);
+  border-radius: 40px 40px 0 0;
+  padding: 32px 20px;
+  position: relative;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  /* 確保 section 本身不裁剪溢出的內容，否則三角形會被切掉 */
+  overflow: visible;
+  z-index: 5;
+
+  &::after {
+    content: "";
+    position: absolute;
+    /* 定位在 question-section 最底部 */
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    /* 製作三角形 */
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid var(--theme-color);
+    /* 確保三角形在 answer-section 之上 */
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+.top-bubble {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: var(--theme-color);
+  padding: 16px 24px;
+  border: 2px solid var(--theme-color);
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  // 確保 bubble 在最上層
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.answer-section {
+  background: white;
+  border-radius: 0 0 40px 40px;
+  padding: 40px 24px;
+  text-align: center;
+  color: $brown-500;
+  font-size: 15px;
+  line-height: 1.6;
+  flex-grow: 1;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  /* 這裡的 z-index 要比 question-section 的尖角低 */
+  position: relative;
+  z-index: 1;
+}
+
+/* 裝飾腳印 */
+.dog-paw {
+  position: absolute;
+  bottom: 20px;
+  right: 110px;
+  width: 88px;
+  pointer-events: none;
+  @media (max-width: 767px) {
+    right: 20px;
+    bottom: 10px;
+  }
+}

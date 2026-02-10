@@ -6,14 +6,17 @@
   border-radius: 8px; /* 新增圓角 */
 }
 
-.btn-signup {
-  background-color: white;
-  color: $tertiary-500;
-  border-radius: 8px; /* 按鈕也加上圓角保持一致性 */
-}
+.announcement {
+  .btn-signup {
+    background-color: white !important;
+    color: $tertiary-500 !important;
+    border: 2px solid white !important;
+    border-radius: 8px;
 
-.btn-signup:hover {
-  border: solid 2px white;
-  color: white;
-  background-color: transparent;
+    &:hover {
+      background-color: transparent !important;
+      color: white !important;
+      border: 2px solid white !important;
+    }
+  }
 }
