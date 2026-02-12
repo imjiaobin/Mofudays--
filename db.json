@@ -1,0 +1,1344 @@
+{
+  "users": [
+    {
+      "id": "32ad2039-0085-4c22-9483-dbecf01ab18c",
+      "name": "王鬢角",
+      "nickname": "鬢角",
+      "birthday": "1998-05-21",
+      "phone": "0912-345-678",
+      "email": "bingjiao@example.com",
+      "password": "bingjiao123",
+      "address": "台北市大安區忠孝東路四段100號",
+      "status": "active",
+      "role": "user",
+      "createdAt": "2025-12-10T23:00:00+08:00",
+      "updatedAt": "2026-01-08T23:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-09T20:00:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": true,
+      "isActive": true
+    },
+    {
+      "id": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "name": "林可可",
+      "nickname": "KOKO",
+      "birthday": "1995-11-02",
+      "phone": "0922-111-222",
+      "email": "koko.lin@example.com",
+      "password": "koko123",
+      "address": "新北市板橋區文化路一段88號",
+      "status": "active",
+      "role": "user",
+      "createdAt": "2025-09-11T23:00:00+08:00",
+      "updatedAt": "2026-01-07T23:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-08T18:00:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": false,
+      "isActive": true
+    },
+    {
+      "id": "8d0d7733-cf68-4971-a035-cc2bce7f0c7f",
+      "name": "陳阿福",
+      "nickname": "福福",
+      "birthday": "1989-03-14",
+      "phone": "0933-888-999",
+      "email": "afu.chen@example.com",
+      "password": "afu123",
+      "address": "桃園市中壢區中正路200號",
+      "status": "suspended",
+      "role": "user",
+      "createdAt": "2025-04-24T23:00:00+08:00",
+      "updatedAt": "2025-12-30T23:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2025-11-10T23:00:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": false,
+      "isActive": false
+    },
+    {
+      "id": "da1e9fdf-b4d8-4bdc-91d5-1ff5483fde8e",
+      "name": "root",
+      "nickname": "後台管理員經理",
+      "birthday": "1992-05-22",
+      "phone": "0931-544-799",
+      "email": "root@mofudays.io",
+      "password": "root_admin_123",
+      "address": "",
+      "status": "active",
+      "role": "admin",
+      "createdAt": "2024-08-27T23:00:00+08:00",
+      "updatedAt": "2025-12-30T23:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-09T09:10:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": true,
+      "isActive": true
+    },
+    {
+      "id": "4e1945b0-5d24-4288-bce1-75846dfad4a7",
+      "name": "editor_mofudays",
+      "nickname": "後台管理員",
+      "birthday": "1991-01-16",
+      "phone": "0931-744-555",
+      "email": "editor@mofudays.io",
+      "password": "editor_admin_123",
+      "address": "",
+      "status": "active",
+      "role": "admin",
+      "createdAt": "2025-06-23T23:00:00+08:00",
+      "updatedAt": "2026-01-06T10:30:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-06T10:30:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": false,
+      "isActive": true
+    },
+    {
+      "id": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
+      "name": "許小花",
+      "nickname": "花花",
+      "birthday": "1999-09-09",
+      "phone": "0918-222-333",
+      "email": "hua.hsu@example.com",
+      "password": "hua123",
+      "address": "台中市西屯區台灣大道三段300號",
+      "status": "active",
+      "role": "user",
+      "createdAt": "2025-12-28T20:00:00+08:00",
+      "updatedAt": "2026-01-12T09:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-12T09:00:00+08:00",
+      "loginFailCount": 0,
+      "isLoggedIn": false,
+      "isActive": true
+    },
+    {
+      "id": "6c8d0a1f-9c2e-4f23-8c0d-1b9a8fd1c3a2",
+      "name": "張大可",
+      "nickname": "Dako",
+      "birthday": "1993-07-19",
+      "phone": "0955-111-888",
+      "email": "dako.chang@example.com",
+      "password": "dako123",
+      "address": "高雄市前鎮區中山二路50號",
+      "status": "active",
+      "role": "user",
+      "createdAt": "2025-11-20T18:00:00+08:00",
+      "updatedAt": "2026-01-03T12:00:00+08:00",
+      "deletedAt": null,
+      "lastLoginAt": "2026-01-03T12:00:00+08:00",
+      "loginFailCount": 1,
+      "isLoggedIn": false,
+      "isActive": true
+    }
+  ],
+  "plans": [
+    {
+      "id": 1,
+      "planPrice": 699,
+      "months": 3,
+      "isActive": true,
+      "namePool": ["小小探險家", "嫩嫩咬咬", "初次見面盒"],
+      "subtitle": "入門剛剛好，輕鬆開始每月溫暖。",
+      "content": { "treats": 3, "toys": 1, "household": 1 },
+      "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2026-02-10T00:00:00+08:00",
+      "updatedAt": "2026-02-10T00:00:00+08:00"
+    },
+    {
+      "id": 2,
+      "planPrice": 899,
+      "months": 6,
+      "isActive": true,
+      "namePool": ["耐咬升級盒", "腦力挑戰盒", "毛孩麻吉盒"],
+      "subtitle": "互動與營養更升級，滿足日常所需。",
+      "content": { "treats": 3, "toys": 2, "household": 1 },
+      "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2026-02-10T00:00:00+08:00",
+      "updatedAt": "2026-02-10T00:00:00+08:00"
+    },
+    {
+      "id": 3,
+      "planPrice": 1099,
+      "months": 12,
+      "isActive": true,
+      "namePool": ["全方位守護盒", "豪華熟齡盒", "旗艦養生盒"],
+      "subtitle": "最完整配置，給毛孩滿滿的照顧與陪伴。",
+      "content": { "treats": 4, "toys": 2, "household": 2 },
+      "imageUrl": "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2026-02-10T00:00:00+08:00",
+      "updatedAt": "2026-02-10T00:00:00+08:00"
+    }
+  ],
+  "carts": [
+    {
+      "id": "cart_0001",
+      "userId": "32ad2039-0085-4c22-9483-dbecf01ab18c",
+      "dogId": "1fa5ad51-e524-4f44-b8e6-721ace72c5dc",
+      "planId": 1,
+      "planName": "基礎型｜小型幼犬盒",
+      "planPrice": 699,
+      "planQty": 1,
+      "totalCycles": 6,
+      "pet": {
+        "name": "KOHI",
+        "gender": "M",
+        "size": "S",
+        "allergy": "乳製品、含麩質"
+      },
+      "buyerInfo": {
+        "name": "王鬢角",
+        "email": "bingjiao@example.com",
+        "phone": "0912-345-678",
+        "address": "台北市大安區忠孝東路四段100號"
+      },
+      "memo": "希望零食以偏軟為主，避免乳製品與小麥。",
+      "status": "checkout",
+      "createdAt": "2026-01-09T17:00:00+08:00",
+      "updatedAt": "2026-01-09T17:30:00+08:00",
+      "snacks": [
+        "ca99f802-e303-4389-8222-b09a6085d848",
+        "3a186122-aa12-4010-803e-f406ae07f625"
+      ],
+      "cans": ["2595b29e-6340-4b0d-85ac-09301ea0f52c"],
+      "toys": [
+        "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+        "6c147119-68e1-43c1-888b-6376ee000963"
+      ],
+      "tierKey": "A",
+      "content": {
+        "snacks": [
+          {
+            "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+            "qty": 1
+          },
+          {
+            "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+            "qty": 1
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+            "qty": 1
+          },
+          {
+            "toyId": "6c147119-68e1-43c1-888b-6376ee000963",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "cart_0002",
+      "userId": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "dogId": "3eef55b1-e72d-4f8c-b0eb-9f934ac138d2",
+      "planId": 2,
+      "planName": "進階型｜中型成犬盒",
+      "planPrice": 899,
+      "planQty": 2,
+      "totalCycles": 3,
+      "pet": {
+        "name": "MOMO",
+        "gender": "F",
+        "size": "L",
+        "allergy": ""
+      },
+      "buyerInfo": {
+        "name": "林可可",
+        "email": "koko.lin@example.com",
+        "phone": "0922-111-222",
+        "address": "新北市板橋區文化路一段88號"
+      },
+      "memo": "喜歡耐咬玩具，零食希望有潔牙類。",
+      "status": "paid",
+      "createdAt": "2026-01-07T21:00:00+08:00",
+      "updatedAt": "2026-01-07T23:00:00+08:00",
+      "snacks": [
+        "f1e74bb0-abc9-4da9-b649-d6fac63a09cc",
+        "3a186122-aa12-4010-803e-f406ae07f625"
+      ],
+      "cans": ["5eef3045-f72d-4e51-a091-bc0b27dfa1fa"],
+      "toys": ["eec90b15-a45c-4bcb-b093-56b20b0882b2"],
+      "tierKey": "B",
+      "content": {
+        "snacks": [
+          {
+            "treatId": "f1e74bb0-abc9-4da9-b649-d6fac63a09cc",
+            "qty": 2
+          },
+          {
+            "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+            "qty": 1
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "5eef3045-f72d-4e51-a091-bc0b27dfa1fa",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "eec90b15-a45c-4bcb-b093-56b20b0882b2",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "cart_0003",
+      "userId": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
+      "dogId": "7d6b6b79-6c7f-4d69-8d2f-5e8a2a2f0b11",
+      "planId": 1,
+      "planName": "基礎型｜小型幼犬盒",
+      "planPrice": 699,
+      "planQty": 1,
+      "totalCycles": 3,
+      "pet": {
+        "name": "小餅乾",
+        "gender": "F",
+        "size": "S",
+        "allergy": ""
+      },
+      "buyerInfo": {
+        "name": "許小花",
+        "email": "hua.hsu@example.com",
+        "phone": "0918-222-333",
+        "address": "台中市西屯區台灣大道三段300號"
+      },
+      "memo": "喜歡嗅聞類玩具，零食希望偏軟，訓練用。",
+      "status": "paid",
+      "createdAt": "2026-01-12T10:10:00+08:00",
+      "updatedAt": "2026-01-12T10:20:00+08:00",
+      "snacks": ["ca99f802-e303-4389-8222-b09a6085d848"],
+      "cans": ["2595b29e-6340-4b0d-85ac-09301ea0f52c"],
+      "toys": ["4588d675-88fa-42d5-bfd0-d51957f8ff5c"],
+      "tierKey": "A",
+      "content": {
+        "snacks": [
+          {
+            "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+            "qty": 2
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+            "qty": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "cart_0004",
+      "userId": "6c8d0a1f-9c2e-4f23-8c0d-1b9a8fd1c3a2",
+      "dogId": "8f7c0b25-5a4c-4c4b-b0f2-2f0b1c6f0f22",
+      "planId": 3,
+      "planName": "旗艦型｜大型老犬盒",
+      "planPrice": 1099,
+      "planQty": 1,
+      "totalCycles": 6,
+      "pet": {
+        "name": "阿柴",
+        "gender": "M",
+        "size": "L",
+        "allergy": "小麥"
+      },
+      "buyerInfo": {
+        "name": "張大可",
+        "email": "dako.chang@example.com",
+        "phone": "0955-111-888",
+        "address": "高雄市前鎮區中山二路50號"
+      },
+      "memo": "熟齡犬，零食偏軟；想要關節保健類罐頭。",
+      "status": "checkout",
+      "createdAt": "2026-01-13T19:00:00+08:00",
+      "updatedAt": "2026-01-13T19:05:00+08:00",
+      "snacks": ["3a186122-aa12-4010-803e-f406ae07f625"],
+      "cans": ["5eef3045-f72d-4e51-a091-bc0b27dfa1fa"],
+      "toys": ["eec90b15-a45c-4bcb-b093-56b20b0882b2"],
+      "tierKey": "B",
+      "content": {
+        "snacks": [
+          {
+            "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+            "qty": 1
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "5eef3045-f72d-4e51-a091-bc0b27dfa1fa",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "eec90b15-a45c-4bcb-b093-56b20b0882b2",
+            "qty": 1
+          }
+        ]
+      }
+    }
+  ],
+  "orders": [
+    {
+      "id": "MOF20260109-0001",
+      "userId": "32ad2039-0085-4c22-9483-dbecf01ab18c",
+      "cartId": "cart_0001",
+      "orderDate": "2026-01-09T18:00:00+08:00",
+      "termCycles": 6,
+      "perCycleAmount": 699,
+      "orderTotalAmount": 4194,
+      "currency": "TWD",
+      "paymentStatus": "已付款",
+      "buyer": "王鬢角 (bingjiao@example.com)",
+      "buyerInfo": {
+        "name": "王鬢角",
+        "email": "bingjiao@example.com",
+        "phone": "0912-345-678",
+        "address": "台北市大安區忠孝東路四段100號"
+      },
+      "note": "自動從購物車 cart_0001 建立。",
+      "subscriptionPlans": [
+        {
+          "planId": 1,
+          "name": "基礎型｜小型幼犬盒",
+          "quantity": 1
+        }
+      ],
+      "subscriptionIds": ["SUB-20260109-0001"],
+      "subscriptions": [
+        {
+          "subscriptionId": "SUB-20260109-0001",
+          "subscriptionPlan": "基礎型｜小型幼犬盒",
+          "planId": 1,
+          "planContent": {
+            "snacks": [
+              {
+                "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+                "qty": 1
+              },
+              {
+                "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+                "qty": 1
+              }
+            ],
+            "cans": [
+              {
+                "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+                "qty": 1
+              }
+            ],
+            "toys": [
+              {
+                "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+                "qty": 1
+              },
+              {
+                "toyId": "6c147119-68e1-43c1-888b-6376ee000963",
+                "qty": 1
+              }
+            ]
+          },
+          "subscriptionQuantity": 1,
+          "termCycles": 6,
+          "startDate": "2026-01-15",
+          "currentCycleIndex": 1,
+          "currentCycleTotal": 6,
+          "shippingStatus": "待出貨",
+          "shippedDate": null,
+          "nextShippedDate": "2026-01-15",
+          "subscriptionStatus": "訂閱中"
+        }
+      ],
+      "createdAt": "2026-01-09T18:00:00+08:00",
+      "updatedAt": "2026-01-09T18:00:00+08:00"
+    },
+    {
+      "id": "MOF20260107-0002",
+      "userId": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "cartId": "cart_0002",
+      "orderDate": "2026-01-07T23:00:00+08:00",
+      "termCycles": 3,
+      "perCycleAmount": 1798,
+      "orderTotalAmount": 5394,
+      "currency": "TWD",
+      "paymentStatus": "已付款",
+      "buyer": "林可可 (koko.lin@example.com)",
+      "buyerInfo": {
+        "name": "林可可",
+        "email": "koko.lin@example.com",
+        "phone": "0922-111-222",
+        "address": "新北市板橋區文化路一段88號"
+      },
+      "note": "一次購買 2 盒，期數 3 期。",
+      "subscriptionPlans": [
+        {
+          "planId": 2,
+          "name": "進階型｜中型成犬盒",
+          "quantity": 2
+        }
+      ],
+      "subscriptionIds": ["SUB-20260107-0002-A"],
+      "subscriptions": [
+        {
+          "subscriptionId": "SUB-20260107-0002-A",
+          "subscriptionPlan": "進階型｜中型成犬盒",
+          "planId": 2,
+          "planContent": {
+            "snacks": [
+              {
+                "treatId": "f1e74bb0-abc9-4da9-b649-d6fac63a09cc",
+                "qty": 2
+              },
+              {
+                "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+                "qty": 1
+              }
+            ],
+            "cans": [
+              {
+                "treatId": "5eef3045-f72d-4e51-a091-bc0b27dfa1fa",
+                "qty": 1
+              }
+            ],
+            "toys": [
+              {
+                "toyId": "eec90b15-a45c-4bcb-b093-56b20b0882b2",
+                "qty": 1
+              }
+            ]
+          },
+          "subscriptionQuantity": 2,
+          "termCycles": 3,
+          "startDate": "2026-01-10",
+          "currentCycleIndex": 2,
+          "currentCycleTotal": 3,
+          "shippingStatus": "已出貨1/3",
+          "shippedDate": "2026-01-10",
+          "nextShippedDate": "2026-02-10",
+          "subscriptionStatus": "訂閱中"
+        }
+      ],
+      "createdAt": "2026-01-07T23:00:00+08:00",
+      "updatedAt": "2026-01-07T23:00:00+08:00"
+    },
+    {
+      "id": "MOF20260112-0003",
+      "userId": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
+      "cartId": "cart_0003",
+      "orderDate": "2026-01-12T10:30:00+08:00",
+      "termCycles": 3,
+      "perCycleAmount": 699,
+      "orderTotalAmount": 2097,
+      "currency": "TWD",
+      "paymentStatus": "已付款",
+      "buyer": "許小花 (hua.hsu@example.com)",
+      "buyerInfo": {
+        "name": "許小花",
+        "email": "hua.hsu@example.com",
+        "phone": "0918-222-333",
+        "address": "台中市西屯區台灣大道三段300號"
+      },
+      "note": "自動從購物車 cart_0003 建立。",
+      "subscriptionPlans": [
+        {
+          "planId": 1,
+          "name": "基礎型｜小型幼犬盒",
+          "quantity": 1
+        }
+      ],
+      "subscriptionIds": ["SUB-20260112-0003"],
+      "subscriptions": [
+        {
+          "subscriptionId": "SUB-20260112-0003",
+          "subscriptionPlan": "基礎型｜小型幼犬盒",
+          "planId": 1,
+          "planContent": {
+            "snacks": [
+              {
+                "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+                "qty": 2
+              }
+            ],
+            "cans": [
+              {
+                "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+                "qty": 1
+              }
+            ],
+            "toys": [
+              {
+                "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+                "qty": 1
+              }
+            ]
+          },
+          "subscriptionQuantity": 1,
+          "termCycles": 3,
+          "startDate": "2026-01-20",
+          "currentCycleIndex": 1,
+          "currentCycleTotal": 3,
+          "shippingStatus": "待出貨",
+          "shippedDate": null,
+          "nextShippedDate": "2026-01-20",
+          "subscriptionStatus": "訂閱中"
+        }
+      ],
+      "createdAt": "2026-01-12T10:30:00+08:00",
+      "updatedAt": "2026-01-12T10:30:00+08:00"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "SUB-20260109-0001",
+      "orderId": "MOF20260109-0001",
+      "cartId": "cart_0001",
+      "userId": "32ad2039-0085-4c22-9483-dbecf01ab18c",
+      "dogId": "1fa5ad51-e524-4f44-b8e6-721ace72c5dc",
+      "planId": 1,
+      "planName": "基礎型｜小型幼犬盒",
+      "planContent": {
+        "snacks": [
+          {
+            "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+            "qty": 1
+          },
+          {
+            "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+            "qty": 1
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+            "qty": 1
+          },
+          {
+            "toyId": "6c147119-68e1-43c1-888b-6376ee000963",
+            "qty": 1
+          }
+        ]
+      },
+      "subscriptionQuantity": 1,
+      "termCycles": 6,
+      "startDate": "2026-01-15",
+      "currentCycleIndex": 1,
+      "currentCycleTotal": 6,
+      "shippingStatus": "待出貨",
+      "shippedDate": null,
+      "nextShippedDate": "2026-01-15",
+      "subscriptionStatus": "訂閱中",
+      "createdAt": "2026-01-09T18:00:00+08:00",
+      "updatedAt": "2026-01-09T18:00:00+08:00"
+    },
+    {
+      "id": "SUB-20260107-0002-A",
+      "orderId": "MOF20260107-0002",
+      "cartId": "cart_0002",
+      "userId": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "dogId": "3eef55b1-e72d-4f8c-b0eb-9f934ac138d2",
+      "planId": 2,
+      "planName": "進階型｜中型成犬盒",
+      "planContent": {
+        "snacks": [
+          {
+            "treatId": "f1e74bb0-abc9-4da9-b649-d6fac63a09cc",
+            "qty": 2
+          },
+          {
+            "treatId": "3a186122-aa12-4010-803e-f406ae07f625",
+            "qty": 1
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "5eef3045-f72d-4e51-a091-bc0b27dfa1fa",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "eec90b15-a45c-4bcb-b093-56b20b0882b2",
+            "qty": 1
+          }
+        ]
+      },
+      "subscriptionQuantity": 2,
+      "termCycles": 3,
+      "startDate": "2026-01-10",
+      "currentCycleIndex": 2,
+      "currentCycleTotal": 3,
+      "shippingStatus": "已出貨1/3",
+      "shippedDate": "2026-01-10",
+      "nextShippedDate": "2026-02-10",
+      "subscriptionStatus": "訂閱中",
+      "createdAt": "2026-01-07T23:00:00+08:00",
+      "updatedAt": "2026-01-10T12:00:00+08:00"
+    },
+    {
+      "id": "SUB-20260112-0003",
+      "orderId": "MOF20260112-0003",
+      "cartId": "cart_0003",
+      "userId": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
+      "dogId": "7d6b6b79-6c7f-4d69-8d2f-5e8a2a2f0b11",
+      "planId": 1,
+      "planName": "基礎型｜小型幼犬盒",
+      "planContent": {
+        "snacks": [
+          {
+            "treatId": "ca99f802-e303-4389-8222-b09a6085d848",
+            "qty": 2
+          }
+        ],
+        "cans": [
+          {
+            "treatId": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+            "qty": 1
+          }
+        ],
+        "toys": [
+          {
+            "toyId": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+            "qty": 1
+          }
+        ]
+      },
+      "subscriptionQuantity": 1,
+      "termCycles": 3,
+      "startDate": "2026-01-20",
+      "currentCycleIndex": 1,
+      "currentCycleTotal": 3,
+      "shippingStatus": "待出貨",
+      "shippedDate": null,
+      "nextShippedDate": "2026-01-20",
+      "subscriptionStatus": "訂閱中",
+      "createdAt": "2026-01-12T10:30:00+08:00",
+      "updatedAt": "2026-01-12T10:30:00+08:00"
+    }
+  ],
+  "dogs": [
+    {
+      "id": "1fa5ad51-e524-4f44-b8e6-721ace72c5dc",
+      "ownerId": "32ad2039-0085-4c22-9483-dbecf01ab18c",
+      "breedCode": "SHIBA",
+      "gender": "M",
+      "isNeutered": true,
+      "birthDate": "2024-06-10",
+      "weightKg": 6.8,
+      "size": "S",
+      "dietStage": "PUPPY",
+      "activityTypes": ["IQ", "BITE"],
+      "allergies": ["DAIRY"],
+      "healthCareNeeds": ["DIGEST", "TEETH"],
+      "avoidIngredients": ["DAIRY", "WHEAT"],
+      "treatTexturePreference": "SOFT",
+      "notes": "剛換牙，偏好軟口感，訓練用零食需求高。",
+      "imageUrl": "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80",
+      "createdAt": "2025-11-30T23:00:00+08:00",
+      "updatedAt": "2026-01-08T23:00:00+08:00",
+      "isActive": true
+    },
+    {
+      "id": "3eef55b1-e72d-4f8c-b0eb-9f934ac138d2",
+      "ownerId": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "breedCode": "GOLDEN",
+      "gender": "F",
+      "isNeutered": false,
+      "birthDate": "2021-02-15",
+      "weightKg": 26.5,
+      "size": "L",
+      "dietStage": "ADULT",
+      "activityTypes": ["WALK", "BITE"],
+      "allergies": [],
+      "healthCareNeeds": ["SKIN", "WEIGHT"],
+      "avoidIngredients": ["SOY"],
+      "treatTexturePreference": "NORMAL",
+      "notes": "活動量大，喜歡散步與追逐遊戲。",
+      "imageUrl": "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=900&q=80",
+      "createdAt": "2025-06-03T23:00:00+08:00",
+      "updatedAt": "2026-01-06T23:00:00+08:00",
+      "isActive": true
+    },
+    {
+      "id": "bb2ec396-5bac-45c6-b771-61d1cec2b1cb",
+      "ownerId": "07131537-191d-4a6f-92cf-fa5cc31112e5",
+      "breedCode": "DACHSHUND",
+      "gender": "M",
+      "isNeutered": true,
+      "birthDate": "2017-08-09",
+      "weightKg": 9.2,
+      "size": "M",
+      "dietStage": "SENIOR",
+      "activityTypes": ["IQ"],
+      "allergies": ["WHEAT"],
+      "healthCareNeeds": ["BONES", "DIGEST"],
+      "avoidIngredients": ["WHEAT"],
+      "treatTexturePreference": "SOFT",
+      "notes": "熟齡犬，關節與腸胃保健優先。",
+      "imageUrl": "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=80",
+      "createdAt": "2024-12-05T23:00:00+08:00",
+      "updatedAt": "2026-01-02T23:00:00+08:00",
+      "isActive": true
+    },
+    {
+      "id": "7d6b6b79-6c7f-4d69-8d2f-5e8a2a2f0b11",
+      "ownerId": "b2a987f6-5b9c-4b6f-9a5d-4c2e9fe2d7b1",
+      "breedCode": "POODLE",
+      "gender": "F",
+      "isNeutered": true,
+      "birthDate": "2025-06-01",
+      "weightKg": 3.2,
+      "size": "S",
+      "dietStage": "PUPPY",
+      "activityTypes": ["IQ", "WALK"],
+      "allergies": [],
+      "healthCareNeeds": ["TEETH"],
+      "avoidIngredients": [],
+      "treatTexturePreference": "SOFT",
+      "notes": "膽子小但愛嗅聞，適合嗅聞墊與訓練零食。",
+      "imageUrl": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80",
+      "createdAt": "2025-12-30T12:00:00+08:00",
+      "updatedAt": "2026-01-12T09:10:00+08:00",
+      "isActive": true
+    },
+    {
+      "id": "8f7c0b25-5a4c-4c4b-b0f2-2f0b1c6f0f22",
+      "ownerId": "6c8d0a1f-9c2e-4f23-8c0d-1b9a8fd1c3a2",
+      "breedCode": "MIX",
+      "gender": "M",
+      "isNeutered": true,
+      "birthDate": "2016-04-20",
+      "weightKg": 28.0,
+      "size": "L",
+      "dietStage": "SENIOR",
+      "activityTypes": ["WALK"],
+      "allergies": ["WHEAT"],
+      "healthCareNeeds": ["BONES"],
+      "avoidIngredients": ["WHEAT"],
+      "treatTexturePreference": "SOFT",
+      "notes": "老犬，散步節奏慢，關節照護優先。",
+      "imageUrl": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80",
+      "createdAt": "2025-11-20T18:10:00+08:00",
+      "updatedAt": "2026-01-03T12:10:00+08:00",
+      "isActive": true
+    }
+  ],
+  "toys": [
+    {
+      "id": "4588d675-88fa-42d5-bfd0-d51957f8ff5c",
+      "toyName": "嗅聞墊｜藏食尋寶",
+      "petSize": ["S", "M"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "playStyle": ["IQ"],
+      "isActive": true,
+      "description": "提升嗅覺探索與腦力消耗，適合室內放電。",
+      "createdAt": "2025-09-11T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "eec90b15-a45c-4bcb-b093-56b20b0882b2",
+      "toyName": "耐咬繩結｜拔河玩具",
+      "petSize": ["M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "playStyle": ["BITE", "WALK"],
+      "isActive": true,
+      "description": "適合拔河互動與咬咬釋放壓力，注意磨損即汰換。",
+      "createdAt": "2025-06-23T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "6c147119-68e1-43c1-888b-6376ee000963",
+      "toyName": "發聲球｜追逐互動",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "playStyle": ["WALK"],
+      "isActive": true,
+      "description": "彈跳與聲響增加追逐樂趣，適合戶外或大空間。",
+      "createdAt": "2025-10-21T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "66f92c40-2829-4bf4-a910-023dd99fa259",
+      "toyName": "慢食漏食球｜腦力放電",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "playStyle": ["IQ"],
+      "isActive": false,
+      "description": "透過滾動漏食延長進食時間，減少狼吞虎嚥。",
+      "createdAt": "2025-04-24T23:00:00+08:00",
+      "deletedAt": "2025-12-20T23:00:00+08:00"
+    },
+    {
+      "id": "9f1f1d6a-2f28-4ac2-9a1b-2b8b2b1f5d51",
+      "toyName": "耐咬橡膠骨｜潔牙互動",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "playStyle": ["BITE"],
+      "isActive": true,
+      "description": "橡膠材質耐咬，表面紋路可輔助潔牙。",
+      "createdAt": "2025-12-18T20:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "2f1b9e5a-6b6a-4e7a-9b33-9d2c6d2a0f3a",
+      "toyName": "綜合互動玩具｜嗅聞×拉扯×追逐",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT", "SENIOR"],
+      "playStyle": ["IQ", "BITE", "WALK"],
+      "isActive": true,
+      "description": "一款涵蓋三種互動方式的綜合玩具。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "f3a0b9d1-2b3c-4d5e-9f01-1a2b3c4d5e6f",
+      "treatName": "幼犬大塊魚肉小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST", "TEETH"],
+      "isActive": true,
+      "description": "幼犬可食的軟口感魚肉訓練零食。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "0a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d",
+      "treatName": "幼犬牛肉體態小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY"],
+      "ingredients": ["BEEF"],
+      "texture": "SOFT",
+      "healthCare": ["WEIGHT"],
+      "isActive": true,
+      "description": "幼犬也能吃的軟口感牛肉點心。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "1b2c3d4e-5f60-4b7a-9c8d-0e1f2a3b4c5d",
+      "treatName": "幼犬蛋黃鈣鈣小慕斯（小罐）",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY"],
+      "ingredients": ["EGG"],
+      "texture": "SOFT",
+      "healthCare": ["BONES", "DIGEST"],
+      "isActive": true,
+      "description": "幼犬成長期概念補給。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "2c3d4e5f-6071-4c8b-9d0e-1f2a3b4c5d6e",
+      "treatName": "熟齡魚肉護毛軟慕斯（小罐）",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["SKIN"],
+      "isActive": true,
+      "description": "熟齡配方，偏軟口感。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "3d4e5f60-7182-4d9c-0e1f-2a3b4c5d6e7f",
+      "treatName": "熟齡牛肉潔牙小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["BEEF"],
+      "texture": "SOFT",
+      "healthCare": ["TEETH"],
+      "isActive": true,
+      "description": "熟齡也可食的軟口感潔牙點心。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "4e5f6071-8293-4e0f-1a2b-3c4d5e6f7081",
+      "treatName": "熟齡魚肉腸胃呵護小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST"],
+      "isActive": true,
+      "description": "熟齡腸胃照護概念。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "5f607182-93a4-4f1a-2b3c-4d5e6f708192",
+      "treatName": "羊肉關節守護軟慕斯（小罐）",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT", "SENIOR"],
+      "ingredients": ["SHEEP"],
+      "texture": "SOFT",
+      "healthCare": ["BONES"],
+      "isActive": true,
+      "description": "全齡可用的關節/骨骼概念。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    }
+  ],
+  "treats": [
+    {
+      "id": "ca99f802-e303-4389-8222-b09a6085d848",
+      "treatName": "雞肉小軟丁",
+      "petSize": ["S", "M"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "ingredients": ["CHICKEN", "EGG"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST", "TEETH"],
+      "isActive": true,
+      "description": "低負擔軟口感訓練零食，適合幼犬與牙口敏感毛孩。",
+      "createdAt": "2025-08-22T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "f1e74bb0-abc9-4da9-b649-d6fac63a09cc",
+      "treatName": "牛肉咬咬條",
+      "petSize": ["M", "L"],
+      "dietStage": ["ADULT"],
+      "ingredients": ["BEEF"],
+      "texture": "HARD",
+      "healthCare": ["TEETH"],
+      "isActive": true,
+      "description": "耐咬條狀零食，適合愛咬咬與需要潔牙的成犬。",
+      "createdAt": "2025-07-23T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "3a186122-aa12-4010-803e-f406ae07f625",
+      "treatName": "魚肉皮毛亮亮點心",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "ingredients": ["FISH"],
+      "texture": "NORMAL",
+      "healthCare": ["SKIN", "WEIGHT"],
+      "isActive": true,
+      "description": "魚類蛋白提升皮毛健康，口感適中，適合多數體型。",
+      "createdAt": "2025-09-21T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "5eef3045-f72d-4e51-a091-bc0b27dfa1fa",
+      "treatName": "羊肉關節保健罐（小罐）",
+      "petSize": ["M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["SHEEP"],
+      "texture": "SOFT",
+      "healthCare": ["BONES"],
+      "isActive": true,
+      "description": "熟齡配方，偏軟口感，主打關節照護。",
+      "createdAt": "2025-10-06T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "2595b29e-6340-4b0d-85ac-09301ea0f52c",
+      "treatName": "腸胃呵護罐（小罐）",
+      "petSize": ["S", "M"],
+      "dietStage": ["PUPPY", "SENIOR"],
+      "ingredients": ["CHICKEN"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST"],
+      "isActive": true,
+      "description": "腸胃友善配方，適合幼犬與熟齡犬。",
+      "createdAt": "2025-11-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "1d9f5c2b-6c2b-4dbe-bc0b-2b7f1e8a9a01",
+      "treatName": "南瓜益菌小餅",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "ingredients": ["CHICKEN"],
+      "texture": "NORMAL",
+      "healthCare": ["DIGEST"],
+      "isActive": true,
+      "description": "添加南瓜纖維概念（示意），作為日常腸胃保養點心。",
+      "createdAt": "2025-12-05T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "b7c3b6d1-2a61-4b70-9b8e-2a4f2d1f1a10",
+      "treatName": "鮭魚低敏小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST", "SKIN", "WEIGHT"],
+      "isActive": true,
+      "description": "魚肉蛋白低負擔，軟口感好入口，做為日常腸胃/皮毛/體態保養。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "7d7b9d70-7f91-4f80-9f29-1a2b3c4d5e60",
+      "treatName": "牛肉潔牙小軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "ingredients": ["BEEF"],
+      "texture": "SOFT",
+      "healthCare": ["TEETH"],
+      "isActive": true,
+      "description": "牛肉蛋白補充，軟口感訓練零食，主打潔牙需求。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "a12d9c33-4a4f-4c7a-8c1a-3e3c2b1a0f11",
+      "treatName": "熟齡鮭魚護毛軟慕斯（小罐）",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["SKIN", "DIGEST"],
+      "isActive": true,
+      "description": "熟齡配方，偏軟口感，皮毛與腸胃照護。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "0c2d7e89-1b61-4f7b-9a2b-6f4e3d2c1b0a",
+      "treatName": "熟齡牛肉腸胃軟丁",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["SENIOR"],
+      "ingredients": ["BEEF"],
+      "texture": "SOFT",
+      "healthCare": ["DIGEST", "WEIGHT"],
+      "isActive": true,
+      "description": "熟齡也能吃的軟口感，主打腸胃與體態需求。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    },
+    {
+      "id": "f4a3b2c1-d0e9-4f8a-9b7c-6d5e4f3a2b1c",
+      "treatName": "幼犬關節小慕斯（小罐）",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY"],
+      "ingredients": ["FISH"],
+      "texture": "SOFT",
+      "healthCare": ["BONES"],
+      "isActive": true,
+      "description": "幼犬成長期的關節/骨骼概念補給，偏軟好入口。",
+      "createdAt": "2026-02-10T23:00:00+08:00",
+      "deletedAt": null
+    }
+  ],
+  "household": [
+    {
+      "id": "bb629057-deae-4087-aae5-2503f45d3a54",
+      "itemName": "寵物濕紙巾｜日常清潔",
+      "category": "cleaning",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT", "SENIOR"],
+      "isActive": true,
+      "description": "外出擦拭腳掌與毛髮髒污。",
+      "imageUrl": "https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2025-07-13T23:00:00+08:00",
+      "deletedAt": null,
+      "tags": ["outdoor", "daily"]
+    },
+    {
+      "id": "9593910d-284e-4226-9eb0-9f4bc51f9a9f",
+      "itemName": "矽膠摺疊碗｜外出喝水",
+      "category": "outdoor",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT", "SENIOR"],
+      "isActive": true,
+      "description": "輕便可摺疊，適合散步與旅行補水。",
+      "imageUrl": "https://images.unsplash.com/photo-1601758123927-196fdf3a0a4b?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2025-10-11T23:00:00+08:00",
+      "deletedAt": null,
+      "tags": ["walk", "travel"]
+    },
+    {
+      "id": "64a30b15-3d65-4f8b-88de-900d2219a92b",
+      "itemName": "除毛梳｜換毛季必備",
+      "category": "grooming",
+      "petSize": ["M", "L"],
+      "dietStage": ["ADULT", "SENIOR"],
+      "isActive": true,
+      "description": "幫助去除浮毛、減少打結。",
+      "imageUrl": "https://images.unsplash.com/photo-1612536057832-2ff7d07b2c15?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2025-06-13T23:00:00+08:00",
+      "deletedAt": null,
+      "tags": ["hair", "seasonal"]
+    },
+    {
+      "id": "7bfa4ef8-0c95-4111-916b-aa3b6bf6f8c8",
+      "itemName": "床墊套｜好清洗",
+      "category": "bedding",
+      "petSize": ["S", "M"],
+      "dietStage": ["PUPPY", "ADULT"],
+      "isActive": false,
+      "description": "可拆洗床墊套，維持睡眠區整潔。",
+      "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2025-03-15T23:00:00+08:00",
+      "deletedAt": "2025-12-25T23:00:00+08:00",
+      "tags": ["home", "washable"]
+    },
+    {
+      "id": "c3f8a9f1-0a9f-4b92-8b2a-77d0d4d9d3a5",
+      "itemName": "外出拾便袋｜環保補充包",
+      "category": "outdoor",
+      "petSize": ["S", "M", "L"],
+      "dietStage": ["PUPPY", "ADULT", "SENIOR"],
+      "isActive": true,
+      "description": "日常散步必備，環保材質概念。",
+      "imageUrl": "https://images.unsplash.com/photo-1601758063095-3c66c1a0bb0f?auto=format&fit=crop&w=1200&q=80",
+      "createdAt": "2026-01-05T23:00:00+08:00",
+      "deletedAt": null,
+      "tags": ["walk", "daily"]
+    }
+  ],
+  "playStyle": [
+    {
+      "code": "IQ",
+      "label": "腦力激盪"
+    },
+    {
+      "code": "BITE",
+      "label": "愛玩愛咬"
+    },
+    {
+      "code": "WALK",
+      "label": "出門走走"
+    }
+  ],
+  "ingredients": [
+    {
+      "code": "CHICKEN",
+      "label": "雞肉",
+      "tags": ["protein"]
+    },
+    {
+      "code": "BEEF",
+      "label": "牛肉",
+      "tags": ["protein"]
+    },
+    {
+      "code": "PORK",
+      "label": "豬肉",
+      "tags": ["protein"]
+    },
+    {
+      "code": "SHEEP",
+      "label": "羊肉",
+      "tags": ["protein"]
+    },
+    {
+      "code": "FISH",
+      "label": "魚肉",
+      "tags": ["protein"]
+    },
+    {
+      "code": "EGG",
+      "label": "蛋",
+      "tags": ["protein"]
+    },
+    {
+      "code": "DAIRY",
+      "label": "乳製品",
+      "tags": ["allergen"]
+    },
+    {
+      "code": "WHEAT",
+      "label": "小麥",
+      "tags": ["grain", "allergen"]
+    },
+    {
+      "code": "SOY",
+      "label": "黃豆",
+      "tags": ["allergen"]
+    }
+  ],
+  "treatTexture": [
+    {
+      "code": "SOFT",
+      "label": "偏軟"
+    },
+    {
+      "code": "NORMAL",
+      "label": "一般"
+    },
+    {
+      "code": "HARD",
+      "label": "偏硬"
+    }
+  ],
+  "healthCare": [
+    {
+      "code": "BONES",
+      "label": "骨骼關節"
+    },
+    {
+      "code": "DIGEST",
+      "label": "腸胃消化"
+    },
+    {
+      "code": "SKIN",
+      "label": "皮膚毛髮"
+    },
+    {
+      "code": "TEETH",
+      "label": "口腔潔牙"
+    },
+    {
+      "code": "WEIGHT",
+      "label": "體重管理"
+    }
+  ],
+  "dietStage": [
+    {
+      "code": "PUPPY",
+      "label": "幼犬"
+    },
+    {
+      "code": "ADULT",
+      "label": "成犬"
+    },
+    {
+      "code": "SENIOR",
+      "label": "老犬"
+    }
+  ],
+  "size": [
+    {
+      "code": "S",
+      "label": "小型"
+    },
+    {
+      "code": "M",
+      "label": "中型"
+    },
+    {
+      "code": "L",
+      "label": "大型"
+    }
+  ]
+}
