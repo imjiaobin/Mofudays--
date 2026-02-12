@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
-import petToy from "../../assets/images/userCenter/pet-toy.png";
-import petSnack from "../../assets/images/userCenter/pet_snack.png";
+import petToy from "../../../assets/images/userCenter/pet-toy.png";
+import petSnack from "../../../assets/images/userCenter/pet_snack.png";
 
 export const MOCK_ORDERS = [
   {
@@ -92,8 +92,10 @@ export default function OrderList() {
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
-    if (active === "unpaid") return MOCK_ORDERS.filter((o) => o.payStatus === "UNPAID");
-    if (active === "paid") return MOCK_ORDERS.filter((o) => o.payStatus === "PAID");
+    if (active === "unpaid")
+      return MOCK_ORDERS.filter((o) => o.payStatus === "UNPAID");
+    if (active === "paid")
+      return MOCK_ORDERS.filter((o) => o.payStatus === "PAID");
     return MOCK_ORDERS;
   }, [active]);
 
@@ -232,14 +234,23 @@ export default function OrderList() {
           alt="寵物玩具圖, 包含狗骨頭和兩個球"
           className="img-pet-toy img-shake"
         />
-        <img src={petSnack} alt="寵物點心包" className="img-pet-snack img-shake" />
+        <img
+          src={petSnack}
+          alt="寵物點心包"
+          className="img-pet-snack img-shake"
+        />
       </div>
 
       {/* pagination */}
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center align-bottom mt-16 mb-32">
           <li className={`page-item ${!canPrev ? "disabled" : ""}`}>
-            <a className="page-link" href="#" aria-label="Previous" onClick={handlePrev}>
+            <a
+              className="page-link"
+              href="#"
+              aria-label="Previous"
+              onClick={handlePrev}
+            >
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -248,7 +259,11 @@ export default function OrderList() {
             const p = idx + 1;
             return (
               <li key={p} className={`page-item ${page === p ? "active" : ""}`}>
-                <a className="page-link" href="#" onClick={(e) => handlePage(e, p)}>
+                <a
+                  className="page-link"
+                  href="#"
+                  onClick={(e) => handlePage(e, p)}
+                >
                   {p}
                 </a>
               </li>
@@ -256,7 +271,12 @@ export default function OrderList() {
           })}
 
           <li className={`page-item ${!canNext ? "disabled" : ""}`}>
-            <a className="page-link" href="#" aria-label="Next" onClick={handleNext}>
+            <a
+              className="page-link"
+              href="#"
+              aria-label="Next"
+              onClick={handleNext}
+            >
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

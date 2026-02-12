@@ -1,7 +1,7 @@
 import { useState } from "react";
-import shippingCart from "../../assets/images/userCenter/member_shipping_cart.png";
-import aboutBg from "../../assets/images/userCenter/about-bg.png";
-import waitingDog from "../../assets/images/userCenter/member_waiting_dog.png";
+import shippingCart from "../../../assets/images/userCenter/member_shipping_cart.png";
+import aboutBg from "../../../assets/images/userCenter/about-bg.png";
+import waitingDog from "../../../assets/images/userCenter/member_waiting_dog.png";
 const INITIAL_PROFILE = {
   name: "",
   nickname: "",

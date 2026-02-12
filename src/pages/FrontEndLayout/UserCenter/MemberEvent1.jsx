@@ -1,4 +1,4 @@
-import machiDays from "../../assets/images/memberEvent/毛孩麻吉日主視覺.png"
+import machiDays from "../../../assets/images/memberEvent/毛孩麻吉日主視覺.png";
 // scss載入
 import "./memberEvent.scss";
 
@@ -20,7 +20,9 @@ export default function MemberEvent1() {
 
           {/* 活動 slogan */}
           <section className="section-spacer mb-80 text-center auto-show">
-            <h1 className="h1 mb-24 text-brown-500">Show 出熱血，毛孩們來啦！</h1>
+            <h1 className="h1 mb-24 text-brown-500">
+              Show 出熱血，毛孩們來啦！
+            </h1>
             <h4 className="h4 text-primary-500 fw-500 mb-16">
               毛孩麻吉日，不只是一場活動，更是每位飼主與毛孩互相守護的承諾。
             </h4>
@@ -129,11 +131,12 @@ export default function MemberEvent1() {
                     <div className="col-12 col-md">
                       <h3 className="h3 mb-16">活動時間</h3>
                       <p className="mb-8 fw-500 ps-4">
-                        <strong className="fw-700">日期</strong>：2025 年 10 月 11
-                        日（日）09:30–12:00
+                        <strong className="fw-700">日期</strong>：2025 年 10 月
+                        11 日（日）09:30–12:00
                       </p>
                       <p className="fw-500 ps-4">
-                        <strong className="fw-700">地點</strong>：毛孩樂園（新北市板橋區××路×段×號）
+                        <strong className="fw-700">地點</strong>
+                        ：毛孩樂園（新北市板橋區××路×段×號）
                         {/* 可加地圖連結 */}
                         <a
                           href="#"
@@ -156,7 +159,9 @@ export default function MemberEvent1() {
                         </a>
                         <span className="cta-badge"> 報名倒數中! </span>
                       </div>
-                      <div className="cta-warning mt-2">名額有限，沒有候補喔!</div>
+                      <div className="cta-warning mt-2">
+                        名額有限，沒有候補喔!
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -191,7 +196,8 @@ export default function MemberEvent1() {
                       data-bs-parent="#faqAccordion"
                     >
                       <div className="accordion-body">
-                        A: 本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
+                        A:
+                        本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
                       </div>
                     </div>
                   </div>
@@ -239,7 +245,8 @@ export default function MemberEvent1() {
                       data-bs-parent="#faqAccordion"
                     >
                       <div className="accordion-body">
-                        A：免費血液檢查僅限 10 名，採現場報名、先到先登記，請提早到場登記以確保名額。
+                        A：免費血液檢查僅限 10
+                        名，採現場報名、先到先登記，請提早到場登記以確保名額。
                       </div>
                     </div>
                   </div>
@@ -274,8 +281,6 @@ export default function MemberEvent1() {
           </section>
         </div>
       </div>
-
     </main>
   );
 }
-
