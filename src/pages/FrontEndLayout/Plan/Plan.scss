@@ -1,0 +1,34 @@
+.plan-title {
+  flex: 1;
+}
+.plan-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.number-box {
+  color: $brown-500;
+  width: 32px;
+  height: 32px;
+  background-color: $primary-100;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// 文字
+.plan-price {
+  color: $primary-500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+.include-line {
+  display: block;
+  flex: 1;
+  height: 1.5px;
+  background-color: $brown-100;
+}

@@ -18,6 +18,7 @@
 // 3. 全域基礎樣式 (Base / Reset)
 // 包含 body, a 連結等基礎標籤設定
 @import "./base/base";
+@import "./base/subscribe";
 
 // 4. 全域 UI 元件樣式 (尚未組件化的樣式)
 // 這些會應用到全站所有的按鈕與表單
@@ -28,3 +29,4 @@
 // 5. Layout 框架樣式 (全站通用)
 // 只有「每一頁都會出現」的佈局樣式才放在這
 // @import "./layout/announcement";
+@import "./background";

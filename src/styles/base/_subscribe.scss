@@ -26,8 +26,14 @@
 .text-primary-500 {
   color: $primary-500;
 }
+.text-brown-100 {
+  color: $brown-100;
+}
 .text-brown-300 {
   color: $brown-300;
+}
+.text-brown-500 {
+  color: $brown-500;
 }
 .card-bg {
   background-color: $primary-100;
@@ -85,6 +91,10 @@
 }
 
 // 間距
+.px-26 {
+  padding-left: 26px;
+  padding-right: 26px;
+}
 .px-40 {
   padding-left: 40px;
   padding-right: 40px;
@@ -101,8 +111,15 @@
   padding-top: 9.5px;
   padding-bottom: 9.5px;
 }
+.mb-32 {
+  margin-bottom: 32px;
+}
 .mb-40 {
   margin-bottom: 40px;
+}
+.my-10-5 {
+  margin-top: 10.5px;
+  margin-bottom: 10.5px;
 }
 
 @media (max-width: 576px) {

@@ -234,3 +234,36 @@
   font-size: $font-size-sm;
   border-radius: 0.5rem;
 }
+
+// button plan
+.btn-plan {
+  color: $brown-500;
+  background-color: white;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  border-color: $neutral-200;
+  border-radius: 8px;
+}
+
+.btn-plan:hover {
+  color: $brown-500 !important;
+  background-color: white !important;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  border-color: $primary-500 !important;
+  border-width: 2px;
+  border-radius: 8px;
+}
+
+.btn-check:checked + .btn-plan {
+  color: $primary-500;
+  background-color: white;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-color: $primary-500;
+  border-width: 2px;
+}
+
+.btn-check:checked + .btn-plan:hover {
+  color: $primary-500 !important;
+}
