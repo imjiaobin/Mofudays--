@@ -150,11 +150,13 @@ export const router = createHashRouter([
       // 會員中心
       {
         path: "usercenter",
-        element: (
-          <RequireAuth>
-            <UserCenter />
-          </RequireAuth>
-        ),
+        //會員中心暫時拿掉權限
+        // element: (
+        //   <RequireAuth>
+        //     <UserCenter />
+        //   </RequireAuth>
+        // ),
+        element: <UserCenter />,
         children: [
           // 預設進入會員中心時導向「會員資料」
           { index: true, element: <Navigate to="profile" replace /> },
@@ -190,11 +192,13 @@ export const router = createHashRouter([
   // 後台（AdminLayout + RequireAdmin）
   {
     path: "/admin",
-    element: (
-      <RequireAdmin>
-        <AdminLayout />
-      </RequireAdmin>
-    ),
+    //後台暫時拿掉權限
+    // element: (
+    //   <RequireAdmin>
+    //     <AdminLayout />
+    //   </RequireAdmin>
+    // ),
+    element: <AdminLayout />,
     children: [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: "dashboard", element: <AdminDashboard /> },
