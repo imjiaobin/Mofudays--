@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import "./Member.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
@@ -9,40 +12,73 @@ import aboutBg from "../../assets/images/member/about-bg.png";
 import memberWaitingDog from "../../assets/images/member/member_waiting_dog.png";
 
 export default function Member() {
-  const formRef = useRef(null);
-  const [wasValidated, setWasValidated] = useState(false);
+  //取得網址上的 id 參數
+  const { user } = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formElement = formRef.current;
-    if (!formElement) return;
+  //初始化 React Hook Form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-    const ok = formElement.checkValidity();
-    setWasValidated(true);
-    if (!ok) return;
+  //取得單一會員資料 (假設 ID 為 600)
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/users/${user.id}`);
+        if (res.data) {
+          // 3. 使用 reset 將取得的資料填入 input
+          reset(res.data);
+        }
+      } catch (err) {
+        console.error("取得資料失敗", err);
+        alert("無法載入會員資料");
+      }
+    };
+    if (id) fetchMember();
+  }, [id, reset]);
 
-    // 表單合法後：送 API
+  // 4. 更新資料 API
+  const onSumbit = async (data) => {
+    try {
+      await axios.put(`http://localhost:3000/users/${user.id}`, data);
+      alert("資料已成功存檔");
+    } catch (err) {
+      alert("存檔失敗");
+    }
   };
+
+  // const formRef = useRef(null);
+  // const [wasValidated, setWasValidated] = useState(false);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const formElement = formRef.current;
+  //   if (!formElement) return;
+
+  //   const ok = formElement.checkValidity();
+  //   setWasValidated(true);
+  //   if (!ok) return;
+
+  //   // 表單合法後：送 API
+  // };
 
   return (
     <div className="member-center container">
       <div className="member-data">
-        <form
-          ref={formRef}
-          className={`needs-validation ${wasValidated ? "was-validated" : ""}`}
-          noValidate
-          onSubmit={handleSubmit}
-        >
+        <form ref={formRef} noValidate onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-40">
             <h2 className="h h2 text-primary-500 mt-16 mb-32">
               <span className="bi bi-person me-2" />
               會員資料
             </h2>
 
-            {/* 姓名 */}
+            {/* 姓名- 使用 register 綁定 */}
             <div className="mb-56 ps-8 position-relative">
               <label htmlFor="user-name" className="form-label p1">
-                姓名
+                姓s名
               </label>
               <div className="input-group">
                 <input

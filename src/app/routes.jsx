@@ -23,7 +23,7 @@ export const router = createBrowserRouter(
         {
           element: <ProtectedRoute />,
           children: [
-            { path: "member", element: <Member /> },
+            { path: "/member/:id", element: <Member /> },
             { path: "orders", element: <div>Orders page</div> },
             { path: "coupons", element: <div>Coupons page</div> },
             { path: "member/exclusive", element: <div>Exclusive page</div> },

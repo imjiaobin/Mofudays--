@@ -1,53 +1,40 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
-  const [user, setUser] = useState(null); // { name, ... }
+export const AuthProvider = ({ children }) => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
-  // ✅ 登入後：設定 token + 寫入 localStorage
-  const login = (newToken, userData) => {
-    setToken(newToken);
-    localStorage.setItem("token", newToken);
+  // 初始化：檢查本地是否有 token
+  useEffect(() => {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      setIsLogin(true);
+      // 這裡可以選擇透過 API 獲取最新的使用者資料
+    }
+  }, []);
+
+  const login = (userData, token, rememberMe) => {
+    const storage = rememberMe ? localStorage : sessionStorage;
+    storage.setItem("token", token);
+    setIsLogin(true);
     setUser(userData);
   };
 
-  // ✅ 登出：清 token / user
   const logout = () => {
-    setToken("");
     localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    setIsLogin(false);
     setUser(null);
   };
 
-  // ✅ 重整頁面仍保持登入狀態：有 token 就去抓 user profile
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    if (!t) return;
-
-    setToken(t);
-
-    // 這裡用你的 API 去抓會員資料（示意）
-    // axios.get("/api/me", { headers: { Authorization: `Bearer ${t}` } })
-    //   .then(res => setUser(res.data))
-    //   .catch(() => logout());
-
-    // 👉 如果你暫時還沒 API，可以先用假資料
-    if (!user) setUser({ name: "使用者名稱" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <AuthContext.Provider
-      value={{ token, user, isAuthed: !!token, login, logout }}
-    >
+    <AuthContext.Provider value={{ isLogin, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
-  const v = useContext(AuthContext);
-  if (!v) throw new Error("useAuth must be used within AuthProvider");
-  return v;
-}
+export const useAuth = () => useContext(AuthContext);

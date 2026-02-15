@@ -348,15 +348,16 @@ function NewsAccordionItem({
    ======================================================= */
 
 function AuthMenu({ variant = "desktop" }) {
+  // 假設 AuthContext 提供的是 isAuthed, user, logout
   const { isAuthed, user, logout } = useAuth();
 
-  // 未登入：顯示按鈕
+  // 1. 未登入：顯示原本的「登入會員」按鈕
   if (!isAuthed) {
     // desktop 是 <li>，mobile 在 offcanvas 裡也可以用 <li> 以保持樣式一致
     return (
-      <li className={`nav-item ${variant === "desktop" ? "me-5" : ""}`}>
+      <li className={`nav-item me-5 ${variant === "desktop" ? "me-5" : ""}}`}>
         <Link to="/login">
-          <button className="btn login-btn rounded-pill" type="button">
+          <button className="btn login-btn rounded-pill " type="button">
             登入會員
           </button>
         </Link>
@@ -364,8 +365,8 @@ function AuthMenu({ variant = "desktop" }) {
     );
   }
 
-  // 已登入：顯示姓名下拉
-  // 如果是在 offcanvas 裡，點選 dropdown item 後最好順便把 offcanvas 關掉
+  // 2. 已登入：顯示會員頭像/姓名與下拉選單
+
   const handleLogout = () => {
     logout();
     closeOffcanvasIfAny();
@@ -376,60 +377,75 @@ function AuthMenu({ variant = "desktop" }) {
   };
 
   return (
-    <li className={`nav-item dropdown ${variant === "desktop" ? "me-5" : ""}`}>
-      <button
-        className="btn login-btn rounded-pill dropdown-toggle d-flex align-items-center gap-2"
-        type="button"
+    <li
+      className={`nav-item dropdown ${variant === "desktop" ? "me-5" : "list-unstyled"}`}
+    >
+      {/* 下拉選單按鈕 */}
+      <a
+        className="nav-link dropdown-toggle d-flex align-items-center gap-2 text-brown-500"
+        href="#"
+        role="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <span className="icon-user" aria-hidden="true" />
-        <span>{user?.name || "會員"}</span>
-      </button>
+        {/* 你可以根據需求放置頭像或 Icon */}
+        <div className="avatar-circle d-none d-md-block">
+          {/* 這裡可以放 user.photo 或簡單的 user 圖示 */}
+          <span className="icon-user" />
+        </div>
+        <span className="fw-bold">{user?.name || "會員"} 您好</span>
+      </a>
 
-      <ul className="dropdown-menu dropdown-menu-end">
+      {/* 下拉選單內容 */}
+      <ul
+        className={`dropdown-menu dropdown-menu-end shadow border-0 rounded-3 ${variant === "mobile" ? "text-center" : ""}`}
+      >
         <li>
-          <a className="dropdown-item" href="/orders" onClick={handleClickLink}>
+          <Link
+            className="dropdown-item py-2"
+            to="/orders"
+            onClick={handleClickLink}
+          >
             訂單管理
-          </a>
+          </Link>
         </li>
         <li>
           <Link
+            className="dropdown-item py-2"
             to="/member"
-            className="dropdown-item"
             onClick={handleClickLink}
           >
             個人資料修改
           </Link>
         </li>
         <li>
-          <a
-            className="dropdown-item"
-            href="/member/exclusive"
+          <Link
+            className="dropdown-item py-2"
+            to="/member/exclusive"
             onClick={handleClickLink}
           >
             會員專屬活動
-          </a>
+          </Link>
         </li>
         <li>
-          <a
-            className="dropdown-item"
-            href="/coupons"
+          <Link
+            className="dropdown-item py-2"
+            to="/coupons"
             onClick={handleClickLink}
           >
             我的折扣碼
-          </a>
+          </Link>
         </li>
         <li>
           <hr className="dropdown-divider" />
         </li>
         <li>
           <button
-            className="dropdown-item text-danger"
+            className="dropdown-item text-danger py-2"
             type="button"
             onClick={handleLogout}
           >
-            登出
+            登出系統
           </button>
         </li>
       </ul>
@@ -437,11 +453,16 @@ function AuthMenu({ variant = "desktop" }) {
   );
 }
 
-// 在 mobile offcanvas 點選選單後希望自動關閉
+/**自動關閉 Mobile Offcanvas，避免點擊選單後，側邊欄還擋在畫面上**/
+
 function closeOffcanvasIfAny() {
   const el = document.getElementById("mobileMenu");
   if (!el) return;
-  // bootstrap offcanvas instance
-  const instance = window.bootstrap?.Offcanvas?.getInstance(el);
-  if (instance) instance.hide();
+
+  // 檢查 Bootstrap 是否已載入
+  const bootstrap = window.bootstrap;
+  if (bootstrap) {
+    const instance = bootstrap.Offcanvas.getInstance(el);
+    if (instance) instance.hide();
+  }
 }
