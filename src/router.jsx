@@ -4,6 +4,8 @@ import { createHashRouter, Navigate } from "react-router-dom";
 import FrontLayout from "./layout/FrontEndLayout";
 import AuthLayout from "./layout/AuthLayout";
 import AdminLayout from "./layout/AdminLayout";
+import AdminAuthLayout from "./layout/AdminAuthLayout";
+// 2026/02/17 納森新增, 避免登入後台頁面後, 仍保留前台頁面之 header 和 footer
 
 // FrontLayout
 import Home from "./pages/FrontEndLayout/Home/Home";
@@ -32,7 +34,10 @@ import Signup from "./pages/FrontEndLayout/Signup/Signup";
 // Admin pages（先做 placeholder 也行）
 // 先放 Dashboard 占位，後續再補其他後台頁
 // import AdminDashboard from "./pages/BackEndLayout/AdminDashboard/AdminDashboard";
-import { AdminLogin, AdminDashboard } from "./pages/BackEndLayout/adminIndex";
+import { 
+  AdminLogin, AdminDashboard, AdminOrders, 
+  AdminSubscriptions, AdminInfos, AdminUsers
+} from "./pages/BackEndLayout/adminIndex";
 
 // 404
 import NotFound from "./layout/NotFound";
@@ -63,31 +68,18 @@ function RequireAuth({ children }) {
 }
 
 //後台管理員權限守衛
-function RequireAdmin({ children }) {
-  const { isAuthed, user, isLoading } = useAuth();
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { selectIsAdminAuthed } from "./slices/adminAuthSlice";
+export default function RequireAdmin({ children }) {
+  const isAuthed = useSelector(selectIsAdminAuthed);
+  const location = useLocation();
 
-  // 1. 處理讀取中狀態
-  if (isLoading) {
-    return (
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-      >
-        權限驗證中...
-      </div>
-    );
+  if (!isAuthed) {
+    return <Navigate to="/admin/login" replace state={{ from: location }} />;
   }
 
-  // 2. 權限判斷：user 是從 getUserProfile 回傳的，找不到會是 null
-  const isAdmin = user?.role === "admin";
-
-  // 如果已登入且是管理員，准許進入
-  if (isAuthed && isAdmin) {
-    return children;
-  }
-
-  // 3. 權限不符：跳轉回後台專用的登入路徑 /admin/login
-  // 這樣能保持 mode="admin" 的一致性
-  return <Navigate to="admin/login" replace />;
+  return children;
 }
 
 export const router = createHashRouter([
@@ -189,34 +181,44 @@ export const router = createHashRouter([
     ],
   },
 
-  // 登入/註冊（AuthLayout）
+  // 前台 登入/註冊（AuthLayout）
   {
     path: "/",
     element: <AuthLayout />,
     children: [
-      // 一般登入/註冊
       { path: "login", element: <Login mode="user" /> },
       { path: "signup", element: <Signup /> },
-
-      // 後台登入： 同一個 Login 元件，只是 mode 不同
-      // { path: "admin/login", element: <Login mode="admin" /> },
-       { path: "admin/login", element: <AdminLogin /> },
     ],
   },
 
-  // 後台（AdminLayout + RequireAdmin）
+  // 後台登入頁面 (AdminAuthLayout)
   {
     path: "/admin",
-    element: (
-      <RequireAdmin>
-        <AdminLayout />
-      </RequireAdmin>
-    ),
     children: [
-      { index: true, element: <Navigate to="dashboard" replace /> },
-      { path: "dashboard", element: <AdminDashboard /> },
-      // { path: "products", element: <AdminProducts /> },
-      // { path: "orders", element: <AdminOrders /> },
+      // 後台登入
+      {
+        element: <AdminAuthLayout />,
+        children: [{ path: "login", element: <AdminLogin /> }],
+      },
+
+      // 後台入口
+      {
+        element: (
+          <RequireAdmin>
+            <AdminLayout />
+          </RequireAdmin>
+        ),
+        children: [
+          { index: true, element: <Navigate to="dashboard" replace /> },
+          { path: "dashboard", element: <AdminDashboard /> },
+          { path: "orders", element: <AdminOrders /> },
+          { path: "subscriptions", element: <AdminSubscriptions /> },
+          { path: "admins", element: <AdminInfos /> },
+          { path: "users", element: <AdminUsers /> },
+          // { path: "notifications", element: <AdminNotifications /> },
+          // { path: "settings", element: <AdminSettings /> },
+        ],
+      },
     ],
   },
   //API測試頁

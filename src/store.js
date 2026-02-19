@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { authSlice } from "./slices/authSlice";
+
+// 後台管理系統
+import adminAuthReducer from "./slices/adminAuthSlice";
 
 export const store = configureStore({
     reducer: {
-    // auth: authReducer,
+    adminAuth: adminAuthReducer, 
     // cart: cartReducer,
   },
 })
