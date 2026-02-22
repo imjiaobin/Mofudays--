@@ -1,70 +1,142 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
-import { Link } from "react-router-dom";
-
-// 這三個對應你的 EJS include
-// import Header from "./app/layouts/components/Header/Header";
-// import Announcement from "./layout/Announcement";
-// import Footer from "./app/layouts/components/Footer/Footer";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../../../app/layouts/components/Header/Header";
+import Footer from "../../../app/layouts/components/Footer/Footer";
 
 //圖片載入
 import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
 import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
 import longinSlider03 from "../../../assets/images/common/login-slider-03.png";
 
-export default function Signup() {
-  const formRef = useRef(null);
-  const [wasValidated, setWasValidated] = useState(false);
+const API_BASE_URL = "http://localhost:3000";
 
-  const [formData, setFormData] = useState({
-    name: "",
-    nickname: "",
-    birthday: "",
-    phone: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    address: "",
+export default function Signup() {
+  const navigate = useNavigate();
+  const carouselRef = useRef(null);
+  // const [wasValidated, setWasValidated] = useState(false);
+
+  // 1. 初始化 React Hook Form
+  const {
+    register,
+    handleSubmit,
+    watch, // 用於監控密碼欄位以進行比對
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      nickname: "",
+      birthday: "",
+      phone: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+      address: "",
+    },
   });
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
+  // 監控密碼欄位數值，供「確認密碼」比對使用
+  const passwordValue = watch("password");
 
-    // 把 id 轉成 state key
-    const keyMap = {
-      name: "name",
-      nickname: "nickname",
-      birthday: "birthday",
-      phone: "phone",
-      email: "email",
-      password: "password",
-      "password-confirm": "passwordConfirm",
-      address: "address",
-    };
+  // 輪播初始化
+  useEffect(() => {
+    if (!carouselRef.current) return;
+    const instance = bootstrap.Carousel.getOrCreateInstance(
+      carouselRef.current,
+      {
+        interval: 3000,
+        ride: "carousel",
+      },
+    );
+    return () => instance.dispose();
+  }, []);
 
-    const key = keyMap[id];
-    if (!key) return;
+  const onSubmit = async (data) => {
+    try {
+      const { passwordConfirm, ...registerData } = data;
 
-    setFormData((prev) => ({ ...prev, [key]: value }));
+      // 定義 res 變數
+      const res = await axios.post(`${API_BASE_URL}/register`, registerData);
+
+      console.log("註冊成功回傳資料：", res.data);
+
+      alert("註冊成功！");
+      navigate("/login");
+    } catch (err) {
+      // 區分錯誤類型，方便除錯
+      if (err.response) {
+        // 這是 API 回傳的錯誤 (e.g. 400, 409, 500)
+        console.error("API 錯誤詳情：", err.response.data);
+        const status = err.response.status;
+        const errorMsg = err.response.data;
+
+        if (status === 400 || status === 409) {
+          if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
+            setError("email", { type: "manual", message: "此 Email 已被註冊" });
+          } else {
+            alert("註冊資料格式錯誤，請檢查欄位");
+          }
+        } else {
+          alert("註冊失敗，伺服器連線異常");
+        }
+      } else {
+        console.error("JavaScript 或網路錯誤：", err.message);
+        alert("程式執行發生錯誤，請查看控制台");
+      }
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   nickname: "",
+  //   birthday: "",
+  //   phone: "",
+  //   email: "",
+  //   password: "",
+  //   passwordConfirm: "",
+  //   address: "",
+  // });
 
-    const formEl = formRef.current;
-    if (!formEl) return;
+  // const handleChange = (e) => {
+  //   const { id, value } = e.target;
 
-    // 先跑瀏覽器內建驗證（required / type / pattern 等）
-    const ok = formEl.checkValidity();
-    setWasValidated(true);
+  //   // 把 id 轉成 state key
+  //   const keyMap = {
+  //     name: "name",
+  //     nickname: "nickname",
+  //     birthday: "birthday",
+  //     phone: "phone",
+  //     email: "email",
+  //     password: "password",
+  //     "password-confirm": "passwordConfirm",
+  //     address: "address",
+  //   };
 
-    if (!ok) return;
+  //   const key = keyMap[id];
+  //   if (!key) return;
 
-    // 表單都合法：你在這裡串接註冊 API
-    // console.log(formData);
-  };
+  //   setFormData((prev) => ({ ...prev, [key]: value }));
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const formEl = formRef.current;
+  //   if (!formEl) return;
+
+  //   // 先跑瀏覽器內建驗證（required / type / pattern 等）
+  //   const ok = formEl.checkValidity();
+  //   setWasValidated(true);
+
+  //   if (!ok) return;
+
+  //   // 表單都合法：你在這裡串接註冊 API
+  //   // console.log(formData);
+  // };
 
   return (
     <>
@@ -80,8 +152,9 @@ export default function Signup() {
               <section className="col-6 d-none p-0 d-md-block col-img">
                 <div
                   id="carouselExampleInterval"
-                  className="carousel slide"
+                  className="carousel slide h-100"
                   data-bs-ride="carousel"
+                  ref={carouselRef}
                 >
                   <div className="carousel-indicators">
                     <button
@@ -166,12 +239,7 @@ export default function Signup() {
               {/* 註冊表單 */}
               <section className="col-12 col-md-6 p-0">
                 <div className="signup-form">
-                  <form
-                    ref={formRef}
-                    className={`needs-validation ${wasValidated ? "was-validated" : ""}`}
-                    noValidate
-                    onSubmit={handleSubmit}
-                  >
+                  <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="text-center mb-7">
                       <h2 className="text-brown-500 mb-4">會員註冊</h2>
                       <p className="text-brown-500">
@@ -180,187 +248,179 @@ export default function Signup() {
                     </div>
 
                     {/* 姓名 */}
-                    <div className="mb-4 d-flex align-items-center">
-                      <label
-                        htmlFor="name"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         姓名<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="text"
-                          className="form-control w-100"
-                          id="name"
+                          className={`form-control ${errors.name ? "is-invalid" : ""}`}
                           placeholder="輸入你的姓名"
-                          required
-                          value={formData.name}
-                          onChange={handleChange}
+                          {...register("name", { required: "姓名為必填" })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.name?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 暱稱 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="nickname"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         暱稱
                       </label>
                       <div className="w-100">
                         <input
                           type="text"
-                          className="form-control w-100"
-                          id="nickname"
-                          placeholder="輸入你的用戶暱稱"
-                          value={formData.nickname}
-                          onChange={handleChange}
+                          className="form-control"
+                          placeholder="輸入用戶暱稱"
+                          {...register("nickname")}
                         />
                       </div>
                     </div>
 
                     {/* 生日 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="birthday"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         生日<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="date"
-                          className="form-control w-100"
-                          id="birthday"
-                          required
-                          value={formData.birthday}
-                          onChange={handleChange}
+                          className={`form-control ${errors.birthday ? "is-invalid" : ""}`}
+                          {...register("birthday", { required: "請選擇生日" })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.birthday?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 手機 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="phone"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         手機<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="tel"
-                          className="form-control w-100"
-                          id="phone"
-                          placeholder="輸入你的手機號碼"
-                          required
-                          value={formData.phone}
-                          onChange={handleChange}
+                          className={`form-control ${errors.phone ? "is-invalid" : ""}`}
+                          placeholder="0912345678"
+                          {...register("phone", {
+                            required: "手機為必填",
+                            pattern: {
+                              value: /^09\d{8}$/,
+                              message: "手機格式不正確",
+                            },
+                          })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.phone?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 信箱 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="email"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         電子信箱<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="email"
-                          className="form-control w-100"
-                          id="email"
-                          placeholder="輸入你的信箱"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
+                          className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                          placeholder="example@mail.com"
+                          {...register("email", {
+                            required: "Email 為必填",
+                            pattern: {
+                              value: /^\S+@\S+$/i,
+                              message: "Email 格式不正確",
+                            },
+                          })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.email?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 密碼 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="password"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         密碼<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="password"
-                          className="form-control w-100"
-                          id="password"
-                          placeholder="輸入你的密碼"
-                          required
-                          value={formData.password}
-                          onChange={handleChange}
+                          className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                          placeholder="請輸入密碼"
+                          {...register("password", {
+                            required: "密碼為必填",
+                            minLength: {
+                              value: 8,
+                              message: "密碼至少需 8 位元",
+                            },
+                          })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.password?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 確認密碼 */}
-                    <div className="mb-5 d-flex align-items-center">
-                      <label
-                        htmlFor="password-confirm"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-4 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         確認密碼<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="password"
-                          className="form-control w-100"
-                          id="password-confirm"
-                          placeholder="再次輸入你的密碼"
-                          required
-                          value={formData.passwordConfirm}
-                          onChange={handleChange}
+                          className={`form-control ${errors.passwordConfirm ? "is-invalid" : ""}`}
+                          placeholder="再次輸入密碼"
+                          {...register("passwordConfirm", {
+                            required: "請再次輸入密碼",
+                            validate: (value) =>
+                              value === passwordValue || "兩次密碼輸入不一致",
+                          })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.passwordConfirm?.message}
+                        </div>
                       </div>
                     </div>
 
                     {/* 地址 */}
-                    <div className="mb-5 d-flex align-items-center mb-6">
-                      <label
-                        htmlFor="address"
-                        className="form-label flex-shrink-0 col-2 me-2 text-brown-500"
-                      >
+                    <div className="mb-6 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         地址<sup className="inp-required">*</sup>
                       </label>
                       <div className="w-100">
                         <input
                           type="text"
-                          className="form-control w-100"
-                          id="address"
+                          className={`form-control ${errors.address ? "is-invalid" : ""}`}
                           placeholder="輸入你的通訊地址"
-                          required
-                          value={formData.address}
-                          onChange={handleChange}
+                          {...register("address", { required: "地址為必填" })}
                         />
+                        <div className="invalid-feedback">
+                          {errors.address?.message}
+                        </div>
                       </div>
                     </div>
 
-                    {/* 立即加入按鈕 */}
                     <div className="d-grid mb-9">
                       <button
                         className="btn btn-form-login w-100"
                         type="submit"
+                        disabled={isSubmitting}
                       >
-                        立即加入
+                        {isSubmitting ? "註冊中..." : "立即加入"}
                       </button>
                     </div>
 
-                    {/* 已有帳號連結 */}
                     <div className="d-flex justify-content-center align-items-center">
                       <p className="mb-0 me-2 text-brown-300">已經是會員？</p>
-
-                      {/* react-router 建議用 Link */}
-                      {/* <Link to="/login" className="btn btn-form-signup fw-bold">立即登入</Link> */}
                       <Link to="/login">
                         <button
                           type="button"
