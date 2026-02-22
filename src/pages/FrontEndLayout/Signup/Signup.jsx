@@ -55,32 +55,37 @@ export default function Signup() {
     return () => instance.dispose();
   }, []);
 
-  // 2. 提交邏輯
   const onSubmit = async (data) => {
     try {
-      // 註冊 API
       const { passwordConfirm, ...registerData } = data;
-      await axios.post(`${API_BASE_URL}/register`, registerData);
+
+      // 定義 res 變數
+      const res = await axios.post(`${API_BASE_URL}/register`, registerData);
+
       console.log("註冊成功回傳資料：", res.data);
 
       alert("註冊成功！");
       navigate("/login");
     } catch (err) {
-      // 修正 3: 增加錯誤詳細日誌，幫助調試
-      console.error("API 錯誤詳情：", err.response?.data);
+      // 區分錯誤類型，方便除錯
+      if (err.response) {
+        // 這是 API 回傳的錯誤 (e.g. 400, 409, 500)
+        console.error("API 錯誤詳情：", err.response.data);
+        const status = err.response.status;
+        const errorMsg = err.response.data;
 
-      const status = err.response?.status;
-
-      if (status === 400 || status === 409) {
-        // 檢查後端回傳訊息，如果是 Email 已存在則顯示錯誤
-        const errorMsg = err.response?.data;
-        if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
-          setError("email", { type: "manual", message: "此 Email 已被註冊" });
+        if (status === 400 || status === 409) {
+          if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
+            setError("email", { type: "manual", message: "此 Email 已被註冊" });
+          } else {
+            alert("註冊資料格式錯誤，請檢查欄位");
+          }
         } else {
-          alert("註冊資料格式錯誤，請檢查欄位（密碼需 4 位以上）");
+          alert("註冊失敗，伺服器連線異常");
         }
       } else {
-        alert("註冊失敗，伺服器連線異常");
+        console.error("JavaScript 或網路錯誤：", err.message);
+        alert("程式執行發生錯誤，請查看控制台");
       }
     }
   };

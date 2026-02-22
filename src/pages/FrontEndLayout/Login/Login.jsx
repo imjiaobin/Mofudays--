@@ -67,25 +67,31 @@ export default function Login() {
         password: data.password,
       });
 
-      // json-server-auth 成功後會回傳 { accessToken, user }
+      // 從回傳資料中取出 accessToken 和 user 物件
       const { accessToken, user } = res.data;
 
       if (!accessToken) throw new Error("登入成功但未取得 token");
 
-      // 儲存 Token (注意：json-server-auth 回傳的是 accessToken)
+      // 決定儲存空間 (根據「記住我」勾選狀態)
       const storage = data.rememberMe ? localStorage : sessionStorage;
+
+      // 儲存 Token
       storage.setItem("token", accessToken);
 
-      // 1. 呼叫 Context 的登入 (將 accessToken 傳入)
+      // 新增：儲存 userId (從 user 物件中取出 id)
+      if (user && user.id) {
+        //建議儲存字串，轉成 String 較安全
+        storage.setItem("userId", String(user.id));
+      }
+
+      // 呼叫 Context 的登入 (維持原樣)
       login(user, accessToken, data.rememberMe);
 
-      // 2. 跳轉頁面
+      // 跳轉頁面
       navigate("/", { replace: true });
     } catch (err) {
       console.error("登入錯誤詳情：", err.response?.data);
-
       const status = err?.response?.status;
-      // json-server-auth 帳密錯誤通常回傳 400 或 401
       if (status === 400 || status === 401) {
         setError("password", { type: "manual", message: "帳號或密碼錯誤" });
         setError("email", { type: "manual", message: " " });
