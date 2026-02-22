@@ -11,7 +11,6 @@ import AdminAuthLayout from "./layout/AdminAuthLayout";
 import Home from "./pages/FrontEndLayout/Home/Home";
 import FAQ from "./pages/FrontEndLayout/FAQ/FAQ";
 import Blog from "./pages/FrontEndLayout/Blog/Blog";
-
 import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 import Plan from "./pages/FrontEndLayout/Plan/Plan";
 import Cart from "./pages/FrontEndLayout/Cart/Cart";

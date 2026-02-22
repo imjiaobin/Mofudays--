@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 // 1. 先引入圖片
 import heroHeadlineDesktop from "../../../../assets/images/index/01_hero_headline_desktop.svg";
 import heroHeadlineMobile from "../../../../assets/images/index/01_hero_headline_mobile.svg";
@@ -46,13 +48,14 @@ const HeroSection = () => {
               <br className="d-block d-sm-none" />
               讓陪伴更輕鬆也更有温度
             </h2>
-            <a
+            <Link
               className="btn rounded-pill btn-primary btn-subscribe hero-button"
+              to="/petinfo"
               role="button"
               onClick={handleSubscribeClick}
             >
               立即訂閱
-            </a>
+            </Link>
           </div>
           <div className="col-md-6 col-12 hero-image-col">
             <img src={heroImg} className="img-fluid w-100" alt="hero_img" />
