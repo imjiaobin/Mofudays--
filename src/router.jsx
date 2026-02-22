@@ -25,6 +25,9 @@ import MemberEvent1 from "./pages/FrontEndLayout/UserCenter/MemberEvent1";
 import MemberEvent2 from "./pages/FrontEndLayout/UserCenter/MemberEvent2";
 import MemberEvent3 from "./pages/FrontEndLayout/UserCenter/MemberEvent3";
 
+//再次訂閱 功能測試頁
+import ResubscribePreview from "./pages/FrontEndLayout/UserCenter/components/Resubscribepreview";
+
 // Auth pages（ 會員/後台共用同一個 Login 頁面 ）
 import Login from "./pages/FrontEndLayout/Login/Login";
 import Signup from "./pages/FrontEndLayout/Signup/Signup";
@@ -101,7 +104,7 @@ export const router = createHashRouter([
       // { path: "blog/:postId", element: <BlogPost /> },
       { path: "petinfo", element: <PetInfo /> },
       { path: "plan", element: <Plan /> },
-      { path: "cart", element: <Cart /> },
+      { path: "cart", element: <ResubscribePreview /> },
       { path: "checkout", element: <Checkout /> },
       { path: "finish", element: <Finish /> },
 

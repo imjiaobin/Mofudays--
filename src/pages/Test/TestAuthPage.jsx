@@ -34,8 +34,8 @@ const TestAuthPage = () => {
     try {
       // A. 登入
       const authData = await userApi.loginUser({
-        email: "james@example.com",
-        password: "james123",
+        email: "amy@example.com",
+        password: "amy123",
       });
 
       localStorage.setItem("accessToken", authData.accessToken);
