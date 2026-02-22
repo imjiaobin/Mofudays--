@@ -643,6 +643,8 @@ function LoggedInMenu({ variant, user, logout }) {
   }, []);
 
   const handleLogout = () => {
+    const confirmed = window.confirm("確認要登出嗎？");
+    if (!confirmed) return;
     logout();
     setOpen(false);
     closeOffcanvasIfAny();
