@@ -13,7 +13,7 @@ import { checkLoginStatus } from "../../../../api/userApi";
 const HeroSection = () => {
   const navigate = useNavigate();
 
-  // 統一處理「立即訂閱」的點擊事件
+  // 處理「立即訂閱」的點擊事件
   const handleSubscribeClick = () => {
     const isAuthed = checkLoginStatus();
 

@@ -1,10 +1,10 @@
 // scss載入
 import "./memberEvent.scss";
 import luckyBagBanner from "../../../assets/images/member/theme_event_3.png";
-// import step1 from "../../../assets/images/memberEvent/step_item_1.png";
-// import step2 from "../../../assets/images/memberEvent/step_item_2.png";
-// import step3 from "../../../assets/images/memberEvent/step_item_3.png";
-// import step4 from "../../../assets/images/memberEvent/step_item_4.png";
+import step1 from "../../../assets/images/memberEvent/step_item_1.png";
+import step2 from "../../../assets/images/memberEvent/step_item_2.png";
+import step3 from "../../../assets/images/memberEvent/step_item_3.png";
+import step4 from "../../../assets/images/memberEvent/step_item_4.png";
 
 export default function MemberEvent3() {
   return (
@@ -53,7 +53,7 @@ export default function MemberEvent3() {
               <div className="col d-flex flex-column">
                 <div className="fade-up-1">
                   <img
-                    src="/assets/images/member_activities/step_item_1.png"
+                    src={step1}
                     className="feature-circle mb-20 mx-auto img-hover-bigger"
                     alt="步驟1-登記參加"
                   />
@@ -67,7 +67,7 @@ export default function MemberEvent3() {
               <div className="col d-flex flex-column">
                 <div className="fade-up-1">
                   <img
-                    src="/assets/images/member_activities/step_item_2.png"
+                    src={step2}
                     className="feature-circle mb-20 mx-auto img-hover-bigger"
                     alt="步驟2-系統配對"
                   />
@@ -85,7 +85,7 @@ export default function MemberEvent3() {
               <div className="col d-flex flex-column">
                 <div className="fade-up-1">
                   <img
-                    src="/assets/images/member_activities/step_item_3.png"
+                    src={step3}
                     className="feature-circle mb-20 mx-auto img-hover-bigger"
                     alt="步驟3-寄出福袋"
                   />
@@ -103,7 +103,7 @@ export default function MemberEvent3() {
               <div className="col d-flex flex-column">
                 <div className="fade-up-1">
                   <img
-                    src="/assets/images/member_activities/step_item_4.png"
+                    src={step4}
                     className="feature-circle mb-20 mx-auto img-hover-bigger"
                     alt="步驟4-收到驚喜"
                   />

@@ -1,4 +1,4 @@
-const HealthCard = ({ healthId, healthImg, healthCare }) => {
+const HealthCard = ({ healthId, healthImg, healthCare, checked, onChange }) => {
   return (
     <>
       <div className="card border-0 mb-8-sm">
@@ -8,6 +8,8 @@ const HealthCard = ({ healthId, healthImg, healthCare }) => {
           name="health"
           id={healthId}
           autoComplete="off"
+          checked={checked}
+          onChange={onChange}
         />
         <label
           className="btn btn-health d-flex-sm align-item-center-sm px-5 py-5 p-16-sm"

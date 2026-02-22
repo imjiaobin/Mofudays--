@@ -1,22 +1,71 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  getCarts,
+  deleteCart,
+  updateCartQty,
+  updateCartCycles,
+  getCurrentUserId,
+} from "../../../api/planApi";
 
 import "./Cart.scss";
 
 import ProgressBar2 from "../Subscribe/ProgressBar2";
-import CartCardWeb from "../Subscribe/CartCardWeb";
-import CartCardPhone from "../Subscribe/CartCardPhone";
+import CartCardWeb from "./CartCardWeb";
+import CartCardPhone from "./CartCardPhone";
+import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
+import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
 
 import productImg1 from "../../../assets/images/subscribe/product-img-01.png";
 import productImg2 from "../../../assets/images/subscribe/product-img-02.png";
 import productImg3 from "../../../assets/images/subscribe/product-img-03.png";
 
 function Cart() {
+  const [carts, setCarts] = useState([]);
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const navigate = useNavigate();
+
+  // 取得購物車資料
+  useEffect(() => {
+    const userId = getCurrentUserId();
+    getCarts(userId)
+      .then((data) => {
+        setCarts(data);
+        if (data.length > 0 && data[0].totalCycles) {
+          setSelectedPeriod(data[0].totalCycles);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  // 刪除
+  const handleDelete = async (cartId) => {
+    await deleteCart(cartId);
+    setCarts((prev) => prev.filter((c) => c.id !== cartId));
+  };
+
+  // 減少數量
+  const handleDecrease = async (cart) => {
+    if (cart.planQty <= 1) return;
+    const updated = await updateCartQty(cart.id, cart.planQty - 1);
+    setCarts((prev) => prev.map((c) => (c.id === cart.id ? updated : c)));
+  };
+
+  // 增加數量
+  const handleIncrease = async (cart) => {
+    const updated = await updateCartQty(cart.id, cart.planQty + 1);
+    setCarts((prev) => prev.map((c) => (c.id === cart.id ? updated : c)));
+  };
+
+  // 計算總計
+  const grandTotal = carts.reduce((sum, c) => sum + c.planPrice * c.planQty, 0);
+
   return (
     <>
       <main className="cart py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 />
+          <ProgressBar2 title="購物車" />
 
           {/* 訂閱內容卡片 */}
           <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">
@@ -36,60 +85,36 @@ function Cart() {
                 </div>
 
                 {/* 表格網頁版 */}
-                {/* 第一列 */}
-                <CartCardWeb
-                  productImg={productImg1}
-                  title="新手爸媽安心組"
-                  price="699"
-                  quantity="3"
-                  total="2,097"
-                />
-
-                {/* 第二列 */}
-                <CartCardWeb
-                  productImg={productImg2}
-                  title="青春汪能量補給包"
-                  price="699"
-                  quantity="2"
-                  total="1,398"
-                />
-
-                {/* 第三列 */}
-                <CartCardWeb
-                  productImg={productImg3}
-                  title="牛氣補補能量盒"
-                  price="699"
-                  quantity="1"
-                  total="699"
-                />
+                {carts.map((cart) => (
+                  <CartCardWeb
+                    key={cart.id}
+                    productImg={productImg1}
+                    title={cart.planName}
+                    price={cart.planPrice}
+                    content={cart.content}
+                    quantity={cart.planQty}
+                    total={cart.planPrice * cart.planQty}
+                    onDelete={() => handleDelete(cart.id)}
+                    onDecrease={() => handleDecrease(cart)}
+                    onIncrease={() => handleIncrease(cart)}
+                  />
+                ))}
 
                 {/* 表格手機版 */}
-                {/* 第一列 */}
-                <CartCardPhone
-                  productImg={productImg1}
-                  title="新手爸媽安心組"
-                  price="699"
-                  quantity="3"
-                  total="2,097"
-                />
-
-                {/* 第二列 */}
-                <CartCardPhone
-                  productImg={productImg2}
-                  title="青春汪能量補給包"
-                  price="699"
-                  quantity="2"
-                  total="1,398"
-                />
-
-                {/* 第三列 */}
-                <CartCardPhone
-                  productImg={productImg3}
-                  title="牛氣補補能量盒"
-                  price="699"
-                  quantity="1"
-                  total="699"
-                />
+                {carts.map((cart) => (
+                  <CartCardPhone
+                    key={cart.id}
+                    productImg={productImg1}
+                    title={cart.planName}
+                    price={cart.planPrice}
+                    content={cart.content}
+                    quantity={cart.planQty}
+                    total={cart.planPrice * cart.planQty}
+                    onDelete={() => handleDelete(cart.id)}
+                    onDecrease={() => handleDecrease(cart)}
+                    onIncrease={() => handleIncrease(cart)}
+                  />
+                ))}
               </div>
 
               {/* 選擇訂閱期數 */}
@@ -108,6 +133,8 @@ function Cart() {
                       name="subscription-period"
                       id="one-month"
                       autoComplete="off"
+                      checked={selectedPeriod === 1}
+                      onChange={() => setSelectedPeriod(1)}
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
@@ -124,6 +151,8 @@ function Cart() {
                       name="subscription-period"
                       id="three-month"
                       autoComplete="off"
+                      checked={selectedPeriod === 3}
+                      onChange={() => setSelectedPeriod(3)}
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
@@ -140,6 +169,8 @@ function Cart() {
                       name="subscription-period"
                       id="six-month"
                       autoComplete="off"
+                      checked={selectedPeriod === 6}
+                      onChange={() => setSelectedPeriod(6)}
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 mb-8-sm w-25 w-100-sm"
@@ -156,6 +187,8 @@ function Cart() {
                       name="subscription-period"
                       id="twelve-month"
                       autoComplete="off"
+                      checked={selectedPeriod === 12}
+                      onChange={() => setSelectedPeriod(12)}
                     />
                     <label
                       className="btn btn-primary btn-diet px-0 py-3 w-25 w-100-sm"
@@ -176,7 +209,10 @@ function Cart() {
                   style={{ height: "48px" }}
                 >
                   <p className="total-text fw-bold text-end">
-                    每月<span className="fs-24 fw-medium px-2">$4,194</span>
+                    每月
+                    <span className="fs-24 fw-medium px-2">
+                      ${grandTotal.toLocaleString()}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -187,7 +223,10 @@ function Cart() {
                   <div className="total-bg d-flex justify-content-between align-items-center px-5 py-4">
                     <h6 className="ls-5">訂單合計</h6>
                     <p className="total-text fw-bold fs-16-sm text-end">
-                      每月<span className="fs-24 fw-medium px-2">$4,194</span>
+                      每月
+                      <span className="fs-24 fw-medium px-2">
+                        ${grandTotal.toLocaleString()}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -195,48 +234,40 @@ function Cart() {
             </div>
 
             {/* 儲存按鈕手機版 */}
-            <div className="text-center d-none-min-sm px-5-5-sm">
-              <div className="row">
-                <div className="col-6-sm">
-                  <Link
-                    className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    to="/pet-info"
-                    role="button"
-                  >
-                    繼續訂閱
-                  </Link>
-                </div>
-                <div className="col-6-sm">
-                  <Link
-                    className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    to="/checkout"
-                    role="button"
-                  >
-                    確認結帳
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ActiveButtonPhone
+              active1="繼續訂閱"
+              active2="確認結帳"
+              onBack={() => navigate(-1)}
+              onSubmit={async () => {
+                if (!selectedPeriod) {
+                  alert("請選擇訂閱期數");
+                  return;
+                }
+                await Promise.all(
+                  carts.map((c) => updateCartCycles(c.id, selectedPeriod)),
+                );
+                navigate("/checkout");
+              }}
+            />
           </div>
         </div>
 
         {/* 儲存按鈕網頁版 */}
-        <div className="text-center d-none-sm">
-          <Link
-            className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
-            to="/pet-info"
-            role="button"
-          >
-            繼續訂閱
-          </Link>
-          <Link
-            className="btn btn-primary rounded-pill btn-active fs-18-sm fw-medium-sm ls-10-sm px-40"
-            to="/checkout"
-            role="button"
-          >
-            確認結帳
-          </Link>
-        </div>
+        <ActiveButtonWeb
+          active1="繼續訂閱"
+          active2="確認結帳"
+          onBack={() => navigate(-1)}
+          onSubmit={async () => {
+            if (!selectedPeriod) {
+              alert("請選擇訂閱期數");
+              return;
+            }
+            await Promise.all(
+              carts.map((c) => updateCartCycles(c.id, selectedPeriod)),
+            );
+            navigate("/checkout");
+          }}
+        />
       </main>
     </>
   );

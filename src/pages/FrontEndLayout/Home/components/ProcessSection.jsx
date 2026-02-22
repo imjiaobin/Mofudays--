@@ -23,28 +23,43 @@ import box01 from "../../../../assets/images/index/box_01.png";
 import box02 from "../../../../assets/images/index/box_02.png";
 import box03 from "../../../../assets/images/index/box_03.png";
 
+import { checkLoginStatus } from "../../../../api/userApi";
+
 const ProcessSection = () => {
   const navigate = useNavigate();
 
-  // --- 1. 動態訂閱流程邏輯 ---
-  const handleSubscribe = (e) => {
-    e.preventDefault();
+  // 處理「立即訂閱」的點擊事件(cookie版)
+  // const handleSubscribe = (e) => {
+  //   e.preventDefault();
 
-    // 取得 document.cookie 中的 mofuToken
-    const getCookie = (name) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(";").shift();
-    };
+  //   // 取得 document.cookie 中的 mofuToken
+  //   const getCookie = (name) => {
+  //     const value = `; ${document.cookie}`;
+  //     const parts = value.split(`; ${name}=`);
+  //     if (parts.length === 2) return parts.pop().split(";").shift();
+  //   };
 
-    const mofuToken = getCookie("mofuToken");
+  //   const mofuToken = getCookie("mofuToken");
 
-    if (mofuToken) {
-      // 有 Token：跳轉到 PetInfo
-      navigate("/pet-info");
+  //   if (mofuToken) {
+  //     // 有 Token：跳轉到 PetInfo
+  //     navigate("/pet-info");
+  //   } else {
+  //     // 無 Token：提示並跳轉到 Signup
+  //     alert("請先註冊並登入會員，即可開始為毛孩訂閱專屬驚喜盒！");
+  //     navigate("/signup");
+  //   }
+  // };
+
+  // 處理「立即訂閱」的點擊事件
+  const handleSubscribeClick = () => {
+    const isAuthed = checkLoginStatus();
+
+    if (isAuthed) {
+      // 已登入：跳轉至寵物資訊頁 (依據你的需求)
+      navigate("/petinfo");
     } else {
-      // 無 Token：提示並跳轉到 Signup
-      alert("請先註冊並登入會員，即可開始為毛孩訂閱專屬驚喜盒！");
+      // 未登入：跳轉至註冊頁
       navigate("/signup");
     }
   };
@@ -196,7 +211,7 @@ const ProcessSection = () => {
         <button
           type="button"
           className="btn rounded-pill btn-primary btn-subscribe px-160 d-flex mx-auto"
-          onClick={handleSubscribe}
+          onClick={handleSubscribeClick}
         >
           立即訂閱
         </button>

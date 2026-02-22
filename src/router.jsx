@@ -4,6 +4,7 @@ import { createHashRouter, Navigate } from "react-router-dom";
 import FrontLayout from "./layout/FrontEndLayout";
 import AuthLayout from "./layout/AuthLayout";
 import AdminLayout from "./layout/AdminLayout";
+
 // FrontLayout
 import Home from "./pages/FrontEndLayout/Home/Home";
 import FAQ from "./pages/FrontEndLayout/FAQ/FAQ";
@@ -13,9 +14,9 @@ import Plan from "./pages/FrontEndLayout/Plan/Plan";
 import Cart from "./pages/FrontEndLayout/Cart/Cart";
 import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
 import Finish from "./pages/FrontEndLayout/Finish/Finish";
-import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
 
 //usercenter
+import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
 import UserProfile from "./pages/FrontEndLayout/UserCenter/UserProfile";
 import OrderLists from "./pages/FrontEndLayout/UserCenter/OrderLists";
 import MemberExclusives from "./pages/FrontEndLayout/UserCenter/MemberExclusive";
@@ -34,26 +35,57 @@ import AdminDashboard from "./pages/BackEndLayout/Dashboard/Dashboard";
 // 404
 import NotFound from "./layout/NotFound";
 
+//API測試頁
+import TestAuthPage from "./pages/Test/TestAuthPage";
+
 // auth hooks
 import { useAuth } from "./features/auth/hooks";
 
-// 前台會員權限：沒登入 => 去 /login
+// 前台會員權限守衛
 function RequireAuth({ children }) {
-  const { isAuthed } = useAuth();
+  const { isAuthed, isLoading } = useAuth();
 
-  // 如果沒登入，強制跳轉到登入頁，並記錄原本想去的頁面 (replace: true)
+  // 1. 處理讀取中狀態：避免 API 還沒回傳時就執行 Navigate
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+      >
+        載入中...
+      </div>
+    );
+  }
+
+  // 2. 判斷是否登入：isAuthed 是基於 token 是否存在
   return isAuthed ? children : <Navigate to="/login" replace />;
 }
 
-/** 後台管理員權限：沒登入或不是 admin -> 去 /admin/login */
+//後台管理員權限守衛
 function RequireAdmin({ children }) {
-  const { isAuthed, user } = useAuth();
-  const isAdmin = Boolean(user?.role === "admin");
-  return isAuthed && isAdmin ? (
-    children
-  ) : (
-    <Navigate to="/admin/login" replace />
-  );
+  const { isAuthed, user, isLoading } = useAuth();
+
+  // 1. 處理讀取中狀態
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+      >
+        權限驗證中...
+      </div>
+    );
+  }
+
+  // 2. 權限判斷：user 是從 getUserProfile 回傳的，找不到會是 null
+  const isAdmin = user?.role === "admin";
+
+  // 如果已登入且是管理員，准許進入
+  if (isAuthed && isAdmin) {
+    return children;
+  }
+
+  // 3. 權限不符：跳轉回後台專用的登入路徑 /admin/login
+  // 這樣能保持 mode="admin" 的一致性
+  return <Navigate to="/login" replace />;
 }
 
 export const router = createHashRouter([
@@ -65,12 +97,30 @@ export const router = createHashRouter([
       { index: true, element: <Home /> },
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
+      // { path: "blog/:postId", element: <BlogPost /> },
       { path: "petinfo", element: <PetInfo /> },
       { path: "plan", element: <Plan /> },
       { path: "cart", element: <Cart /> },
       { path: "checkout", element: <Checkout /> },
       { path: "finish", element: <Finish /> },
-      // { path: "blog/:postId", element: <BlogPost /> },
+
+      //暫時移除權限方便測試
+      // {
+      //   path: "petinfo",
+      //   element: (
+      //     <RequireAuth>
+      //       <PetInfo />
+      //     </RequireAuth>
+      //   ),
+      // },
+      // {
+      //   path: "plan",
+      //   element: (
+      //     <RequireAuth>
+      //       <Plan />
+      //     </RequireAuth>
+      //   ),
+      // },
       // {
       //   path: "cart",
       //   element: (
@@ -99,11 +149,13 @@ export const router = createHashRouter([
       // 會員中心
       {
         path: "usercenter",
-        element: (
-          <RequireAuth>
-            <UserCenter />
-          </RequireAuth>
-        ),
+        //會員中心暫時拿掉權限
+        // element: (
+        //   <RequireAuth>
+        //     <UserCenter />
+        //   </RequireAuth>
+        // ),
+        element: <UserCenter />,
         children: [
           // 預設進入會員中心時導向「會員資料」
           { index: true, element: <Navigate to="profile" replace /> },
@@ -139,17 +191,25 @@ export const router = createHashRouter([
   // 後台（AdminLayout + RequireAdmin）
   {
     path: "/admin",
-    element: (
-      <RequireAdmin>
-        <AdminLayout />
-      </RequireAdmin>
-    ),
+    //後台暫時拿掉權限
+    // element: (
+    //   <RequireAdmin>
+    //     <AdminLayout />
+    //   </RequireAdmin>
+    // ),
+    element: <AdminLayout />,
     children: [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: "dashboard", element: <AdminDashboard /> },
       // { path: "products", element: <AdminProducts /> },
       // { path: "orders", element: <AdminOrders /> },
     ],
+  },
+
+  //API測試頁
+  {
+    path: "/test",
+    element: <TestAuthPage />,
   },
 
   // 404

@@ -1,4 +1,12 @@
-const PlanCard = ({ id, title, price, text, selectedPlan, onSelect }) => {
+const PlanCard = ({
+  id,
+  title,
+  price,
+  text,
+  content,
+  selectedPlan,
+  onSelect,
+}) => {
   const isSelected = selectedPlan === id;
   return (
     <div
@@ -36,15 +44,19 @@ const PlanCard = ({ id, title, price, text, selectedPlan, onSelect }) => {
             </div>
             <div className="d-flex justify-content-between mb-2">
               <p className="text-brown-300">零食</p>
-              <div className="number-box fw-medium">x3</div>
+              <div className="number-box fw-medium">
+                x{content?.treats ?? 0}
+              </div>
             </div>
             <div className="d-flex justify-content-between mb-2">
               <p className="text-brown-300">保健罐頭</p>
-              <div className="number-box fw-medium">x2</div>
+              <div className="number-box fw-medium">
+                x{content?.household ?? 0}
+              </div>
             </div>
             <div className="d-flex justify-content-between">
               <p className="text-brown-300">互動小玩具</p>
-              <div className="number-box fw-medium">x2</div>
+              <div className="number-box fw-medium">x{content?.toys ?? 0}</div>
             </div>
           </>
         )}

@@ -1,4 +1,14 @@
-const CartCardWeb = ({ productImg, title, price, quantity, total }) => {
+const CartCardWeb = ({
+  productImg,
+  title,
+  price,
+  quantity,
+  total,
+  content,
+  onDelete,
+  onDecrease,
+  onIncrease,
+}) => {
   return (
     <>
       <div className="table-container-bg d-flex py-4 mb-2 d-none-sm">
@@ -11,9 +21,15 @@ const CartCardWeb = ({ productImg, title, price, quantity, total }) => {
           />
           <div>
             <p className="table-title fw-bold mb-4">{title}</p>
-            <p className="table-text fw-normal mb-1">零食 x 3</p>
-            <p className="table-text fw-normal mb-1">保健罐頭 x 2</p>
-            <p className="table-text fw-normal mb-1">互動小物 x 2</p>
+            <p className="table-text fw-normal mb-1">
+              零食 x {content?.snacks?.length ?? 0}
+            </p>
+            <p className="table-text fw-normal mb-1">
+              保健罐頭 x {content?.household?.length ?? 0}
+            </p>
+            <p className="table-text fw-normal mb-1">
+              互動小物 x {content?.toys?.length ?? 0}
+            </p>
           </div>
         </div>
 
@@ -25,7 +41,11 @@ const CartCardWeb = ({ productImg, title, price, quantity, total }) => {
         {/* 數量 */}
         <div className="col-table-2 d-flex align-items-center">
           <div className="input-group px-4" style={{ height: "48px" }}>
-            <button className="btn btn-quantity px-4 py-3" type="button">
+            <button
+              className="btn btn-quantity px-4 py-3"
+              type="button"
+              onClick={onDecrease}
+            >
               －
             </button>
             <input
@@ -36,7 +56,11 @@ const CartCardWeb = ({ productImg, title, price, quantity, total }) => {
               tabIndex="-1"
               aria-label="Example text with two button addons"
             />
-            <button className="btn btn-quantity px-4 py-3" type="button">
+            <button
+              className="btn btn-quantity px-4 py-3"
+              type="button"
+              onClick={onIncrease}
+            >
               ＋
             </button>
           </div>
@@ -47,12 +71,13 @@ const CartCardWeb = ({ productImg, title, price, quantity, total }) => {
           ${total}
         </div>
 
-        {/* 關閉 */}
+        {/* 刪除 */}
         <div className="col-table-1 d-flex justify-content-center align-items-center">
           <button
             type="button"
             className="btn-close"
             aria-label="Close"
+            onClick={onDelete}
           ></button>
         </div>
       </div>

@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  createDog,
+  getCurrentUserId,
+  getDogsByOwnerId,
+} from "../../../api/planApi";
+import axios from "axios";
+import { generatePlans } from "../../../generatePlans";
 
 import "./PetInfo.scss";
 
 import ProgressBar1 from "../Subscribe/ProgressBar1";
-import DietButton from "../Subscribe/DietButton";
-import HealthCard from "../Subscribe/HealthCard";
-import PlayCard from "../Subscribe/PlayCard";
+import DietButton from "./DietButton";
+import HealthCard from "./HealthCard";
+import PlayCard from "../PetInfo/PlayCard";
 
 import healthImg1 from "../../../assets/images/subscribe/image_btn_01.png";
 import healthImg2 from "../../../assets/images/subscribe/image_btn_02.png";
@@ -17,12 +24,49 @@ import playImg3 from "../../../assets/images/subscribe/image_btn_06.png";
 import dogIllustration from "../../../assets/images/subscribe/Illustration-dog.png";
 import feedIllustration from "../../../assets/images/subscribe/Illustration-feed.png";
 
+const YEAR_TO_DIET_STAGE = {
+  "幼犬 ( 出生 ～ 1 歲左右 )": "PUPPY",
+  "1 ～ 3 歲": "ADULT",
+  "4 ～ 6 歲": "ADULT",
+  "7 歲以上": "SENIOR",
+};
+const SIZE_TO_CODE = {
+  "小型犬（ ex. 博美、貴賓、吉娃娃 ）": "S",
+  "中型犬（ ex. 柴犬、柯基犬、台灣犬 ）": "M",
+  "大型犬（ ex. 黃金獵犬、哈士奇、拉布拉多 ）": "L",
+};
+const DIET_TO_ALLERGY = {
+  drumstick: "CHICKEN",
+  beef: "BEEF",
+  ham: "PORK",
+  sheep: "LAMB",
+  fish: "FISH",
+  wheat: "WHEAT",
+  milk: "DAIRY",
+  egg: "EGG",
+  x: "NONE",
+};
+const HEALTH_TO_CODE = {
+  joint: "JOINT",
+  digestion: "DIGEST",
+  skin: "SKIN",
+};
+const PLAY_TO_CODE = {
+  brainpower: "IQ",
+  bite: "BITE",
+  walk: "WALK",
+};
+
 function PetInfo() {
   const [petName, setPetName] = useState("");
   const [petGender, setPetGender] = useState("");
   const [selectedYear, setSelectedYear] = useState("選擇年齡");
   const [selectedSize, setSelectedSize] = useState("選擇體型");
   const [selectedDiets, setSelectedDiets] = useState([]);
+  const [selectedHealth, setSelectedHealth] = useState(null);
+  const [selectedPlay, setSelectedPlay] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmedExistingDog, setConfirmedExistingDog] = useState(null);
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const navigate = useNavigate();
@@ -35,6 +79,57 @@ function PetInfo() {
     petGender: false,
     petDiet: false,
   });
+
+  // 逆向對照表
+  const CODE_TO_SIZE = {
+    S: "小型犬（ ex. 博美、貴賓、吉娃娃 ）",
+    M: "中型犬（ ex. 柴犬、柯基犬、台灣犬 ）",
+    L: "大型犬（ ex. 黃金獵犬、哈士奇、拉布拉多 ）",
+  };
+  const CODE_TO_ALLERGY = {
+    CHICKEN: "drumstick",
+    BEEF: "beef",
+    PORK: "ham",
+    LAMB: "sheep",
+    FISH: "fish",
+    WHEAT: "wheat",
+    DAIRY: "milk",
+    EGG: "egg",
+  };
+  const CODE_TO_HEALTH = { JOINT: "joint", DIGEST: "digestion", SKIN: "skin" };
+  const CODE_TO_PLAY = { IQ: "brainpower", BITE: "bite", WALK: "walk" };
+  const prefillFromDog = (dog) => {
+    setPetGender(dog.gender === "M" ? "male" : "female");
+    setSelectedSize(CODE_TO_SIZE[dog.size] ?? "選擇體型");
+    setSelectedYear(dog.ageLabel ?? "選擇年齡");
+    setSelectedDiets(
+      dog.allergies.length === 0
+        ? ["x"]
+        : dog.allergies.map((a) => CODE_TO_ALLERGY[a]).filter(Boolean),
+    );
+    setSelectedHealth(CODE_TO_HEALTH[dog.healthCareNeeds?.[0]] ?? null);
+    setSelectedPlay(CODE_TO_PLAY[dog.activityTypes?.[0]] ?? null);
+  };
+
+  // 寵物名稱驗證優化
+  const handlePetNameBlur = async () => {
+    if (!petName.trim()) return;
+
+    const existingDogs = await getDogsByOwnerId(getCurrentUserId());
+    const matched = existingDogs.find(
+      (d) => d.name === petName.trim() && d.isActive,
+    );
+
+    if (matched) {
+      const wantImport = window.confirm(
+        `找到名為「${petName}」的毛孩資料，要帶入先前的設定嗎？`,
+      );
+      if (wantImport) {
+        prefillFromDog(matched);
+        setConfirmedExistingDog(matched);
+      }
+    }
+  };
 
   // 食材選取欄位驗證
   const handleDietChange = (id) => {
@@ -49,7 +144,8 @@ function PetInfo() {
     });
     clearError("petDiet");
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {
@@ -61,7 +157,73 @@ function PetInfo() {
     };
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
-    navigate("/plan");
+
+    // 轉換成 API 代碼
+    const sizeCode = SIZE_TO_CODE[selectedSize];
+    const dietStageCode = YEAR_TO_DIET_STAGE[selectedYear];
+    const genderCode = petGender === "male" ? "M" : "F";
+    const allergyArray = selectedDiets.map((d) => DIET_TO_ALLERGY[d]);
+    const healthCareArray = selectedHealth
+      ? [HEALTH_TO_CODE[selectedHealth]]
+      : [];
+    const playStyleArray = selectedPlay ? [PLAY_TO_CODE[selectedPlay]] : [];
+
+    // 給 Plan 頁面 generatePlans 用的 formData
+    const formData = {
+      petName: petName.trim(),
+      gender: genderCode,
+      size: sizeCode,
+      dietStage: dietStageCode,
+      allergy: allergyArray,
+      healthCare: healthCareArray,
+      playStyle: playStyleArray,
+    };
+
+    // POST 給後端 /dogs 的資料
+    const dogPayload = {
+      name: petName.trim(),
+      ownerId: getCurrentUserId(),
+      gender: genderCode,
+      size: sizeCode,
+      ageLabel: selectedYear,
+      dietStage: dietStageCode,
+      activityTypes: playStyleArray,
+      allergies: allergyArray.filter((a) => a !== "NONE"),
+      healthCareNeeds: healthCareArray,
+      isActive: true,
+    };
+    let generatedPlans;
+    try {
+      setIsSubmitting(true);
+
+      // 取得 db 資料
+      const API_BASE = "http://localhost:3000";
+      const [plans, toys, treats, household] = await Promise.all([
+        axios.get(`${API_BASE}/plans`),
+        axios.get(`${API_BASE}/toys`),
+        axios.get(`${API_BASE}/treats`),
+        axios.get(`${API_BASE}/household`),
+      ]);
+      const db = {
+        plans: plans.data,
+        toys: toys.data,
+        treats: treats.data,
+        household: household.data,
+      };
+
+      //產生推薦方案
+      generatedPlans = generatePlans(formData, db);
+
+      const dogId = confirmedExistingDog
+        ? confirmedExistingDog.id
+        : (await createDog(dogPayload)).id;
+      navigate("/plan", {
+        state: { formData, dogId, generatedPlans },
+      });
+    } catch (err) {
+      console.error("建立毛孩失敗", err);
+      alert("發生錯誤，請稍後再試");
+    }
   };
   const clearError = (field) => {
     setErrors((prev) => ({ ...prev, [field]: false }));
@@ -110,7 +272,9 @@ function PetInfo() {
                       onChange={(e) => {
                         setPetName(e.target.value);
                         clearError("petName");
+                        setConfirmedExistingDog(null);
                       }}
+                      onBlur={handlePetNameBlur}
                     />
                     {errors.petName && (
                       <p className="text-danger mt-2 small">
@@ -562,6 +726,8 @@ function PetInfo() {
                         healthId="joint"
                         healthImg={healthImg1}
                         healthCare="關節保健"
+                        checked={selectedHealth === "joint"}
+                        onChange={() => setSelectedHealth("joint")}
                       />
 
                       {/* 消化幫助 */}
@@ -569,6 +735,8 @@ function PetInfo() {
                         healthId="digestion"
                         healthImg={healthImg2}
                         healthCare="消化幫助"
+                        checked={selectedHealth === "digestion"}
+                        onChange={() => setSelectedHealth("digestion")}
                       />
 
                       {/* 美毛/皮膚問題 */}
@@ -576,6 +744,8 @@ function PetInfo() {
                         healthId="skin"
                         healthImg={healthImg3}
                         healthCare="美毛/皮膚問題"
+                        checked={selectedHealth === "skin"}
+                        onChange={() => setSelectedHealth("skin")}
                       />
                     </div>
                   </div>
@@ -597,18 +767,24 @@ function PetInfo() {
                         playId="brainpower"
                         playImg={playImg1}
                         interaction="喜歡腦力激盪"
+                        checked={selectedPlay === "brainpower"}
+                        onChange={() => setSelectedPlay("brainpower")}
                       />
 
                       <PlayCard
                         playId="bite"
                         playImg={playImg2}
                         interaction="愛玩愛咬"
+                        checked={selectedPlay === "bite"}
+                        onChange={() => setSelectedPlay("bite")}
                       />
 
                       <PlayCard
                         playId="walk"
                         playImg={playImg3}
                         interaction="愛出門走走"
+                        checked={selectedPlay === "walk"}
+                        onChange={() => setSelectedPlay("walk")}
                       />
                     </div>
                   </div>
@@ -636,8 +812,9 @@ function PetInfo() {
                 role="button"
                 type="submit"
                 onClick={handleSubmit}
-              ></button>
-              儲存並繼續
+              >
+                儲存並繼續
+              </button>
             </div>
           </div>
 

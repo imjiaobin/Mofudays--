@@ -1,7 +1,7 @@
 // scss載入
 import "./memberEvent.scss";
 import commBanner from "../../../assets/images/member/theme_event_2.png";
-// import speakerAvatar from "../../../assets/images/memberEvent/pet_communicator.png";
+import speakerAvatar from "../../../assets/images/memberEvent/pet_communicator.png";
 
 export default function MemberEvent2() {
   return (
@@ -54,7 +54,7 @@ export default function MemberEvent2() {
               <div className="row g-4 align-items-center auto-show-1">
                 <div className="col-12 col-md-5 text-center">
                   <img
-                    src="/assets/images/member_activities/pet_communicator.png"
+                    src={speakerAvatar}
                     alt="講師頭像"
                     className="speaker-avatar"
                   />

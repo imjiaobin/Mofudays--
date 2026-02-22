@@ -1,4 +1,4 @@
-const PlayCard = ({ playId, playImg, interaction }) => {
+const PlayCard = ({ playId, playImg, interaction, checked, onChange }) => {
   return (
     <div className="card border-0 mb-8-sm">
       <input
@@ -7,6 +7,8 @@ const PlayCard = ({ playId, playImg, interaction }) => {
         name="play"
         id={playId}
         autoComplete="off"
+        checked={checked}
+        onChange={onChange}
       />
       <label
         className="btn btn-health d-flex-sm align-item-center-sm px-5 py-5 p-16-sm"

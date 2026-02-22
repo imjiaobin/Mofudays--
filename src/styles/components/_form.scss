@@ -18,3 +18,12 @@ select:focus {
 .form-control {
   padding: 12px 24px; // 0912 vivian 新增
 }
+
+.form-control:not(:placeholder-shown) {
+  color: $brown-500;
+}
+
+.form-select-filled {
+  background-color: $primary-100 !important;
+  color: $brown-500 !important;
+}

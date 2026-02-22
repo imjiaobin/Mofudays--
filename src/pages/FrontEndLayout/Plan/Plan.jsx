@@ -1,61 +1,89 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  addToCart,
+  getCarts,
+  updateCart,
+  getCurrentUserId,
+} from "../../../api/planApi";
 
 import "./Plan.scss";
 import ProgressBar1 from "../Subscribe/ProgressBar1.jsx";
-import PlanCard from "../Subscribe/PlanCard.jsx";
+import PlanCard from "./PlanCard.jsx";
+import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
+import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
 
 import planImg from "../../../assets/images/subscribe/plan-img.png";
 
-const ActiveButtonPhone = () => {
-  return (
-    <div className="text-center d-none-min-sm px-5-5-sm">
-      <div className="row">
-        <div className="col-6-sm">
-          <Link
-            className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-            to="/pet-info"
-            role="button"
-          >
-            回上一頁
-          </Link>
-        </div>
-        <div className="col-6-sm">
-          <Link
-            className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-            to="/cart"
-            role="button"
-          >
-            儲存並繼續
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-const ActiveButtonWeb = () => {
-  return (
-    <div className="text-center d-none-sm">
-      <Link
-        className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
-        to="/pet-info"
-        role="button"
-      >
-        回上一頁
-      </Link>
-      <Link
-        className="btn btn-primary rounded-pill btn-active fs-18-sm fw-medium-sm ls-10-sm px-40"
-        to="/cart"
-        role="button"
-      >
-        儲存並繼續
-      </Link>
-    </div>
-  );
-};
-
 function Plan() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const formData = state?.formData;
+  const dogId = state?.dogId;
+  const dogPayload = state?.dogPayload;
+  const generatedPlans = state?.generatedPlans;
   const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const handleBack = () => navigate(-1);
+
+  const handleSubmitPlan = async () => {
+    if (!selectedPlan) {
+      alert("請先選擇一個方案");
+      return;
+    }
+
+    const planIndex = { plan1: 0, plan2: 1, plan3: 2 }[selectedPlan];
+    const plan = generatedPlans[planIndex];
+    const userId = getCurrentUserId(); // 未來換 auth 只改這一行
+
+    const cartPayload = {
+      userId,
+      dogId: dogId ?? null,
+      planName: plan.name,
+      planPrice: plan.planPrice,
+      planQty: 1,
+      totalCycles: plan.months,
+      pet: {
+        name: formData?.petName,
+        gender: formData?.gender,
+        size: formData?.size,
+        allergy:
+          formData?.allergy?.filter((a) => a !== "NONE").join("、") || "無",
+      },
+      status: "pending",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      content: {
+        snacks: (plan.items?.treats ?? []).map((t) => ({
+          treatId: t.id,
+          qty: 1,
+        })),
+        toys: (plan.items?.toys ?? []).map((t) => ({ toyId: t.id, qty: 1 })),
+        household: (plan.items?.household ?? []).map((h) => ({
+          itemId: h.id,
+          qty: 1,
+        })),
+      },
+    };
+
+    try {
+      const existingCarts = await getCarts(userId);
+      const existingCart = existingCarts.find(
+        (c) => c.userId === userId && c.dogId === (dogId ?? null),
+      );
+
+      if (existingCart) {
+        await updateCart(existingCart.id, cartPayload);
+      } else {
+        await addToCart(cartPayload);
+      }
+      navigate("/cart");
+    } catch (err) {
+      console.error("加入購物車失敗", err);
+    }
+  };
+
   return (
     <>
       <main className="plan py-11 pt-80-sm pb-0-sm">
@@ -96,27 +124,45 @@ function Plan() {
                   {/* 方案一 */}
                   <PlanCard
                     id="plan1"
-                    title="新手爸媽安心組"
-                    price="699"
-                    text="給第一次養毛孩的你，一份剛剛好的照顧"
+                    title={generatedPlans?.[0]?.name}
+                    price={generatedPlans?.[0]?.planPrice}
+                    text={generatedPlans?.[0]?.subtitle}
+                    content={{
+                      treats: generatedPlans?.[0]?.items?.treats?.length ?? 0,
+                      toys: generatedPlans?.[0]?.items?.toys?.length ?? 0,
+                      household:
+                        generatedPlans?.[0]?.items?.household?.length ?? 0,
+                    }}
                     selectedPlan={selectedPlan}
                     onSelect={setSelectedPlan}
                   ></PlanCard>
                   {/* 方案二 */}
                   <PlanCard
                     id="plan2"
-                    title="活力成長探索組"
-                    price="899"
-                    text="給每天都充滿活力、喜歡探索世界的孩子"
+                    title={generatedPlans?.[1]?.name}
+                    price={generatedPlans?.[1]?.planPrice}
+                    text={generatedPlans?.[1]?.subtitle}
+                    content={{
+                      treats: generatedPlans?.[1]?.items?.treats?.length ?? 0,
+                      toys: generatedPlans?.[1]?.items?.toys?.length ?? 0,
+                      household:
+                        generatedPlans?.[1]?.items?.household?.length ?? 0,
+                    }}
                     selectedPlan={selectedPlan}
                     onSelect={setSelectedPlan}
                   ></PlanCard>
                   {/* 方案三 */}
                   <PlanCard
                     id="plan3"
-                    title="豪華寵愛禮物組"
-                    price="1,299"
-                    text="每月為毛孩送上一份滿滿儀式感的大禮"
+                    title={generatedPlans?.[2]?.name}
+                    price={generatedPlans?.[2]?.planPrice}
+                    text={generatedPlans?.[2]?.subtitle}
+                    content={{
+                      treats: generatedPlans?.[2]?.items?.treats?.length ?? 0,
+                      toys: generatedPlans?.[2]?.items?.toys?.length ?? 0,
+                      household:
+                        generatedPlans?.[2]?.items?.household?.length ?? 0,
+                    }}
                     selectedPlan={selectedPlan}
                     onSelect={setSelectedPlan}
                   ></PlanCard>
@@ -125,15 +171,24 @@ function Plan() {
             </div>
 
             {/* 儲存按鈕手機版 */}
-            <ActiveButtonPhone />
+            <ActiveButtonPhone
+              active1="回上一頁"
+              active2="加入購物車"
+              onBack={() => navigate(-1)}
+              onSubmit={handleSubmitPlan}
+            />
           </div>
 
           {/* 儲存按鈕網頁版 */}
-          <ActiveButtonWeb />
+          <ActiveButtonWeb
+            active1="回上一頁"
+            active2="加入購物車"
+            onBack={handleBack}
+            onSubmit={handleSubmitPlan}
+          />
         </div>
       </main>
     </>
   );
 }
-
 export default Plan;
