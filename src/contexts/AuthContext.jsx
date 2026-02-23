@@ -1,37 +1,104 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { getUserProfile } from "../api/userApi"; // 路徑依你的專案調整
 
+const API_BASE_URL = "http://localhost:3000";
 const AuthContext = createContext(null);
 
+function getStorage(key) {
+  return localStorage.getItem(key) || sessionStorage.getItem(key) || null;
+}
+
+function clearStorage(...keys) {
+  keys.forEach((key) => {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  });
+}
+
 export const AuthProvider = ({ children }) => {
-  const [isAuthed, setIsAuthed] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState(() => getStorage("token"));
 
-  // 初始化：檢查本地是否有 token
+  // 每次 token 變動時，呼叫 API 驗證身分並還原 user
   useEffect(() => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (token) {
-      setIsAuthed(true);
-      // 這裡可以選擇透過 API 獲取最新的使用者資料
-    }
-  }, []);
+    const initAuth = async () => {
+      const currentToken = getStorage("token");
 
-  const login = (userData, token, rememberMe) => {
+      if (!currentToken) {
+        setUser(null);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const userData = await getUserProfile();
+        if (userData) {
+          setUser(userData);
+        } else {
+          clearStorage("token", "userId", "userName", "userRole");
+          setToken(null);
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Auth 驗證發生錯誤:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initAuth();
+  }, [token]);
+
+  const login = (userData, accessToken, rememberMe) => {
     const storage = rememberMe ? localStorage : sessionStorage;
-    storage.setItem("token", token);
-    setIsAuthed(true);
+
+    storage.setItem("token", accessToken);
+    storage.setItem("userId", String(userData.id));
+    storage.setItem("userName", userData.name || "");
+    storage.setItem("userRole", userData.role || "user");
+
+    setToken(accessToken); // 觸發 useEffect 重新驗證
     setUser(userData);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
-    setIsAuthed(false);
+  const logout = async () => {
+    const userId = getStorage("userId");
+    const currentToken = getStorage("token");
+
+    if (userId && currentToken) {
+      try {
+        await axios.patch(
+          `${API_BASE_URL}/users/${userId}`,
+          {
+            isLoggedIn: false,
+            updatedAt: new Date().toISOString(),
+          },
+          { headers: { Authorization: `Bearer ${currentToken}` } },
+        );
+      } catch (err) {
+        console.error("登出狀態同步失敗：", err);
+      }
+    }
+
+    clearStorage("token", "userId", "userName", "userRole");
+    setToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthed, user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isAuthed: !!token && (isLoading || !!user), // 與 hooks.js 相同邏輯
+        user,
+        isLoading,
+        token,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

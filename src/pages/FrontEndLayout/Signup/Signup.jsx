@@ -1,11 +1,9 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../../../app/layouts/components/Header/Header";
-import Footer from "../../../app/layouts/components/Footer/Footer";
 
 //圖片載入
 import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
@@ -23,7 +21,7 @@ export default function Signup() {
   const {
     register,
     handleSubmit,
-    watch, // 用於監控密碼欄位以進行比對
+    getValues,
     setError,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -38,9 +36,6 @@ export default function Signup() {
       address: "",
     },
   });
-
-  // 監控密碼欄位數值，供「確認密碼」比對使用
-  const passwordValue = watch("password");
 
   // 輪播初始化
   useEffect(() => {
@@ -57,19 +52,27 @@ export default function Signup() {
 
   const onSubmit = async (data) => {
     try {
-      const { passwordConfirm, ...registerData } = data;
+      const { passwordConfirm: _passwordConfirm, ...formFields } = data;
 
-      // 定義 res 變數
+      const now = new Date().toISOString();
+
+      const registerData = {
+        ...formFields, // name, nickname, birthday, phone, email, password, address
+        role: "user", // 預設角色
+        createdAt: now, // 註冊時間
+        updatedAt: now, // 初始與 createdAt 相同
+        deletedAt: null, // 尚未刪除
+        isLoggedIn: false, // 剛註冊尚未登入
+        isActive: true, // 帳號啟用
+      };
+
       const res = await axios.post(`${API_BASE_URL}/register`, registerData);
 
       console.log("註冊成功回傳資料：", res.data);
-
       alert("註冊成功！");
       navigate("/login");
     } catch (err) {
-      // 區分錯誤類型，方便除錯
       if (err.response) {
-        // 這是 API 回傳的錯誤 (e.g. 400, 409, 500)
         console.error("API 錯誤詳情：", err.response.data);
         const status = err.response.status;
         const errorMsg = err.response.data;
@@ -382,7 +385,8 @@ export default function Signup() {
                           {...register("passwordConfirm", {
                             required: "請再次輸入密碼",
                             validate: (value) =>
-                              value === passwordValue || "兩次密碼輸入不一致",
+                              value === getValues("password") ||
+                              "兩次密碼輸入不一致",
                           })}
                         />
                         <div className="invalid-feedback">

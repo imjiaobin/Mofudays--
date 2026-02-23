@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AnnouncementCarousel from "./components/AnnouncementCarousel";
 import AnnouncementButton from "./components/AnnouncementButton";
-import { checkLoginStatus } from "../../../../api/userApi";
+import { useAuth } from "../../../../contexts/AuthContext";
 import "./Announcement.scss";
 
 const Announcement = () => {
@@ -12,17 +12,9 @@ const Announcement = () => {
     "訂閱禮盒，每月驚喜送到家",
   ];
 
+  const { isAuthed } = useAuth();
   //公告欄關閉功能狀態
   const [isVisible, setIsVisible] = useState(true);
-
-  //串接會員狀態
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // 初始化時檢查一次登入狀態
-    const status = checkLoginStatus();
-    setIsLoggedIn(status);
-  }, []); // 陣列為空代表只在組件載入時執行一次
 
   if (!isVisible) return null;
 
@@ -38,7 +30,7 @@ const Announcement = () => {
           <div className="col-1"></div>
 
           <div className="col-2 text-center">
-            <AnnouncementButton isLoggedIn={isLoggedIn} />
+            <AnnouncementButton isLoggedIn={isAuthed} />
           </div>
 
           <div className="col-2 text-end">

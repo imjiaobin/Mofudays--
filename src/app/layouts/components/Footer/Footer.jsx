@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Footer.scss";
-import axios from "axios";
-import * as bootstrap from "bootstrap";
 
 //圖片載入
 import footerLogo from "../../../../assets/images/footer/footer-logo.png";
@@ -148,18 +146,35 @@ function FooterLinkList({ title, items }) {
 /* ------------------ Back to top + Copyright ------------------ */
 
 function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // 捲超過 300px 才顯示按鈕
+      setVisible(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
-    <div>
-      <a href="#top" className="footer-link">
-        <button
-          type="button"
-          className="btn btn-totop rounded-circle"
-          aria-label="Back to top"
-        >
-          <IconArrowBigUp />
-        </button>
-      </a>
-    </div>
+    <button
+      type="button"
+      onClick={scrollToTop}
+      className="btn btn-totop rounded-circle"
+      aria-label="Back to top"
+      style={{
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 0.3s ease",
+      }}
+    >
+      <IconArrowBigUp />
+    </button>
   );
 }
 

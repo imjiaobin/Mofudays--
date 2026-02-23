@@ -67,27 +67,22 @@ export default function Login() {
         password: data.password,
       });
 
-      // 從回傳資料中取出 accessToken 和 user 物件
       const { accessToken, user } = res.data;
-
       if (!accessToken) throw new Error("登入成功但未取得 token");
 
-      // 決定儲存空間 (根據「記住我」勾選狀態)
-      const storage = data.rememberMe ? localStorage : sessionStorage;
+      // 同步更新資料庫的 isLoggedIn 與 updatedAt
+      await axios.patch(
+        `${API_BASE_URL}/users/${user.id}`,
+        {
+          isLoggedIn: true,
+          updatedAt: new Date().toISOString(),
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      );
 
-      // 儲存 Token
-      storage.setItem("token", accessToken);
-
-      // 新增：儲存 userId (從 user 物件中取出 id)
-      if (user && user.id) {
-        //建議儲存字串，轉成 String 較安全
-        storage.setItem("userId", String(user.id));
-      }
-
-      // 呼叫 Context 的登入 (維持原樣)
       login(user, accessToken, data.rememberMe);
-
-      // 跳轉頁面
       navigate("/", { replace: true });
     } catch (err) {
       console.error("登入錯誤詳情：", err.response?.data);
