@@ -14,11 +14,13 @@ export default function MemberEvent1() {
           {/* Hero 區塊 */}
           <section className="section-spacer">
             <div className="hero-banner p-3 p-md-4">
-              <img
-                src={machiDays}
-                alt="毛孩麻吉日-活動主視覺"
-                className="hero-img rounded"
-              />
+              <div className="hero-media">
+                <img
+                  src={machiDays}
+                  alt="毛孩麻吉日-活動主視覺"
+                  className="hero-img rounded"
+                />
+              </div>
             </div>
           </section>
 
@@ -179,50 +181,53 @@ export default function MemberEvent1() {
 
             <div className="row justify-content-center">
               <div className="col-lg-10">
-                <div className="accordion" id="faqAccordion">
+
+                <div className="accordion" id="faqAccordionEvent1">
                   <div className="accordion-item fade-up-1">
-                    <h2 className="accordion-header" id="q1">
+                    <h2 className="accordion-header" id="q1Event1">
                       <button
                         className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#a1"
+                        data-bs-target="#a1Event1"
                         aria-expanded="false"
-                        aria-controls="a1"
+                        aria-controls="a1Event1"
                       >
                         Q1. 活動是否免費？
                       </button>
                     </h2>
+
                     <div
-                      id="a1"
+                      id="a1Event1"
                       className="accordion-collapse collapse"
-                      aria-labelledby="q1"
-                      data-bs-parent="#faqAccordion"
+                      aria-labelledby="q1Event1"
+                      data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
-                        A:
-                        本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
+                        A: 本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
                       </div>
                     </div>
                   </div>
 
                   <div className="accordion-item fade-up-1">
-                    <h2 className="accordion-header" id="q2">
+                    <h2 className="accordion-header" id="q2Event1">
                       <button
                         className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#a2"
-                        aria-controls="a2"
+                        data-bs-target="#a2Event1"
+                        aria-expanded="false"
+                        aria-controls="a2Event1"
                       >
                         Q2. 毛孩有過敏可以參加嗎？
                       </button>
                     </h2>
+
                     <div
-                      id="a2"
+                      id="a2Event1"
                       className="accordion-collapse collapse"
-                      aria-labelledby="q2"
-                      data-bs-parent="#faqAccordion"
+                      aria-labelledby="q2Event1"
+                      data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
                         A：可以喔！不過建議您先向現場獸醫師說明毛孩的過敏狀況，我們也會盡量避開可能引發過敏的產品或物品。
@@ -231,47 +236,50 @@ export default function MemberEvent1() {
                   </div>
 
                   <div className="accordion-item fade-up-1">
-                    <h2 className="accordion-header" id="q3">
+                    <h2 className="accordion-header" id="q3Event1">
                       <button
                         className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#a3"
-                        aria-controls="a3"
+                        data-bs-target="#a3Event1"
+                        aria-expanded="false"
+                        aria-controls="a3Event1"
                       >
                         Q3. 免費血液檢查怎麼參加？
                       </button>
                     </h2>
+
                     <div
-                      id="a3"
+                      id="a3Event1"
                       className="accordion-collapse collapse"
-                      aria-labelledby="q3"
-                      data-bs-parent="#faqAccordion"
+                      aria-labelledby="q3Event1"
+                      data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
-                        A：免費血液檢查僅限 10
-                        名，採現場報名、先到先登記，請提早到場登記以確保名額。
+                        A：免費血液檢查僅限 10 名，採現場報名、先到先登記，請提早到場登記以確保名額。
                       </div>
                     </div>
                   </div>
 
                   <div className="accordion-item fade-up-1">
-                    <h2 className="accordion-header" id="q4">
+                    <h2 className="accordion-header" id="q4Event1">
                       <button
                         className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#a4"
-                        aria-controls="a4"
+                        data-bs-target="#a4Event1"
+                        aria-expanded="false"
+                        aria-controls="a4Event1"
                       >
                         Q4. 有行前注意事項嗎？
                       </button>
                     </h2>
+
                     <div
-                      id="a4"
+                      id="a4Event1"
                       className="accordion-collapse collapse"
-                      aria-labelledby="q4"
-                      data-bs-parent="#faqAccordion"
+                      aria-labelledby="q4Event1"
+                      data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
                         參加前請確認疫苗、健康狀況良好；現場請全程牽繩並尊重他人與毛孩距離。

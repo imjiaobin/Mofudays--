@@ -1,6 +1,6 @@
 // scss載入
 import "./memberEvent.scss";
-import luckyBagBanner from "../../../assets/images/member/theme_event_3.png";
+import luckyBagBanner from "../../../assets/images/memberEvent/毛孩福袋交換日主視覺.png";
 import step1 from "../../../assets/images/memberEvent/step_item_1.png";
 import step2 from "../../../assets/images/memberEvent/step_item_2.png";
 import step3 from "../../../assets/images/memberEvent/step_item_3.png";

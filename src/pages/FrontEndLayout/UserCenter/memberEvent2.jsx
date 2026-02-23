@@ -1,6 +1,6 @@
 // scss載入
 import "./memberEvent.scss";
-import commBanner from "../../../assets/images/member/theme_event_2.png";
+import commBanner from "../../../assets/images/memberEvent/毛孩溝通教室主視覺.png";
 import speakerAvatar from "../../../assets/images/memberEvent/pet_communicator.png";
 
 export default function MemberEvent2() {
@@ -11,11 +11,13 @@ export default function MemberEvent2() {
           {/* Hero 區塊 */}
           <section className="section-spacer">
             <div className="hero-banner-1 p-3 p-md-4">
-              <img
-                src={commBanner}
-                alt="毛孩溝通教室-活動主視覺"
-                className="hero-img rounded"
-              />
+              <div className="hero-media">
+                <img
+                  src={commBanner}
+                  alt="毛孩溝通教室-活動主視覺"
+                  className="hero-img"
+                />
+              </div>
             </div>
           </section>
 

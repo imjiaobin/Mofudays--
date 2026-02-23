@@ -1,26 +1,32 @@
 import { useEffect } from "react";
-import UserProfile from "./UserProfile";
-import MemberExclusives from "./MemberExclusive";
+import { NavLink, Outlet } from "react-router-dom";
 
-// scss載入
 import "./userCenter.scss";
 
-// 圖片載入
-import heroYellowPattern from "../../../assets/images/userCenter/hero_yellow_pattern.png";
-import heroGreenPattern from "../../../assets/images/userCenter/hero_green_pattern.png";
-import OrderList from "./OrderLists";
+// import heroYellowPattern from "../../../assets/images/userCenter/hero_yellow_pattern.png";
+// import heroGreenPattern from "../../../assets/images/userCenter/hero_green_pattern.png";
+import faqFootprint from "../../../assets/images/userCenter/FAQ_footprint_patten.png";
+import memberPersonal from "../../../assets/images/userCenter/member_personal_1.png";
 
-// 主元件
-export default function UserInfo() {
+export default function UserCenter() {
   useEffect(() => {
-    document.title = "會員中心";
+    document.title = "毛日和-會員中心";
   }, []);
+
+  // 讓 NavLink 套用button class + active 
+  const tabBtnClass = ({ isActive }) =>
+    [
+      "btn",
+      "button-outline-primary",
+      "btn-member",
+      "rounded-pill",
+      isActive ? "active" : "",
+    ].join(" "); // 保留 css 間的空格
 
   return (
     <main className="member-center position-relative mb-80">
       <div className="container">
-        {/* 裝飾圖：先確定你圖片放哪裡（建議 public/assets/...） */}
-        <img
+        {/* <img
           src={heroYellowPattern}
           alt="黃色裝飾"
           className="position-absolute yellow-patten-1 z-3"
@@ -29,102 +35,61 @@ export default function UserInfo() {
           src={heroGreenPattern}
           alt="綠色裝飾"
           className="position-absolute green-patten-1 me-0 z-3"
-        />
+        /> */}
 
         <div className="row justify-content-center">
           <div className="col-12 col-md-10 position-relative">
-            {/* tab區塊 */}
-            <ul
-              className="nav nav-pills d-flex align-items-end"
-              id="pills-tab"
-              role="tablist"
-            >
-              <li className="nav-item me-16" role="presentation">
-                <button
-                  className="btn button-outline-primary btn-member active rounded-pill"
-                  id="pills-profile-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-profile"
-                  aria-selected="true"
-                >
-                  <span className="icon-user-round-pen align-bottom"></span>
-                  <span className="ms-2">會員資料</span>
-                </button>
-              </li>
-
-              <li className="nav-item me-16" role="presentation">
-                <button
-                  className="btn button-outline-primary btn-member rounded-pill"
-                  id="pills-orderlists-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-orderlists"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-orderlists"
-                  aria-selected="false"
-                >
-                  <span className="icon-receipt-text align-bottom"></span>
-                  <span className="ms-2">訂單管理</span>
-                </button>
-              </li>
-
-              <li className="nav-item" role="presentation">
-                <button
-                  className="btn button-outline-primary btn-member rounded-pill"
-                  id="pills-exclusives-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-exclusives"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-exclusives"
-                  aria-selected="false"
-                >
-                  <span className="icon-ticket-check align-bottom"></span>
-                  <span className="ms-2">會員專屬活動</span>
-                </button>
-              </li>
-            </ul>
-
-            {/* 頁面內容 */}
-            <div
-              className="tab-content p-48 bg-yellow bg-radius py-40 px-55"
-              id="pills-tabContent"
-            >
-              {/* tab-會員資料 */}
-              <div
-                className="member-data tab-pane fade show active"
-                id="pills-profile"
-                role="tabpanel"
-                aria-labelledby="pills-profile-tab"
-                tabIndex={0}
+            <div class="d-flex flex-column-reverse flex-lg-row align-items-center align-items-lg-end justify-content-center justify-content-lg-between gap-4 mt-16 mb-24">
+              <img src={faqFootprint}
+                      alt="三個小腳掌"
+                      class="foot-print" aria-hidden="true"></img>
+              <ul
+                className="nav nav-pills d-flex align-items-end flex-fill ps-80"
+                id="pills-tab"
+                role="tablist"
               >
-                <UserProfile />
-              </div>
+                <li className="nav-item me-16" role="presentation">
+                  <NavLink
+                    to="profile"
+                    end
+                    className={tabBtnClass}
+                    role="tab"
+                    aria-controls="pills-profile"
+                  >
+                    <span className="icon-user-round-pen align-bottom" />
+                    <span className="ms-2">會員資料</span>
+                  </NavLink>
+                </li>
 
-              {/* tab-訂閱資料 */}
-              <div
-                className="member-orderlist tab-pane fade mt-16"
-                id="pills-orderlists"
-                role="tabpanel"
-                aria-labelledby="pills-orderlists-tab"
-                tabIndex={0}
-              >
-                <OrderList />
-              </div>
+                <li className="nav-item me-16" role="presentation">
+                  <NavLink
+                    to="orders"
+                    className={tabBtnClass}
+                    role="tab"
+                    aria-controls="pills-orderlists"
+                  >
+                    <span className="icon-receipt-text align-bottom" />
+                    <span className="ms-2">訂單管理</span>
+                  </NavLink>
+                </li>
 
-              {/* Member */}
-              <div
-                className="tab-pane fade theme-event"
-                id="pills-exclusives"
-                role="tabpanel"
-                aria-labelledby="pills-exclusives-tab"
-                tabIndex={0}
-              >
-                <MemberExclusives />
-              </div>
+                <li className="nav-item" role="presentation">
+                  <NavLink
+                    to="events"
+                    className={tabBtnClass}
+                    role="tab"
+                    aria-controls="pills-exclusives"
+                  >
+                    <span className="icon-ticket-check align-bottom" />
+                    <span className="ms-2">會員專屬活動</span>
+                  </NavLink>
+                </li>
+              </ul>
+              <img src={memberPersonal} alt="狗狗看著主人訂閱圖" class="member-img-tab flex-fill"></img>
+            </div>
+            
+            <div className="tab-content p-48 bg-yellow bg-radius py-40 px-55">
+              <Outlet />
             </div>
           </div>
         </div>

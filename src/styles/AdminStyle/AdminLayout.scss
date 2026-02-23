@@ -1,0 +1,521 @@
+/* ===== Admin Layout / Sidebar 共用樣式 ===== */
+
+// 固定 layout 高度（100dvh）
+
+// sidebar / main 各自捲動
+
+// 避免整頁水平卷軸
+
+// sidebar 收合動畫
+
+// 手機版 drawer + overlay + topbar
+
+// 入場動畫
+
+.ad-dashboard {
+  --side-w: 240px;
+  --side-w-collapsed: 76px;
+  --ad-transition: 280ms ease;
+
+  height: 100dvh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: var(--side-w) minmax(0, 1fr);
+  background: #f4f0ec;
+  overflow: hidden; // 避免整頁水平捲軸
+  transition: grid-template-columns var(--ad-transition);
+}
+
+.ad-dashboard.is-side-collapsed {
+  grid-template-columns: var(--side-w-collapsed) minmax(0, 1fr);
+}
+
+/* 很重要：避免 grid child 被內容撐爆 */
+.ad-dashboard > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ===== Overlay（手機版抽屜背景） ===== */
+.ad-side__overlay {
+  display: none;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+/* ===== Sidebar ===== */
+.ad-side {
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  height: 100dvh;   // 不跟著 main 高度變動
+  overflow-y: auto; // sidebar 自己捲
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.ad-side__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px 10px;
+  min-height: 50px;
+}
+
+.ad-side__collapseBtn,
+.ad-side__mobileClose {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: #4a4a4a;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.ad-side__mobileClose {
+  display: none;
+  margin-left: auto;
+}
+
+.ad-side__logo {
+  width: 100%;
+  height: 34px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transform-origin: left center;
+    transition: opacity var(--ad-transition), transform var(--ad-transition);
+  }
+}
+
+/* sidebar nav*/
+.ad-side__nav {
+  display: grid;
+  gap: 6px;
+}
+
+.ad-side__link,
+.ad-side__linkBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 12px;
+  color: #4a4a4a;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  overflow: hidden;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    padding var(--ad-transition),
+    gap var(--ad-transition);
+}
+
+.ad-side__link:hover,
+.ad-side__linkBtn:hover {
+  background: rgba(255, 106, 0, 0.08);
+}
+
+.ad-side__link.is-active {
+  background: rgba(255, 106, 0, 0.10);
+  color: $primary-500;
+  outline: 1px solid rgba(255, 106, 0, 0.18);
+}
+
+/* 底部 */
+.ad-side__bottom {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.ad-side__mini {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 10px 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4a4a4a;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    padding var(--ad-transition),
+    gap var(--ad-transition);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.ad-side__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 14px;
+  background: #fafafa;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: padding var(--ad-transition), gap var(--ad-transition);
+}
+
+.ad-side__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #ededed;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.ad-side__userMeta {
+  min-width: 0;
+}
+
+/* 收合時隱藏的文字區塊 */
+.ad-side__label,
+.ad-side__userMeta {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    max-width var(--ad-transition),
+    opacity 180ms ease,
+    transform var(--ad-transition);
+}
+
+.ad-side__logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  transition: all var(--ad-transition);
+  line-height: 1;
+}
+
+.ad-side__logoutIcon {
+  flex-shrink: 0;
+}
+
+
+/* ===== 收合狀態（桌機） ===== */
+.ad-dashboard.is-side-collapsed .ad-side {
+  padding-inline: 10px;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__brand {
+  gap: 6px;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__logo {
+  width: 0;
+  opacity: 0;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__link,
+.ad-dashboard.is-side-collapsed .ad-side__mini {
+  justify-content: center;
+  gap: 0;
+  padding-inline: 8px;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__user {
+  justify-content: center;
+  gap: 0;
+  padding-inline: 8px;
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__label,
+.ad-dashboard.is-side-collapsed .ad-side__userMeta {
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-6px);
+}
+
+.ad-dashboard.is-side-collapsed .ad-side__logoutBtn {
+  padding-inline: 0.5rem !important;
+}
+
+/* ===== Main 右側內容 ===== */
+.ad-main {
+  min-width: 0;
+  min-height: 0;
+  height: 100dvh;     // main 自己捲動
+  overflow: auto;
+  overflow-x: hidden; // 不要整頁水平卷軸
+  scrollbar-gutter: stable both-edges;
+
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: center center;
+}
+
+.ad-main__inner {
+  padding: 22px 22px 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+/* 手機版 topbar */
+.ad-mobileTopbar {
+  display: none;
+}
+
+/* 自訂登出按鈕 */
+.btn-outline-orange {
+  border-color: #ff6a00;
+  color: #ff6a00;
+
+  &:hover {
+    background: #ff6a00;
+    color: #fff;
+  }
+}
+
+/* ===== 進場動畫（Sidebar / 共用） ===== */
+@keyframes ad-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Sidebar 進場：品牌區 / 每個 nav item / 底部每個 item */
+.ad-side__brand,
+.ad-side__nav > *,
+.ad-side__bottom > * {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: ad-fade-up 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* 品牌區先出現 */
+.ad-side__brand {
+  animation-delay: 0.04s;
+}
+
+/* nav stagger */
+.ad-side__nav > *:nth-child(1) { animation-delay: 0.20s; }
+.ad-side__nav > *:nth-child(2) { animation-delay: 0.26s; }
+.ad-side__nav > *:nth-child(3) { animation-delay: 0.32s; }
+.ad-side__nav > *:nth-child(4) { animation-delay: 0.38s; }
+.ad-side__nav > *:nth-child(5) { animation-delay: 0.44s; }
+.ad-side__nav > *:nth-child(6) { animation-delay: 0.50s; }
+
+/* bottom stagger（通知 / 設定 / user / 登出） */
+.ad-side__bottom > *:nth-child(1) { animation-delay: 0.52s; }
+.ad-side__bottom > *:nth-child(2) { animation-delay: 0.58s; }
+.ad-side__bottom > *:nth-child(3) { animation-delay: 0.64s; }
+.ad-side__bottom > *:nth-child(4) { animation-delay: 0.70s; }
+.ad-side__bottom > *:nth-child(5) { animation-delay: 0.76s; }
+
+/* 手機版 drawer 開啟時，不要重播進場（避免每次打開都閃） */
+@media (max-width: 992px) {
+  .ad-side.is-mobile-open .ad-side__brand,
+  .ad-side.is-mobile-open .ad-side__nav > *,
+  .ad-side.is-mobile-open .ad-side__bottom > * {
+    /* 如果想每次開抽屜都播放動畫，可把下面兩行刪掉 */
+    animation-play-state: running;
+  }
+}
+
+/* 尊重使用者減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .ad-dashboard,
+  .ad-side,
+  .ad-main,
+  .ad-side__label,
+  .ad-side__userMeta,
+  .ad-side__brand,
+  .ad-side__nav > *,
+  .ad-side__bottom > * {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ===== RWD / Mobile Drawer ===== */
+@media (max-width: 992px) {
+  .ad-dashboard {
+    grid-template-columns: 1fr;
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  /* overlay 啟用 */
+  .ad-side__overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+  }
+
+  .ad-dashboard.is-mobile-side-open .ad-side__overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Sidebar 變成抽屜 */
+  .ad-side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1050;
+    width: min(84vw, 320px);
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform 280ms ease;
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .ad-side.is-mobile-open {
+    transform: translateX(0);
+  }
+
+  /* 手機版：顯示關閉按鈕、隱藏桌機收合按鈕 */
+  .ad-side__collapseBtn {
+    display: none;
+  }
+
+  .ad-side__mobileClose {
+    display: grid;
+  }
+
+  /* 手機版 main */
+  .ad-main {
+    height: 100dvh;
+    overflow: auto;
+  }
+
+  /* 手機版頂部工具列 */
+  .ad-mobileTopbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(244, 240, 236, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .ad-mobileTopbar__menuBtn {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+  }
+
+  .ad-mobileTopbar__title {
+    font-weight: 800;
+    color: #333;
+  }
+
+  .ad-main__inner {
+    padding: 16px;
+  }
+
+  /* 手機版 drawer 一律顯示完整內容（忽略桌機收合狀態） */
+  .ad-dashboard.is-side-collapsed .ad-side {
+    padding-inline: 14px;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__brand {
+    gap: 10px;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__logo {
+    width: 100%;
+    opacity: 1;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__link,
+  .ad-dashboard.is-side-collapsed .ad-side__mini {
+    justify-content: flex-start;
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__user {
+    justify-content: flex-start;
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .ad-dashboard.is-side-collapsed .ad-side__label,
+  .ad-dashboard.is-side-collapsed .ad-side__userMeta {
+    max-width: 180px;
+    opacity: 1;
+    transform: translateX(0);
+    
+  }
+}

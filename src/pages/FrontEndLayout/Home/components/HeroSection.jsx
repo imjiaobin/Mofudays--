@@ -15,8 +15,8 @@ const HeroSection = () => {
 
   // 處理「立即訂閱」的點擊事件
   const handleSubscribeClick = () => {
-    const isAuthed = checkLoginStatus();
-
+    // const isAuthed = checkLoginStatus(); // 為了測試路由先做第17行 2025/2/15 by 納森
+    const isAuthed = true;
     if (isAuthed) {
       // 已登入：跳轉至寵物資訊頁 (依據你的需求)
       navigate("/petinfo");

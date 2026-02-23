@@ -22,7 +22,7 @@ export default function MemberExclusives() {
         <img
           src={imgOpenBox}
           alt="毛寶貝開箱秀活動圖"
-          className="position-absolute end-0 img-open-box img-shake"
+          className="position-absolute start-0 img-open-box img-shake"
         />
 
         <h2 className="h2 text-center unbox-title mb-12">毛寶貝開箱秀</h2>

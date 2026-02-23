@@ -1,0 +1,137 @@
+/* ===== Dashboard 頁面樣式（卡片 / 表格 / 狀態） ===== */
+
+.ad-card {
+  background: rgba(255, 255, 255, 0.92);
+  overflow: hidden; // ✅ 避免內部元素視覺外溢
+}
+
+.ad-orange {
+  color: #ff6a00 !important;
+}
+
+.ad-link {
+  color: #ff6a00;
+  font-weight: 800;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* icon button */
+.ad-iconBtn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+.ad-iconLink {
+  color: #9aa0a6;
+
+  &:hover {
+    color: #ff6a00;
+  }
+}
+
+/* table 外層只在卡片內自己橫向捲動 */
+.ad-card .table-responsive {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* 欄位較多時維持表格寬度，交給 table-responsive 處理 */
+.ad-table {
+  min-width: 980px; // 可依實際欄數再調整 1000 / 1100
+}
+
+.ad-table thead th {
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.ad-table tbody td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* 狀態點點 */
+.ad-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  transform: translateY(-1px);
+}
+
+.ad-dot--warning { background: #ffb020; }
+.ad-dot--success { background: #27ae60; }
+.ad-dot--orange  { background: #ff6a00; }
+.ad-dot--muted   { background: #9aa0a6; }
+
+/* 訂閱狀態 badge */
+.ad-badge {
+  font-weight: 900;
+  padding: 0.4rem 0.75rem;
+}
+
+.ad-badge--orange {
+  background: rgba(255, 106, 0, 0.14);
+  color: #ff6a00;
+}
+
+.ad-badge--gray {
+  background: rgba(0, 0, 0, 0.08);
+  color: #555;
+}
+
+/* ===== Dashboard 進場動畫 ===== */
+/* 針對 AdminDashboard root：標題列、統計卡區、各 section 卡片做錯開進場 */
+.ad-dashboard-page > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: ad-fade-up 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* stagger 順序 */
+/* 1: 標題列, 2: 統計卡 row, 3: 最新訂單, 4: 最新訂閱, 5: 最新會員 */
+.ad-dashboard-page > *:nth-child(1) { animation-delay: 0.18s; }
+.ad-dashboard-page > *:nth-child(2) { animation-delay: 0.26s; }
+.ad-dashboard-page > *:nth-child(3) { animation-delay: 0.34s; }
+.ad-dashboard-page > *:nth-child(4) { animation-delay: 0.42s; }
+.ad-dashboard-page > *:nth-child(5) { animation-delay: 0.50s; }
+.ad-dashboard-page > *:nth-child(6) { animation-delay: 0.58s; }
+
+/* 如果你希望「三張統計卡」也各自錯開（不是整排一起），加這段 */
+.ad-dashboard-page > .row.g-3 > [class*="col-"] {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: ad-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ad-dashboard-page > .row.g-3 > [class*="col-"]:nth-child(1) { animation-delay: 0.28s; }
+.ad-dashboard-page > .row.g-3 > [class*="col-"]:nth-child(2) { animation-delay: 0.34s; }
+.ad-dashboard-page > .row.g-3 > [class*="col-"]:nth-child(3) { animation-delay: 0.40s; }
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .ad-dashboard-page > *,
+  .ad-dashboard-page > .row.g-3 > [class*="col-"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* 小螢幕微調 */
+@media (max-width: 992px) {
+  .ad-table {
+    min-width: 900px;
+  }
+}
