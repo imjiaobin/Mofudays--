@@ -2,15 +2,46 @@ import "./Header.scss";
 import "./Header-logout.scss";
 import { useNavigate } from "react-router-dom";
 import { Menu, ShoppingCart, Newspaper, HeartPlus } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-
 //匯入圖片
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
 import avatarDefalut from "../../../../assets/images/header/avatar_defalut.png";
 
+// 購物車跳轉邏輯 hook
+function useCartNavigate() {
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  const handleCartClick = async () => {
+    if (!isAuthed) {
+      alert("尚未登入，請先註冊或登入會員！");
+      navigate("/signup");
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const res = await fetch(`http://localhost:3000/carts?userId=${userId}`);
+      const data = await res.json();
+
+      if (data && data.length > 0) {
+        navigate("/cart");
+      } else {
+        alert("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
+        navigate("/petinfo");
+      }
+    } catch (err) {
+      console.error("查詢購物車失敗", err);
+      alert("查詢購物車時發生錯誤，請稍後再試。");
+    }
+  };
+
+  return handleCartClick;
+}
 export default function Header() {
   return (
     <header className="container" id="top">
@@ -131,6 +162,8 @@ function DesktopMenu() {
 // }
 function MobileOffcanvasMenu() {
   const { isAuthed, user, logout } = useAuth();
+  const storedName = localStorage.getItem("userName");
+  const displayName = user?.name || storedName || "會員";
 
   const handleClickLink = () => closeOffcanvasIfAny();
   const handleLogout = () => {
@@ -189,7 +222,7 @@ function MobileOffcanvasMenu() {
                   className="rounded-circle"
                   style={{ width: 44, height: 44, objectFit: "cover" }}
                 />
-                <div className="fw-medium">{user?.name || "會員"}</div>
+                <div className="fw-medium">{displayName}</div>
               </div>
 
               {/* 功能清單 */}
@@ -647,6 +680,8 @@ function AuthMenu({ variant = "desktop" }) {
 // }
 
 function LoggedInMenu({ variant, user, logout }) {
+  const storedName = localStorage.getItem("userName"); // 看你 localStorage 存的 key 名稱
+  const displayName = user?.name || storedName || "會員";
   const [open, setOpen] = useState(false);
 
   // 點其他地方時關閉
@@ -692,7 +727,7 @@ function LoggedInMenu({ variant, user, logout }) {
             objectFit: "cover",
           }}
         />
-        <span className="fw-bold">{user?.name || "會員"} 您好</span>
+        <span className="fw-bold">{displayName} 您好</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -724,8 +759,7 @@ function LoggedInMenu({ variant, user, logout }) {
           <li>
             <Link
               className="dropdown-item text-center py-2 border-bottom"
-              to="/orders"
-              onClick={handleClickLink}
+              to="/usercenter/orders"
             >
               訂單管理
             </Link>
@@ -733,8 +767,7 @@ function LoggedInMenu({ variant, user, logout }) {
           <li>
             <Link
               className="dropdown-item text-center py-2 border-bottom"
-              to="Member"
-              onClick={handleClickLink}
+              to="/usercenter/profile"
             >
               個人資料修改
             </Link>
@@ -742,8 +775,7 @@ function LoggedInMenu({ variant, user, logout }) {
           <li>
             <Link
               className="dropdown-item text-center py-2 border-bottom"
-              to="/member/exclusive"
-              onClick={handleClickLink}
+              to="/usercenter/events"
             >
               會員專屬活動
             </Link>

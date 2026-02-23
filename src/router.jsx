@@ -18,13 +18,16 @@ import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
 import Finish from "./pages/FrontEndLayout/Finish/Finish";
 
 //usercenter
-import UserCenter from "./pages/FrontEndLayout/UserCenter/UserCenter";
+import UserCenterLayout from "./pages/FrontEndLayout/UserCenter/UserCenterLayout";
 import UserProfile from "./pages/FrontEndLayout/UserCenter/UserProfile";
 import OrderLists from "./pages/FrontEndLayout/UserCenter/OrderLists";
 import MemberExclusives from "./pages/FrontEndLayout/UserCenter/MemberExclusive";
 import MemberEvent1 from "./pages/FrontEndLayout/UserCenter/MemberEvent1";
 import MemberEvent2 from "./pages/FrontEndLayout/UserCenter/MemberEvent2";
 import MemberEvent3 from "./pages/FrontEndLayout/UserCenter/MemberEvent3";
+
+//再次訂閱 功能測試頁
+import ResubscribePreview from "./pages/FrontEndLayout/UserCenter/components/Resubscribepreview";
 
 // Auth pages（ 會員/後台共用同一個 Login 頁面 ）
 import Login from "./pages/FrontEndLayout/Login/Login";
@@ -45,9 +48,6 @@ import {
 // 404
 import NotFound from "./layout/NotFound";
 
-//API測試頁
-// import TestAuthPage from "./pages/Test/TestAuthPage";
-
 // auth hooks
 import { useAuth } from "./contexts/AuthContext";
 
@@ -60,9 +60,17 @@ function RequireAuth({ children }) {
   if (isLoading) {
     return (
       <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          fontSize: "1.2rem",
+          color: "#8d6e63", // 配合你的 brown 色系
+        }}
       >
-        載入中...
+        <div className="spinner-border me-2" role="status"></div>
+        身分驗證中...
       </div>
     );
   }
@@ -144,36 +152,18 @@ export const router = createHashRouter([
       // 會員中心
       {
         path: "usercenter",
-        //會員中心暫時拿掉權限
-        // element: (
-        //   <RequireAuth>
-        //     <UserCenter />
-        //   </RequireAuth>
-        // ),
-        element: <UserCenter />,
+        element: (
+          <RequireAuth>
+            <UserCenterLayout /> {/* 這是下方步驟 2 建立的新組件 */}
+          </RequireAuth>
+        ),
         children: [
-          // 預設進入會員中心時導向「會員資料」
           { index: true, element: <Navigate to="profile" replace /> },
-
-          // 三個主要 Tab 頁面
           { path: "profile", element: <UserProfile /> },
           { path: "orders", element: <OrderLists /> },
-          {
-            path: "events",
-            element: <MemberExclusives />,
-          },
+          { path: "events", element: <MemberExclusives /> },
         ],
       },
-      // {
-      //   path: "usercenter",
-      //   element: <UserCenter />,
-      //   children: [
-      //     { index: true, element: <Navigate to="profile" replace /> },
-      //     { path: "profile", element: <UserProfile /> },
-      //     { path: "orders", element: <OrderLists /> },
-      //     { path: "events", element: <MemberExclusives /> },
-      //   ]
-      // },
 
       // 三個活動詳情頁
       { path: "member-event-1", element: <MemberEvent1 /> },
