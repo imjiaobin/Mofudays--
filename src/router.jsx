@@ -51,7 +51,7 @@ import NotFound from "./layout/NotFound";
 // auth hooks
 import { useAuth } from "./contexts/AuthContext";
 
-// 前台會員權限守衛
+// 前台會員權限守衛->利用AuthContext這支hook驅動
 function RequireAuth({ children }) {
   const { isAuthed, isLoading } = useAuth();
   // 1. 處理讀取中狀態：這是防止被踢回登入頁的最重要防線
@@ -103,53 +103,53 @@ export const router = createHashRouter([
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
       // { path: "blog/:postId", element: <BlogPost /> },
-      { path: "petinfo", element: <PetInfo /> },
-      { path: "plan", element: <Plan /> },
-      { path: "cart", element: <Cart /> },
-      { path: "checkout", element: <Checkout /> },
-      { path: "finish", element: <Finish /> },
+      // { path: "petinfo", element: <PetInfo /> },
+      // { path: "plan", element: <Plan /> },
+      // { path: "cart", element: <Cart /> },
+      // { path: "checkout", element: <Checkout /> },
+      // { path: "finish", element: <Finish /> },
 
-      //暫時移除權限方便測試
-      // {
-      //   path: "petinfo",
-      //   element: (
-      //     <RequireAuth>
-      //       <PetInfo />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "plan",
-      //   element: (
-      //     <RequireAuth>
-      //       <Plan />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "cart",
-      //   element: (
-      //     <RequireAuth>
-      //       <Cart />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "checkout",
-      //   element: (
-      //     <RequireAuth>
-      //       <Checkout />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "finish",
-      //   element: (
-      //     <RequireAuth>
-      //       <Finish />
-      //     </RequireAuth>
-      //   ),
-      // },
+      //加回前台權限守衛
+      {
+        path: "petinfo",
+        element: (
+          <RequireAuth>
+            <PetInfo />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "plan",
+        element: (
+          <RequireAuth>
+            <Plan />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <RequireAuth>
+            <Cart />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <RequireAuth>
+            <Checkout />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "finish",
+        element: (
+          <RequireAuth>
+            <Finish />
+          </RequireAuth>
+        ),
+      },
 
       // 會員中心
       {
