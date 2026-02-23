@@ -1,292 +1,249 @@
-import { useMemo, useState } from "react";
+import {
+  filterOrdersByTab,
+  buildResubscribePayload,
+} from "./components/subscriptionHelpers";
+import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import SubscriptionCard from "./components/MemberOrderCard";
+import {
+  getUserOrders,
+  cancelSubscriptions,
+} from "../../../api/subscriptionApi";
 
+// 裝飾圖片路徑（路徑依專案實際位置調整）
 import petToy from "../../../assets/images/userCenter/pet-toy.png";
 import petSnack from "../../../assets/images/userCenter/pet_snack.png";
 
-export const MOCK_ORDERS = [
-  {
-    id: "00003",
-    purchasedAt: "2025/08/10",
-    name: "新手爸媽安心組",
-    unitPrice: 699,
-    qty: 3,
-    total: 2097,
-    latestShipAt: null,
-    status: "待結帳",
-    payStatus: "UNPAID", // UNPAID | PAID
-  },
-  {
-    id: "00002",
-    purchasedAt: "2025/08/09",
-    name: "青春汪能量補給包",
-    unitPrice: 699,
-    qty: 2,
-    total: 1398,
-    latestShipAt: "2025/08/12",
-    status: "運送中",
-    payStatus: "PAID",
-  },
-  {
-    id: "00001",
-    purchasedAt: "2025/08/03",
-    name: "牛氣補補能量盒",
-    unitPrice: 1699,
-    qty: 1,
-    total: 1699,
-    latestShipAt: "2025/08/06",
-    status: "已取貨(2025/08/05)",
-    payStatus: "PAID",
-  },
-  // ✅ 多塞幾筆，方便你看 pagination（可調整）
-  {
-    id: "00004",
-    purchasedAt: "2025/08/12",
-    name: "狗狗健康小補給",
-    unitPrice: 399,
-    qty: 1,
-    total: 399,
-    latestShipAt: "2025/08/15",
-    status: "處理中",
-    payStatus: "PAID",
-  },
-  {
-    id: "00005",
-    purchasedAt: "2025/08/13",
-    name: "汪汪咬咬玩具組",
-    unitPrice: 499,
-    qty: 2,
-    total: 998,
-    latestShipAt: "2025/08/16",
-    status: "待結帳",
-    payStatus: "UNPAID",
-  },
-  {
-    id: "00006",
-    purchasedAt: "2025/08/14",
-    name: "清爽夏日零食包",
-    unitPrice: 299,
-    qty: 3,
-    total: 897,
-    latestShipAt: null,
-    status: "待結帳",
-    payStatus: "UNPAID",
-  },
-  {
-    id: "00007",
-    purchasedAt: "2025/08/15",
-    name: "毛孩保健罐頭組",
-    unitPrice: 799,
-    qty: 1,
-    total: 799,
-    latestShipAt: "2025/08/18",
-    status: "運送中",
-    payStatus: "PAID",
-  },
+const TABS = [
+  { key: "all", label: "訂閱總覽" },
+  { key: "completed", label: "已完成" },
+  { key: "processing", label: "進行中" },
+  // { key: "partial", label: "部分取消" },
+  { key: "cancelled", label: "已取消" },
 ];
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 5;
 
-export default function OrderList() {
-  // all | unpaid | paid
-  const [active, setActive] = useState("all");
-  const [page, setPage] = useState(1);
+export default function OrderLists() {
+  const navigate = useNavigate();
 
-  const filtered = useMemo(() => {
-    if (active === "unpaid")
-      return MOCK_ORDERS.filter((o) => o.payStatus === "UNPAID");
-    if (active === "paid")
-      return MOCK_ORDERS.filter((o) => o.payStatus === "PAID");
-    return MOCK_ORDERS;
-  }, [active]);
+  // ── 資料 state ──────────────────────────────────────────────
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const totalPages = useMemo(() => {
-    return Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  }, [filtered.length]);
+  // ── UI state ────────────────────────────────────────────────
+  const [activeTab, setActiveTab] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [expandedId, setExpandedId] = useState(null);
+  const [cancellingId, setCancellingId] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const pageOrders = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return filtered.slice(start, start + PAGE_SIZE);
-  }, [filtered, page]);
+  // ── 取得訂單列表 ─────────────────────────────────────────────
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getUserOrders();
+        setOrders(data);
+      } catch (err) {
+        setError("訂單資料載入失敗，請稍後再試。");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
 
-  // 切 tab 時把 page reset（避免切到一個不存在的頁）
-  const handleTab = (next) => {
-    setActive(next);
-    setPage(1);
+  // ── Tab 篩選 + 分頁 ──────────────────────────────────────────
+  const filteredOrders = useMemo(
+    () => filterOrdersByTab(orders, activeTab),
+    [orders, activeTab],
+  );
+
+  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE) || 1;
+
+  const currentItems = filteredOrders.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
+
+  // ── 事件 handlers ────────────────────────────────────────────
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setCurrentPage(1);
+    setExpandedId(null);
+    setCancellingId(null);
+    setSelectedItems([]);
   };
 
-  const canPrev = page > 1;
-  const canNext = page < totalPages;
-
-  const handlePrev = (e) => {
-    e.preventDefault();
-    if (!canPrev) return;
-    setPage((p) => p - 1);
+  const handleToggleExpand = (orderId) => {
+    setExpandedId((prev) => (prev === orderId ? null : orderId));
+    // 切換卡片時清除取消流程
+    if (cancellingId && cancellingId !== orderId) {
+      setCancellingId(null);
+      setSelectedItems([]);
+    }
   };
 
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (!canNext) return;
-    setPage((p) => p + 1);
+  const handleStartCancel = (orderId) => {
+    setCancellingId(orderId);
+    setSelectedItems([]);
   };
 
-  const handlePage = (e, p) => {
-    e.preventDefault();
-    if (p < 1 || p > totalPages) return;
-    setPage(p);
+  // 取消流程的返回：由 onToggleItem 用特殊 id 觸發
+  const handleToggleItem = (subscriptionId) => {
+    if (subscriptionId === "__cancel_mode_exit__") {
+      setCancellingId(null);
+      setSelectedItems([]);
+      return;
+    }
+    setSelectedItems((prev) =>
+      prev.includes(subscriptionId)
+        ? prev.filter((id) => id !== subscriptionId)
+        : [...prev, subscriptionId],
+    );
   };
 
+  const handleConfirmCancel = async (orderId) => {
+    if (selectedItems.length === 0) return;
+    try {
+      const updated = await cancelSubscriptions(orderId, selectedItems);
+      // 用更新後的資料取代本地對應訂單
+      setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+      setCancellingId(null);
+      setSelectedItems([]);
+    } catch (err) {
+      alert("取消失敗，請稍後再試。");
+    }
+  };
+
+  const handleResubscribe = (order) => {
+    const payload = buildResubscribePayload(order);
+    // 將資料存入 sessionStorage，讓 /cart 頁面取用
+    sessionStorage.setItem("resubscribePayload", JSON.stringify(payload));
+    navigate("/cart");
+  };
+
+  // ── Render ───────────────────────────────────────────────────
   return (
-    <div className="member-orderlist mt-16">
-      {/* 內層 tabs：我們改成 React 控制（不靠 data-bs-toggle） */}
-      <ul className="nav nav-tabs" role="tablist">
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link p1 fw-500 ${active === "all" ? "active" : ""}`}
-            type="button"
-            role="tab"
-            aria-selected={active === "all"}
-            onClick={() => handleTab("all")}
-          >
-            總覽
-          </button>
-        </li>
-
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link p1 fw-500 ${active === "unpaid" ? "active" : ""}`}
-            type="button"
-            role="tab"
-            aria-selected={active === "unpaid"}
-            onClick={() => handleTab("unpaid")}
-          >
-            未結帳
-          </button>
-        </li>
-
-        <li className="nav-item" role="presentation">
-          <button
-            className={`nav-link p1 fw-500 ${active === "paid" ? "active" : ""}`}
-            type="button"
-            role="tab"
-            aria-selected={active === "paid"}
-            onClick={() => handleTab("paid")}
-          >
-            已結帳
-          </button>
-        </li>
-      </ul>
-
-      {/* table */}
-      <div className="orderlist-table-wrap">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">購買時間</th>
-              <th scope="col">名稱/編號</th>
-              <th scope="col">單價</th>
-              <th scope="col">數量</th>
-              <th scope="col">總金額</th>
-              <th scope="col">預計最晚出貨日</th>
-              <th scope="col">訂單狀態</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {pageOrders.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="text-center py-4">
-                  目前沒有符合條件的訂單
-                </td>
-              </tr>
-            ) : (
-              pageOrders.map((o) => (
-                <tr key={o.id}>
-                  <td scope="row">{o.purchasedAt}</td>
-                  <td>
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        alert(`之後會做訂單詳情頁：#${o.id}`);
-                      }}
-                    >
-                      {o.name}
-                      <br />
-                      <span className="order-number">訂單編號 #{o.id}</span>
-                    </a>
-                  </td>
-                  <td>${money(o.unitPrice)}</td>
-                  <td>{o.qty}</td>
-                  <td>${money(o.total)}</td>
-                  <td>{o.latestShipAt ?? "-"}</td>
-                  <td>{o.status}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+    <div className="member-orderlist mt-32">
+      {/* 標題 + Tab 列 */}
+      <div className="d-flex justify-content-between align-items-center mb-24">
+        <h2 className="h2 fw-900">訂閱管理</h2>
+        <ul className="nav nav-tabs border-0" id="myTab">
+          {TABS.map((tab) => (
+            <li className="nav-item" key={tab.key}>
+              <button
+                className={`nav-link rounded-pill px-4 ms-2 border-0 ${
+                  activeTab === tab.key
+                    ? "bg-orange text-white active"
+                    : "text-brown bg-transparent"
+                }`}
+                onClick={() => handleTabChange(tab.key)}
+              >
+                {tab.label}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* 裝飾圖 */}
-      <div className="d-flex justify-content-end mt-48">
+      {/* 欄位標題列 */}
+      <div className="row text-center mb-3 px-4 fw-500 p2">
+        <div className="col">訂閱時間</div>
+        <div className="col">訂單編號</div>
+        <div className="col">訂閱期數</div>
+        <div className="col">訂單金額</div>
+        <div className="col">訂單狀態</div>
+      </div>
+
+      {/* 訂閱卡片列表 */}
+      <div className="subscription-list">
+        {isLoading && (
+          <div className="text-center py-5 text-brown">載入中...</div>
+        )}
+        {error && <div className="text-center py-5 text-danger">{error}</div>}
+        {!isLoading && !error && currentItems.length === 0 && (
+          <div className="text-center py-5 text-brown">
+            目前沒有符合的訂閱紀錄
+          </div>
+        )}
+        {!isLoading &&
+          !error &&
+          currentItems.map((order) => (
+            <SubscriptionCard
+              key={order.id}
+              order={order}
+              isExpanded={expandedId === order.id}
+              isCancelling={cancellingId === order.id}
+              selectedItems={selectedItems}
+              onToggleExpand={() => handleToggleExpand(order.id)}
+              onStartCancel={() => handleStartCancel(order.id)}
+              onConfirmCancel={() => handleConfirmCancel(order.id)}
+              onToggleItem={handleToggleItem}
+              onResubscribe={() => handleResubscribe(order)}
+            />
+          ))}
+      </div>
+
+      {/* 裝飾圖片 */}
+      <div className="d-flex justify-content-end align-items-end mt-16 me-32">
         <img
           src={petToy}
-          alt="寵物玩具圖, 包含狗骨頭和兩個球"
-          className="img-pet-toy img-shake"
+          alt="toy"
+          className="img-shake me-16"
+          style={{ width: "80px" }}
         />
         <img
           src={petSnack}
-          alt="寵物點心包"
-          className="img-pet-snack img-shake"
+          alt="snack"
+          className="img-shake"
+          style={{ width: "100px" }}
         />
       </div>
 
-      {/* pagination */}
-      <nav aria-label="Page navigation example">
-        <ul className="pagination justify-content-center align-bottom mt-16 mb-32">
-          <li className={`page-item ${!canPrev ? "disabled" : ""}`}>
-            <a
-              className="page-link"
-              href="#"
-              aria-label="Previous"
-              onClick={handlePrev}
+      {/* 分頁 */}
+      <nav className="mt-32">
+        <ul className="pagination justify-content-center">
+          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+            <button
+              className="page-link border-0 bg-transparent text-brown"
+              onClick={() => setCurrentPage((p) => p - 1)}
             >
-              <span aria-hidden="true">&laquo;</span>
-            </a>
+              <i className="bi bi-chevron-left"></i>
+            </button>
           </li>
-
-          {Array.from({ length: totalPages }, (_, idx) => {
-            const p = idx + 1;
-            return (
-              <li key={p} className={`page-item ${page === p ? "active" : ""}`}>
-                <a
-                  className="page-link"
-                  href="#"
-                  onClick={(e) => handlePage(e, p)}
-                >
-                  {p}
-                </a>
-              </li>
-            );
-          })}
-
-          <li className={`page-item ${!canNext ? "disabled" : ""}`}>
-            <a
-              className="page-link"
-              href="#"
-              aria-label="Next"
-              onClick={handleNext}
+          {[...Array(totalPages)].map((_, i) => (
+            <li
+              key={i}
+              className={`page-item mx-1 ${currentPage === i + 1 ? "active" : ""}`}
             >
-              <span aria-hidden="true">&raquo;</span>
-            </a>
+              <button
+                className={`page-link rounded-2 border-0 ${
+                  currentPage === i + 1
+                    ? "bg-orange text-white"
+                    : "bg-light text-brown"
+                }`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            </li>
+          ))}
+          <li
+            className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
+          >
+            <button
+              className="page-link border-0 bg-transparent text-brown"
+              onClick={() => setCurrentPage((p) => p + 1)}
+            >
+              <i className="bi bi-chevron-right"></i>
+            </button>
           </li>
         </ul>
       </nav>
     </div>
   );
-}
-
-function money(n) {
-  const num = Number(n) || 0;
-  return num.toLocaleString("zh-Hant");
 }
