@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { getUserProfile } from "../api/userApi"; // 路徑依你的專案調整
+import { getUserProfile } from "../api/userApi";
+import { toast } from "react-toastify";
 
 const API_BASE_URL = "http://localhost:3000";
 const AuthContext = createContext(null);
@@ -68,6 +69,15 @@ export const AuthProvider = ({ children }) => {
     clearStorage("token", "userId", "userName", "userRole");
     setToken(null);
     setUser(null);
+
+    toast.success("您已成功登出", {
+      position: "top-center",
+      autoClose: 2000, // 2秒後自動消失
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (

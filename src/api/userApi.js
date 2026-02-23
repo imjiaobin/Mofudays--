@@ -108,3 +108,25 @@ export const getUserCart = async () => {
     return handleProtectedError(error, []);
   }
 };
+
+// 7. 更新會員資料 (/600)
+export const updateUserProfile = async (profileData) => {
+  const userId = getStorageItem("userId");
+  if (!userId) throw new Error("未登入，找不到 userId");
+
+  try {
+    const response = await axios.patch(
+      `${API_BASE_URL}/600/users/${userId}`,
+      profileData,
+      {
+        headers: {
+          ...getAuthHeader(),
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    return handleProtectedError(error, null);
+  }
+};
