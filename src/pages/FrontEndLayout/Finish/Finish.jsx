@@ -1,16 +1,33 @@
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { getOrderById } from "../../../api/planApi";
+
 import "./Finish.scss";
-import ProgressBar2 from "../Subscribe/ProgressBar2.jsx";
+import ProgressBar2 from "../Subscribe/ProgressBar2";
+import FinishOrder from "./FinishOrder";
 
 import finishIllustration from "../../../assets/images/subscribe/Illustration-finish.png";
 import balloonIllustration from "../../../assets/images/subscribe/Illustration-balloon.png";
 
 function Finish() {
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get("orderId");
+  const [order, setOrder] = useState(null);
+
+  useEffect(() => {
+    if (orderId) {
+      getOrderById(orderId).then(setOrder).catch(console.error);
+    }
+  }, [orderId]);
+
+  const grandTotal = order?.orderTotalAmount ?? 0;
+
   return (
     <>
       <main className="finish py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 />
+          <ProgressBar2 title="訂閱成功！" subtitle="謝謝你成為毛日和的夥伴" />
 
           {/* 訂單內容卡片 */}
           <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">
@@ -47,92 +64,16 @@ function Finish() {
                     <p className="col-table-1-5 p-nowrap text-center">小計</p>
                   </div>
 
-                  {/* 表格第一列 */}
-                  <div className="table-container-bg fs-14-sm d-flex py-4 px-4-sm pe-12-sm mb-2">
-                    {/* 訂閱期數 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      3
-                    </div>
-                    {/* 品項 */}
-                    <div className="col-table-4">
-                      <p className="table-title fw-bold mb-2 mb-4-sm">
-                        新手爸媽安心組
-                      </p>
-                      <p className="table-text fw-normal">
-                        零食 x 3 + 保健罐頭 x 2 + 互動小物 x 2
-                      </p>
-                    </div>
-                    {/* 單價 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $699
-                    </div>
-                    {/* 數量 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      3
-                    </div>
-                    {/* 小計 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $2,097
-                    </div>
-                  </div>
-
-                  {/* 表格第二列 */}
-                  <div className="table-container-bg fs-14-sm d-flex py-4 px-4-sm pe-12-sm mb-2">
-                    {/* 訂閱期數 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      3
-                    </div>
-                    {/* 品項 */}
-                    <div className="col-table-4">
-                      <p className="table-title fw-bold mb-2 mb-4-sm">
-                        青春汪能量補給包
-                      </p>
-                      <p className="table-text fw-normal">
-                        零食 x 3 + 保健罐頭 x 2 + 互動小物 x 2
-                      </p>
-                    </div>
-                    {/* 單價 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $699
-                    </div>
-                    {/* 數量 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      2
-                    </div>
-                    {/* 小計 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $1,398
-                    </div>
-                  </div>
-
-                  {/* 表格第三列 */}
-                  <div className="table-container-bg fs-14-sm d-flex py-4 px-4-sm pe-12-sm mb-2">
-                    {/* 訂閱期數 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      3
-                    </div>
-                    {/* 品項 */}
-                    <div className="col-table-4">
-                      <p className="table-title fw-bold mb-2 mb-4-sm">
-                        牛氣補補能量盒
-                      </p>
-                      <p className="table-text fw-normal">
-                        零食 x 3 + 保健罐頭 x 2 + 互動小物 x 2
-                      </p>
-                    </div>
-                    {/* 單價 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $699
-                    </div>
-                    {/* 數量 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      1
-                    </div>
-                    {/* 小計 */}
-                    <div className="col-table-1-5 d-flex justify-content-center align-items-center">
-                      $699
-                    </div>
-                  </div>
+                  {order?.subscriptions.map((sub) => (
+                    <FinishOrder
+                      key={sub.subscriptionId}
+                      months={order?.month}
+                      planName={sub.planName}
+                      planPrice={sub.planPrice}
+                      planQty={sub.planQty}
+                      content={sub.content}
+                    />
+                  ))}
                 </div>
 
                 {/* 訂單合計 */}
@@ -142,7 +83,10 @@ function Finish() {
                       訂單合計
                     </h6>
                     <p className="col-table-5 total-text fs-16-sm fw-bold text-end p-nowrap">
-                      每月<span className="fs-24 fw-medium ps-2">$4,194</span>
+                      每月
+                      <span className="fs-24 fw-medium ps-2">
+                        ${grandTotal.toLocaleString()}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -181,43 +125,43 @@ function Finish() {
             <div className="text-center d-none-min-sm px-5-5-sm">
               <div className="row">
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./index.html"
+                    to="/"
                     role="button"
                   >
                     返回首頁
-                  </a>
+                  </Link>
                 </div>
                 <div className="col-6-sm">
-                  <a
+                  <Link
                     className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    href="./pet-info.html"
+                    to="/petinfo"
                     role="button"
                   >
                     新增訂單
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 儲存按鈕 */}
+          {/* 儲存按鈕網頁版 */}
           <div className="text-center d-none-sm">
-            <a
+            <Link
               className="btn btn-primary rounded-pill btn-active-white px-40 me-6"
-              href="./index.html"
+              to="/"
               role="button"
             >
               返回首頁
-            </a>
-            <a
+            </Link>
+            <Link
               className="btn btn-primary rounded-pill btn-active px-40"
-              href="./pet-info.html"
+              to="/petinfo"
               role="button"
             >
               新增訂單
-            </a>
+            </Link>
           </div>
         </div>
       </main>
