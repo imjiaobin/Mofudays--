@@ -6,7 +6,6 @@ import { generatePlans } from "./generatePlans";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-
 async function getWithFallback(paths) {
   for (let i = 0; i < paths.length; i++) {
     try {
