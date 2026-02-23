@@ -24,6 +24,15 @@ select:focus {
 }
 
 .form-select-filled {
-  background-color: $primary-100 !important;
   color: $brown-500 !important;
+}
+
+// 移除瀏覽器 autofill 藍色背景
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: $brown-500 !important;
 }

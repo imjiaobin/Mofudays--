@@ -27,7 +27,11 @@ function Finish() {
       <main className="finish py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 title="訂閱成功！" subtitle="謝謝你成為毛日和的夥伴" />
+          <ProgressBar2
+            title="訂閱成功！"
+            subtitle="謝謝你成為毛日和的夥伴"
+            step={3}
+          />
 
           {/* 訂單內容卡片 */}
           <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">

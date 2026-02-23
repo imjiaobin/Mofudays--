@@ -25,7 +25,7 @@ import box01 from "../../../../assets/images/index/box_01.png";
 import box02 from "../../../../assets/images/index/box_02.png";
 import box03 from "../../../../assets/images/index/box_03.png";
 
-import { checkLoginStatus } from "../../../../api/userApi";
+// import { checkLoginStatus } from "../../../../api/userApi";
 
 const ProcessSection = () => {
   const navigate = useNavigate();

@@ -18,40 +18,22 @@ function clearStorage(...keys) {
 }
 
 export const AuthProvider = ({ children }) => {
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); //0223 vivian新增
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(() => getStorage("token"));
 
   // 每次 token 變動時，呼叫 API 驗證身分並還原 user
   useEffect(() => {
-    const initAuth = async () => {
-      const currentToken = getStorage("token");
-
-      if (!currentToken) {
-        setUser(null);
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        const userData = await getUserProfile();
-        if (userData) {
-          setUser(userData);
-        } else {
-          clearStorage("token", "userId", "userName", "userRole");
-          setToken(null);
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Auth 驗證發生錯誤:", error);
-        setUser(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    initAuth();
-  }, [token]);
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      setIsAuthed(true);
+      // 這裡可以選擇透過 API 獲取最新的使用者資料
+    }
+    setIsLoading(false); //0223 vivian新增
+  }, []);
 
   const login = (userData, accessToken, rememberMe) => {
     const storage = rememberMe ? localStorage : sessionStorage;
@@ -99,16 +81,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        isAuthed: !!token && (isLoading || !!user), // 與 hooks.js 相同邏輯
-        user,
-        isLoading,
-        token,
-        login,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{ isAuthed, isLoading, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

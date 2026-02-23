@@ -3,10 +3,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:3000";
 
 export const getCurrentUserId = () => {
-  // 開發期間假裝以王鬢角身分登入，接上 auth 後只剩這一行
-  return (
-    localStorage.getItem("userId") || "32ad2039-0085-4c22-9483-dbecf01ab18c"
-  );
+  return localStorage.getItem("userId") || sessionStorage.getItem("userId");
 };
 
 // 建立毛孩

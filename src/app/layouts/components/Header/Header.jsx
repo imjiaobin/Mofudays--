@@ -313,7 +313,25 @@ function MobileOffcanvasMenu() {
 // }
 
 function MobileTopActions() {
-  const handleCartClick = useCartNavigate(); // ← 改用 hook
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/petinfo");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  const handleCartClick = () => {
+    if (isAuthed) {
+      navigate("/cart");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="d-flex align-items-center gap-3 d-lg-none">
@@ -368,7 +386,25 @@ function NavBlogItem() {
 }
 
 function NavCartItem() {
-  const handleCartClick = useCartNavigate(); // ← 改用 hook
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  const handleCartClick = () => {
+    if (isAuthed) {
+      navigate("/cart");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <li className="nav-item d-none d-md-flex">

@@ -19,6 +19,7 @@ export default function Login() {
   const { login } = useAuth(); // 取得全域登入函式
   const navigate = useNavigate();
   const carouselRef = useRef(null);
+  const location = useLocation();
   const [apiError, setApiError] = useState(""); // 僅保留全域 API 錯誤
   // const [wasValidated, setWasValidated] = useState(false);
   // const [formData, setFormData] = useState({
