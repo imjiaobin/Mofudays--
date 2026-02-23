@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Header from "../../../app/layouts/components/Header/Header";
 import Footer from "../../../app/layouts/components/Footer/Footer";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -19,6 +19,7 @@ export default function Login() {
   const { login } = useAuth(); // 取得全域登入函式
   const navigate = useNavigate();
   const carouselRef = useRef(null);
+  const location = useLocation();
   const [apiError, setApiError] = useState(""); // 僅保留全域 API 錯誤
   // const [wasValidated, setWasValidated] = useState(false);
   // const [formData, setFormData] = useState({
@@ -83,7 +84,10 @@ export default function Login() {
       );
 
       login(user, accessToken, data.rememberMe);
-      navigate("/", { replace: true });
+
+      // 跳轉頁面
+      const redirectTo = location.state?.from?.pathname || "/";
+      navigate(redirectTo, { replace: true });
     } catch (err) {
       console.error("登入錯誤詳情：", err.response?.data);
       const status = err?.response?.status;

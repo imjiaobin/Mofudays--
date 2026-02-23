@@ -8,7 +8,7 @@ import heroImg from "../../../../assets/images/index/hero_img.png";
 import bonePatten from "../../../../assets/images/index/hero_bone_patten.svg";
 import greenPatten from "../../../../assets/images/index/hero_green_patten.svg";
 import yellowPatten from "../../../../assets/images/index/hero_yellow_patten.svg";
-import { checkLoginStatus } from "../../../../api/userApi";
+// import { checkLoginStatus } from "../../../../api/userApi";
 
 const HeroSection = () => {
   const navigate = useNavigate();

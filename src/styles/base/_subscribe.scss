@@ -313,6 +313,34 @@
   height: 2px;
   background-color: $secondary-300;
   margin: 0 16px;
+  transform-origin: left center;
+}
+.step-line:not(.disabled)::before {
+  animation: lineGrow 0.5s ease-out;
+}
+.step-line:not(.disabled) + .step-item:not(.disabled) {
+  animation: iconPop 0.4s ease-out 0.5s both;
+}
+@keyframes lineGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes iconPop {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .step .disabled {
   opacity: 30%;
@@ -325,5 +353,24 @@
   }
   .step-line::before {
     width: 143px;
+  }
+  .step-line:not(.disabled)::before {
+    animation: lineGrow 0.5s ease-out;
+  }
+  .step-line:not(.disabled) + .step-item:not(.disabled) {
+    animation: iconPop 0.4s ease-out 0.5s both;
+  }
+  @keyframes iconPop {
+    0% {
+      opacity: 0.3;
+      transform: scale(0.85);
+    }
+    60% {
+      transform: scale(1.15);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }

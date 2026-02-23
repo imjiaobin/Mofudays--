@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable no-constant-binary-expression */
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   createDog,
@@ -58,15 +59,46 @@ const PLAY_TO_CODE = {
 };
 
 function PetInfo() {
-  const [petName, setPetName] = useState("");
-  const [petGender, setPetGender] = useState("");
-  const [selectedYear, setSelectedYear] = useState("選擇年齡");
-  const [selectedSize, setSelectedSize] = useState("選擇體型");
-  const [selectedDiets, setSelectedDiets] = useState([]);
-  const [selectedHealth, setSelectedHealth] = useState(null);
-  const [selectedPlay, setSelectedPlay] = useState(null);
+  const saved = JSON.parse(localStorage.getItem("petInfoForm") || "{}");
+  const [petName, setPetName] = useState(saved.petName ?? "");
+  const [petGender, setPetGender] = useState(saved.petGender ?? "");
+  const [selectedYear, setSelectedYear] = useState(
+    saved.selectedYear ?? "選擇年齡",
+  );
+  const [selectedSize, setSelectedSize] = useState(
+    saved.selectedSize ?? "選擇體型",
+  );
+  const [selectedDiets, setSelectedDiets] = useState(saved.selectedDiets ?? []);
+  const [selectedHealth, setSelectedHealth] = useState(
+    saved.selectedHealth ?? null,
+  );
+  const [selectedPlay, setSelectedPlay] = useState(saved.selectedPlay ?? null);
+  // eslint-disable-next-line no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedExistingDog, setConfirmedExistingDog] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "petInfoForm",
+      JSON.stringify({
+        petName,
+        petGender,
+        selectedYear,
+        selectedSize,
+        selectedDiets,
+        selectedHealth,
+        selectedPlay,
+      }),
+    );
+  }, [
+    petName,
+    petGender,
+    selectedYear,
+    selectedSize,
+    selectedDiets,
+    selectedHealth,
+    selectedPlay,
+  ]);
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const navigate = useNavigate();
@@ -217,9 +249,12 @@ function PetInfo() {
       const dogId = confirmedExistingDog
         ? confirmedExistingDog.id
         : (await createDog(dogPayload)).id;
-      navigate("/plan", {
-        state: { formData, dogId, generatedPlans },
-      });
+      localStorage.setItem(
+        "planState",
+        JSON.stringify({ formData, dogId, generatedPlans }),
+      );
+      localStorage.removeItem("petInfoForm");
+      navigate("/plan", { state: { formData, dogId, generatedPlans } });
     } catch (err) {
       console.error("建立毛孩失敗", err);
       alert("發生錯誤，請稍後再試");

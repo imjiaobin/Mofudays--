@@ -54,7 +54,9 @@ import { useAuth } from "./contexts/AuthContext";
 // 前台會員權限守衛
 function RequireAuth({ children }) {
   const { isAuthed, isLoading } = useAuth();
-  // 1. 處理讀取中狀態：這是防止被踢回登入頁的最重要防線
+  const location = useLocation();
+
+  // 1. 處理讀取中狀態：避免 API 還沒回傳時就執行 Navigate
   if (isLoading) {
     return (
       <div
@@ -73,9 +75,12 @@ function RequireAuth({ children }) {
     );
   }
 
-  // 2. 判斷是否登入：此時 isLoading 必為 false
-  // 如果 isAuthed 為 false，才執行跳轉
-  return isAuthed ? children : <Navigate to="/login" replace />;
+  // 2. 判斷是否登入：isAuthed 是基於 token 是否存在
+  return isAuthed ? (
+    children
+  ) : (
+    <Navigate to="/login" replace state={{ from: location }} />
+  );
 }
 
 //後台管理員權限守衛
@@ -103,53 +108,46 @@ export const router = createHashRouter([
       { path: "faq", element: <FAQ /> },
       { path: "blog", element: <Blog /> },
       // { path: "blog/:postId", element: <BlogPost /> },
-      { path: "petinfo", element: <PetInfo /> },
-      { path: "plan", element: <Plan /> },
-      { path: "cart", element: <Cart /> },
-      { path: "checkout", element: <Checkout /> },
-      { path: "finish", element: <Finish /> },
-
-      //暫時移除權限方便測試
-      // {
-      //   path: "petinfo",
-      //   element: (
-      //     <RequireAuth>
-      //       <PetInfo />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "plan",
-      //   element: (
-      //     <RequireAuth>
-      //       <Plan />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "cart",
-      //   element: (
-      //     <RequireAuth>
-      //       <Cart />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "checkout",
-      //   element: (
-      //     <RequireAuth>
-      //       <Checkout />
-      //     </RequireAuth>
-      //   ),
-      // },
-      // {
-      //   path: "finish",
-      //   element: (
-      //     <RequireAuth>
-      //       <Finish />
-      //     </RequireAuth>
-      //   ),
-      // },
+      {
+        path: "petinfo",
+        element: (
+          <RequireAuth>
+            <PetInfo />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "plan",
+        element: (
+          <RequireAuth>
+            <Plan />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <RequireAuth>
+            <Cart />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <RequireAuth>
+            <Checkout />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "finish",
+        element: (
+          <RequireAuth>
+            <Finish />
+          </RequireAuth>
+        ),
+      },
 
       // 會員中心
       {

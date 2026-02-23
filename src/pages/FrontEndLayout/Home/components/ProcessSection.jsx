@@ -23,7 +23,7 @@ import box01 from "../../../../assets/images/index/box_01.png";
 import box02 from "../../../../assets/images/index/box_02.png";
 import box03 from "../../../../assets/images/index/box_03.png";
 
-import { checkLoginStatus } from "../../../../api/userApi";
+// import { checkLoginStatus } from "../../../../api/userApi";
 
 const ProcessSection = () => {
   const navigate = useNavigate();
@@ -53,15 +53,7 @@ const ProcessSection = () => {
 
   // 處理「立即訂閱」的點擊事件
   const handleSubscribeClick = () => {
-    const isAuthed = checkLoginStatus();
-
-    if (isAuthed) {
-      // 已登入：跳轉至寵物資訊頁 (依據你的需求)
-      navigate("/petinfo");
-    } else {
-      // 未登入：跳轉至註冊頁
-      navigate("/signup");
-    }
+    navigate("/petinfo");
   };
   return (
     <section className="process position-relative">

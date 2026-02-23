@@ -41,7 +41,7 @@ const CheckoutInfo = ({ form, setForm, errors, clearError }) => {
                 <input
                   type="tel"
                   className={`form-control ${errors.tel ? "border-danger" : ""}`}
-                  placeholder="電話或手機號碼"
+                  placeholder="電話（含區碼）或手機號碼"
                   value={form.tel}
                   onChange={(e) => {
                     setForm({ ...form, tel: e.target.value });
@@ -80,7 +80,8 @@ const CheckoutInfo = ({ form, setForm, errors, clearError }) => {
                     <div className="dropdown">
                       <button
                         className={`form-select text-start fw-regular border py-3 px-5
-                        ${errors.city ? "border-danger" : ""}`}
+                          ${errors.city ? "border-danger" : ""}
+                          ${form.city ? "form-select-filled" : ""}`}
                         type="button"
                         onClick={() =>
                           setOpenDropdown(
@@ -126,7 +127,8 @@ const CheckoutInfo = ({ form, setForm, errors, clearError }) => {
                     <div className="dropdown">
                       <button
                         className={`form-select text-start fw-regular border py-3 px-5
-                        ${errors.district ? "border-danger" : ""}`}
+                          ${errors.district ? "border-danger" : ""}
+                          ${form.district ? "form-select-filled" : ""}`}
                         type="button"
                         disabled={!form.city}
                         onClick={() =>

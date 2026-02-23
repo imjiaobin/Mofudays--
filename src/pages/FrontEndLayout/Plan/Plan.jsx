@@ -19,10 +19,11 @@ import planImg from "../../../assets/images/subscribe/plan-img.png";
 function Plan() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const formData = state?.formData;
-  const dogId = state?.dogId;
-  const dogPayload = state?.dogPayload;
-  const generatedPlans = state?.generatedPlans;
+  const saved = JSON.parse(localStorage.getItem("planState") || "{}");
+  const formData = state?.formData ?? saved.formData;
+  const dogId = state?.dogId ?? saved.dogId;
+  const generatedPlans = state?.generatedPlans ?? saved.generatedPlans;
+
   const [selectedPlan, setSelectedPlan] = useState(null);
 
   const handleBack = () => navigate(-1);
@@ -78,6 +79,7 @@ function Plan() {
       } else {
         await addToCart(cartPayload);
       }
+      localStorage.removeItem("planState");
       navigate("/cart");
     } catch (err) {
       console.error("加入購物車失敗", err);
@@ -89,7 +91,7 @@ function Plan() {
       <main className="plan py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar1 />
+          <ProgressBar1 step={2} />
 
           {/* 推薦方案 */}
           <div className="card-bg py-9 px-12-sm mb-6 mb-0-sm">
