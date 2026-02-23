@@ -17,12 +17,12 @@ import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
 import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
 
 import productImg1 from "../../../assets/images/subscribe/product-img-01.png";
-import productImg2 from "../../../assets/images/subscribe/product-img-02.png";
-import productImg3 from "../../../assets/images/subscribe/product-img-03.png";
 
 function Cart() {
   const [carts, setCarts] = useState([]);
-  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState(
+    () => JSON.parse(localStorage.getItem("selectedPeriod")) ?? null,
+  );
   const navigate = useNavigate();
 
   // 取得購物車資料
@@ -37,6 +37,10 @@ function Cart() {
       })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("selectedPeriod", JSON.stringify(selectedPeriod));
+  }, [selectedPeriod]);
 
   // 刪除
   const handleDelete = async (cartId) => {
@@ -65,7 +69,7 @@ function Cart() {
       <main className="cart py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 title="購物車" />
+          <ProgressBar2 title="購物車" step={1} />
 
           {/* 訂閱內容卡片 */}
           <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">
@@ -235,9 +239,11 @@ function Cart() {
 
             {/* 儲存按鈕手機版 */}
             <ActiveButtonPhone
-              active1="繼續訂閱"
+              active1="回上一步"
               active2="確認結帳"
+              active3="加入新的訂閱"
               onBack={() => navigate(-1)}
+              onExtra={() => navigate("/petinfo")}
               onSubmit={async () => {
                 if (!selectedPeriod) {
                   alert("請選擇訂閱期數");
@@ -246,6 +252,7 @@ function Cart() {
                 await Promise.all(
                   carts.map((c) => updateCartCycles(c.id, selectedPeriod)),
                 );
+                localStorage.removeItem("selectedPeriod");
                 navigate("/checkout");
               }}
             />
@@ -254,9 +261,11 @@ function Cart() {
 
         {/* 儲存按鈕網頁版 */}
         <ActiveButtonWeb
-          active1="繼續訂閱"
+          active1="回上一步"
           active2="確認結帳"
+          active3="加入新的訂閱"
           onBack={() => navigate(-1)}
+          onExtra={() => navigate("/petinfo")}
           onSubmit={async () => {
             if (!selectedPeriod) {
               alert("請選擇訂閱期數");
@@ -265,6 +274,7 @@ function Cart() {
             await Promise.all(
               carts.map((c) => updateCartCycles(c.id, selectedPeriod)),
             );
+            localStorage.removeItem("selectedPeriod");
             navigate("/checkout");
           }}
         />

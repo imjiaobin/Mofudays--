@@ -3,8 +3,6 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../../../app/layouts/components/Header/Header";
-import Footer from "../../../app/layouts/components/Footer/Footer";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./Login.scss";
 
@@ -13,12 +11,15 @@ import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
 import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
 import loginSlider03 from "../../../assets/images/common/login-slider-03.png";
 
+import { toast } from "react-toastify";
+
 const API_BASE_URL = "http://localhost:3000";
 
 export default function Login() {
   const { login } = useAuth(); // 取得全域登入函式
   const navigate = useNavigate();
   const carouselRef = useRef(null);
+  const location = useLocation();
   const [apiError, setApiError] = useState(""); // 僅保留全域 API 錯誤
   // const [wasValidated, setWasValidated] = useState(false);
   // const [formData, setFormData] = useState({
@@ -70,7 +71,6 @@ export default function Login() {
       const { accessToken, user } = res.data;
       if (!accessToken) throw new Error("登入成功但未取得 token");
 
-      // 同步更新資料庫的 isLoggedIn 與 updatedAt
       await axios.patch(
         `${API_BASE_URL}/users/${user.id}`,
         {
@@ -83,6 +83,7 @@ export default function Login() {
       );
 
       login(user, accessToken, data.rememberMe);
+      toast.success("登入成功！歡迎回來 👋");
       navigate("/", { replace: true });
     } catch (err) {
       console.error("登入錯誤詳情：", err.response?.data);
@@ -91,7 +92,7 @@ export default function Login() {
         setError("password", { type: "manual", message: "帳號或密碼錯誤" });
         setError("email", { type: "manual", message: " " });
       } else {
-        setApiError("登入失敗，伺服器連線異常");
+        toast.error("登入失敗，伺服器連線異常");
       }
     }
   };

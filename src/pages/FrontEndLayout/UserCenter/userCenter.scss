@@ -683,6 +683,11 @@ p {
     .btn-save {
       font-size: clamp(14px, 1.7vw, 16px);
     }
+    // 修正 input-group 內 form-control 被 BS5 清掉右側 radius 的問題
+    .input-group > .form-control,
+    .input-group > .form-select {
+      border-radius: var(--bs-border-radius) !important;
+    }
   }
 
   // ----------------------------------------  訂單管理頁籤

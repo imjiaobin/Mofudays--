@@ -10,6 +10,8 @@ import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
 import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
 import longinSlider03 from "../../../assets/images/common/login-slider-03.png";
 
+import { toast } from "react-toastify";
+
 const API_BASE_URL = "http://localhost:3000";
 
 export default function Signup() {
@@ -57,19 +59,19 @@ export default function Signup() {
       const now = new Date().toISOString();
 
       const registerData = {
-        ...formFields, // name, nickname, birthday, phone, email, password, address
-        role: "user", // 預設角色
-        createdAt: now, // 註冊時間
-        updatedAt: now, // 初始與 createdAt 相同
-        deletedAt: null, // 尚未刪除
-        isLoggedIn: false, // 剛註冊尚未登入
-        isActive: true, // 帳號啟用
+        ...formFields,
+        role: "user",
+        createdAt: now,
+        updatedAt: now,
+        deletedAt: null,
+        isLoggedIn: false,
+        isActive: true,
       };
 
       const res = await axios.post(`${API_BASE_URL}/register`, registerData);
 
       console.log("註冊成功回傳資料：", res.data);
-      alert("註冊成功！");
+      toast.success("註冊成功！");
       navigate("/login");
     } catch (err) {
       if (err.response) {
@@ -81,14 +83,14 @@ export default function Signup() {
           if (typeof errorMsg === "string" && errorMsg.includes("Email")) {
             setError("email", { type: "manual", message: "此 Email 已被註冊" });
           } else {
-            alert("註冊資料格式錯誤，請檢查欄位");
+            toast.warn("註冊資料格式錯誤，請檢查欄位");
           }
         } else {
-          alert("註冊失敗，伺服器連線異常");
+          toast.error("註冊失敗，伺服器連線異常");
         }
       } else {
         console.error("JavaScript 或網路錯誤：", err.message);
-        alert("程式執行發生錯誤，請查看控制台");
+        toast.error("程式執行發生錯誤，請查看控制台");
       }
     }
   };

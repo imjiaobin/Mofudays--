@@ -1,65 +1,126 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import shippingCart from "../../../assets/images/userCenter/member_shipping_cart.png";
 import aboutBg from "../../../assets/images/userCenter/about-bg.png";
 import waitingDog from "../../../assets/images/userCenter/member_waiting_dog.png";
+import { getUserProfile, updateUserProfile } from "../../../api/userApi";
+
+import { toast } from "react-toastify";
+
 const INITIAL_PROFILE = {
   name: "",
   nickname: "",
   birthday: "",
   email: "",
-  mobile: "",
-  address: {
-    city: "",
-    zip: "",
-    addr: "",
-  },
-  shipping: {
-    city: "",
-    zip: "",
-    addr: "",
-  },
+  phone: "",
+  address: "",
+  shipping: "",
 };
+
+// 將 API 回傳的 user 物件轉為元件用的 formData 格式
+const mapUserToForm = (user) => ({
+  name: user.name || "",
+  nickname: user.nickname || "",
+  birthday: user.birthday || "", // 預期格式 "YYYY-MM-DD"，符合 input[type=date]
+  email: user.email || "",
+  phone: user.phone || "",
+  address: typeof user.address === "string" ? user.address : "",
+  shipping: typeof user.shipping === "string" ? user.shipping : "",
+});
+
+// 將 formData 轉回 API 所需格式
+const mapFormToUser = (formData) => ({
+  name: formData.name,
+  nickname: formData.nickname,
+  birthday: formData.birthday,
+  email: formData.email,
+  phone: formData.phone,
+  address: formData.address,
+  shipping: formData.shipping,
+});
 
 export default function UserProfile({ onSave }) {
   const [formData, setFormData] = useState(INITIAL_PROFILE);
   const [wasValidated, setWasValidated] = useState(false);
+  const [sameAsHome, setSameAsHome] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // 載入會員資料
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const user = await getUserProfile();
+        if (user) {
+          setFormData(mapUserToForm(user));
+        }
+      } catch (err) {
+        console.error("載入會員資料失敗", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // 支援巢狀欄位：address.city / shipping.zip
-    if (name.includes(".")) {
-      const [group, key] = name.split(".");
-      setFormData((prev) => ({
-        ...prev,
-        [group]: {
-          ...prev[group],
-          [key]: value,
-        },
-      }));
-      return;
-    }
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+      // 若勾選同住家地址且修改的是 address，同步更新 shipping
+      if (sameAsHome && name === "address") {
+        updated.shipping = value;
+      }
+
+      return updated;
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSameAsHome = (e) => {
+    const checked = e.target.checked;
+    setSameAsHome(checked);
+    if (checked) {
+      setFormData((prev) => ({ ...prev, shipping: prev.address }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
 
     setWasValidated(true);
 
     if (!form.checkValidity()) {
-      // BS5 會自動顯示 invalid-tooltip / valid-tooltip（因為加了 was-validated）
       e.stopPropagation();
       return;
     }
 
-    // 先不打 API，先模擬存檔
-    console.log("[UserProfileForm] submit:", formData);
-    onSave?.(formData);
-    alert("已送出（目前先不打 API）");
+    setIsSaving(true);
+    try {
+      const payload = mapFormToUser(formData);
+      const result = await updateUserProfile(payload);
+      console.log("[UserProfile] 儲存成功:", result);
+      onSave?.(result);
+      toast.success("會員資料已更新！");
+      setWasValidated(false);
+    } catch (err) {
+      console.error("[UserProfile] 儲存失敗:", err);
+      toast.error("儲存失敗，請稍後再試");
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center mt-80">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -77,8 +138,7 @@ export default function UserProfile({ onSave }) {
           <label htmlFor="user-name" className="form-label p1">
             姓名
           </label>
-
-          <div className="input-group">
+          <div className="position-relative">
             <input
               type="text"
               className="form-control pe-5"
@@ -92,18 +152,16 @@ export default function UserProfile({ onSave }) {
             />
             <i className="icon icon-user-round-pen position-absolute top-50 end-0 translate-middle-y me-3"></i>
           </div>
-
           <div className="valid-tooltip">正確!</div>
           <div className="invalid-tooltip">姓名不得為空或是超過20個字!</div>
         </div>
 
-        {/* 暱稱 */}
+        {/* 暱稱（選填，不加 required） */}
         <div className="mb-56 ps-8 position-relative">
           <label htmlFor="user-nick-name" className="form-label p1">
             暱稱
           </label>
-
-          <div className="input-group">
+          <div className="position-relative">
             <input
               type="text"
               className="form-control pe-5"
@@ -117,31 +175,26 @@ export default function UserProfile({ onSave }) {
           </div>
         </div>
 
-        {/* 生日（先用 text + pattern 保持原設計） */}
+        {/* 生日 — type="date" 讓使用者用選的，對齊註冊頁 */}
         <div className="mb-56 ps-8 position-relative">
           <label htmlFor="birthday" className="form-label p1">
             生日
           </label>
-
-          <div className="input-group">
+          <div className="position-relative">
             <input
-              type="text"
+              type="date"
               className="form-control"
               id="birthday"
               name="birthday"
-              placeholder="請輸入生日, 例如: 1991/10/09"
               required
-              pattern="^\d{4}\/\d{2}\/\d{2}$"
+              max={new Date().toISOString().split("T")[0]}
               value={formData.birthday}
               onChange={handleChange}
             />
-            <i className="icon icon-cake position-absolute top-50 end-0 translate-middle-y me-3"></i>
+            {/* pe-none 避免 icon 擋住 date picker 的原生箭頭 */}
           </div>
-
           <div className="valid-tooltip">正確!</div>
-          <div className="invalid-tooltip">
-            請輸入正確年月日! 例如: 1991/10/09
-          </div>
+          <div className="invalid-tooltip">請選擇生日!</div>
         </div>
 
         {/* Email */}
@@ -149,8 +202,7 @@ export default function UserProfile({ onSave }) {
           <label htmlFor="email" className="form-label p1">
             Email
           </label>
-
-          <div className="input-group">
+          <div className="position-relative">
             <input
               type="email"
               className="form-control"
@@ -165,93 +217,57 @@ export default function UserProfile({ onSave }) {
             />
             <div className="icon icon-mail position-absolute top-50 end-0 translate-middle-y me-3"></div>
           </div>
-
           <div className="valid-tooltip">正確!</div>
           <div className="invalid-tooltip">請輸入正確電子信箱!</div>
         </div>
 
         {/* 手機 */}
         <div className="mb-56 ps-8 position-relative">
-          <label htmlFor="mobile" className="form-label p1">
+          <label htmlFor="phone" className="form-label p1">
             手機號碼
           </label>
-
-          <div className="input-group">
+          <div className="position-relative">
             <input
-              type="text"
+              type="tel"
               className="form-control"
-              id="mobile"
-              name="mobile"
+              id="phone"
+              name="phone"
               placeholder="請輸入手機號碼"
               maxLength={10}
               required
-              pattern="^\d{10}$"
-              value={formData.mobile}
+              pattern="^09\d{8}$"
+              inputMode="tel"
+              value={formData.phone}
               onChange={handleChange}
             />
             <i className="icon icon-smartphone position-absolute top-50 end-0 translate-middle-y me-3"></i>
           </div>
-
           <div className="valid-tooltip">正確!</div>
-          <div className="invalid-tooltip">請輸入手機號碼!</div>
+          <div className="invalid-tooltip">
+            請輸入正確的手機號碼（09 開頭，共10碼）!
+          </div>
         </div>
 
-        {/* 住家地址 */}
-        <div className="mb-56 ps-8">
-          <label className="form-label p1">住家地址</label>
-
-          <div className="row g-3 g-lg-4">
-            <div className="col-md-3 position-relative">
-              <select
-                className="form-select"
-                id="city"
-                name="address.city"
-                required
-                value={formData.address.city}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  縣/市
-                </option>
-                <option value="台北市">台北市</option>
-                <option value="台中市">台中市</option>
-                <option value="高雄市">高雄市</option>
-              </select>
-              <div className="invalid-tooltip">請選擇縣/市!</div>
-            </div>
-
-            <div className="col-md-3 position-relative">
-              <input
-                type="text"
-                className="form-control"
-                id="zip"
-                name="address.zip"
-                placeholder="郵遞區號"
-                required
-                pattern="^\d{3,5}$"
-                value={formData.address.zip}
-                onChange={handleChange}
-              />
-              <div className="invalid-tooltip">請輸入郵遞區號!</div>
-            </div>
-
-            <div className="col-md-6 position-relative">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="address"
-                  name="address.addr"
-                  placeholder="地址"
-                  required
-                  value={formData.address.addr}
-                  onChange={handleChange}
-                />
-                <div className="icon icon-map-pin-house position-absolute top-50 end-0 translate-middle-y me-3"></div>
-              </div>
-              <div className="invalid-tooltip">請輸入地址!</div>
-            </div>
+        {/* 住家地址 — 單一欄位 */}
+        <div className="mb-56 ps-8 position-relative">
+          <label htmlFor="address" className="form-label p1">
+            住家地址
+          </label>
+          <div className="position-relative">
+            <input
+              type="text"
+              className="form-control"
+              id="address"
+              name="address"
+              placeholder="請輸入住家地址"
+              required
+              value={formData.address}
+              onChange={handleChange}
+            />
+            <div className="icon icon-map-pin-house position-absolute top-50 end-0 translate-middle-y me-3"></div>
           </div>
+          <div className="valid-tooltip">正確!</div>
+          <div className="invalid-tooltip">請輸入住家地址!</div>
         </div>
       </div>
 
@@ -277,60 +293,44 @@ export default function UserProfile({ onSave }) {
           className="position-absolute img-waiting-dog transform-x img-shake top-1 end-1 z-1"
         />
 
+        {/* 送達地址 — 單一欄位 */}
         <div className="mb-3 ps-8">
-          <label className="form-label p1">送達地址</label>
-
-          <div className="row g-3 g-lg-4">
-            <div className="col-md-3 position-relative">
-              <select
-                className="form-select"
-                id="shipping-city"
-                name="shipping.city"
-                required
-                value={formData.shipping.city}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  縣/市
-                </option>
-                <option value="台北市">台北市</option>
-                <option value="台中市">台中市</option>
-                <option value="高雄市">高雄市</option>
-              </select>
-              <div className="invalid-tooltip">請選擇縣/市!</div>
+          {/* Label 列：送達地址標題 + 同住家地址 checkbox 並排 */}
+          <div className="d-flex align-items-center gap-3 mb-2">
+            <label htmlFor="shipping" className="form-label p1 mb-0">
+              送達地址
+            </label>
+            <div className="form-check mb-0">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="same-as-home"
+                checked={sameAsHome}
+                onChange={handleSameAsHome}
+              />
+              <label className="form-check-label" htmlFor="same-as-home">
+                同住家地址
+              </label>
             </div>
+          </div>
 
-            <div className="col-md-3 position-relative">
+          <div className="position-relative">
+            <div className="position-relative">
               <input
                 type="text"
                 className="form-control"
-                id="shipping-zip"
-                name="shipping.zip"
-                placeholder="郵遞區號"
+                id="shipping"
+                name="shipping"
+                placeholder="請輸入送達地址"
                 required
-                pattern="^\d{3,5}$"
-                value={formData.shipping.zip}
+                disabled={sameAsHome}
+                value={formData.shipping}
                 onChange={handleChange}
               />
-              <div className="invalid-tooltip">請輸入郵遞區號!</div>
+              <div className="icon icon-map-pin-house position-absolute top-50 end-0 translate-middle-y me-3"></div>
             </div>
-
-            <div className="col-md-6 position-relative">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="shipping-addr"
-                  name="shipping.addr"
-                  placeholder="地址"
-                  required
-                  value={formData.shipping.addr}
-                  onChange={handleChange}
-                />
-                <div className="icon icon-map-pin-house position-absolute top-50 end-0 translate-middle-y me-3"></div>
-              </div>
-              <div className="invalid-tooltip">請輸入送達地址!</div>
-            </div>
+            <div className="valid-tooltip">正確!</div>
+            <div className="invalid-tooltip">請輸入送達地址!</div>
           </div>
         </div>
       </div>
@@ -339,8 +339,9 @@ export default function UserProfile({ onSave }) {
         <button
           type="submit"
           className="btn btn-save rounded-pill align-bottom"
+          disabled={isSaving}
         >
-          存檔
+          {isSaving ? "儲存中..." : "編輯"}
         </button>
       </div>
     </form>

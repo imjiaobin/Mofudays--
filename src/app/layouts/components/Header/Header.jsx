@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
 import avatarDefalut from "../../../../assets/images/header/avatar_defalut.png";
 
+import { toast } from "react-toastify";
+
 // 購物車跳轉邏輯 hook
 function useCartNavigate() {
   const navigate = useNavigate();
@@ -17,8 +19,8 @@ function useCartNavigate() {
 
   const handleCartClick = async () => {
     if (!isAuthed) {
-      alert("尚未登入，請先註冊或登入會員！");
-      navigate("/signup");
+      toast.warn("尚未登入，請先登入會員！");
+      navigate("/login");
       return;
     }
 
@@ -31,12 +33,12 @@ function useCartNavigate() {
       if (data && data.length > 0) {
         navigate("/cart");
       } else {
-        alert("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
+        toast.info("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
         navigate("/petinfo");
       }
     } catch (err) {
       console.error("查詢購物車失敗", err);
-      alert("查詢購物車時發生錯誤，請稍後再試。");
+      toast.error("查詢購物車時發生錯誤，請稍後再試。");
     }
   };
 
@@ -311,7 +313,25 @@ function MobileOffcanvasMenu() {
 // }
 
 function MobileTopActions() {
-  const handleCartClick = useCartNavigate(); // ← 改用 hook
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/petinfo");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  const handleCartClick = () => {
+    if (isAuthed) {
+      navigate("/cart");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="d-flex align-items-center gap-3 d-lg-none">
@@ -366,7 +386,25 @@ function NavBlogItem() {
 }
 
 function NavCartItem() {
-  const handleCartClick = useCartNavigate(); // ← 改用 hook
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  const handleCartClick = () => {
+    if (isAuthed) {
+      navigate("/cart");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <li className="nav-item d-none d-md-flex">
@@ -648,6 +686,8 @@ function LoggedInMenu({ variant, user, logout }) {
   const displayName = user?.name || storedName || "會員";
   const [open, setOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   // 點其他地方時關閉
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -660,11 +700,36 @@ function LoggedInMenu({ variant, user, logout }) {
   }, []);
 
   const handleLogout = () => {
-    const confirmed = window.confirm("確認要登出嗎？");
-    if (!confirmed) return;
-    logout();
-    setOpen(false);
-    closeOffcanvasIfAny();
+    toast.info(
+      ({ closeToast }) => (
+        <div className="text-center">
+          <p className="mb-3">確定要登出嗎？</p>
+          <div className="d-flex justify-content-center gap-2">
+            <button className="btn btn-sm btn-secondary" onClick={closeToast}>
+              取消
+            </button>
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={async () => {
+                await logout();
+                setOpen(false);
+                closeOffcanvasIfAny();
+                closeToast();
+                navigate("/");
+              }}
+            >
+              確認登出
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        position: "top-center",
+        autoClose: false, // ❗ 不自動關閉
+        closeOnClick: false,
+        draggable: false,
+      },
+    );
   };
 
   const handleClickLink = () => {

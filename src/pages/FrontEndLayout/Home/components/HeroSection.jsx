@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-// 1. 先引入圖片
+// 引入圖片
 import heroHeadlineDesktop from "../../../../assets/images/index/01_hero_headline_desktop.svg";
 import heroHeadlineMobile from "../../../../assets/images/index/01_hero_headline_mobile.svg";
 import heroImg from "../../../../assets/images/index/hero_img.png";
 import bonePatten from "../../../../assets/images/index/hero_bone_patten.svg";
 import greenPatten from "../../../../assets/images/index/hero_green_patten.svg";
 import yellowPatten from "../../../../assets/images/index/hero_yellow_patten.svg";
-import { checkLoginStatus } from "../../../../api/userApi";
+// import { checkLoginStatus } from "../../../../api/userApi";
+
+import { toast } from "react-toastify";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ const HeroSection = () => {
       // 已登入：跳轉至寵物資訊頁 (依據你的需求)
       navigate("/petinfo");
     } else {
-      // 未登入：跳轉至註冊頁
-      navigate("/signup");
+      toast.warn("請先登入以使用此功能！");
+      navigate("/login");
     }
   };
   return (
@@ -48,14 +49,13 @@ const HeroSection = () => {
               <br className="d-block d-sm-none" />
               讓陪伴更輕鬆也更有温度
             </h2>
-            <Link
+            <button
+              type="button"
               className="btn rounded-pill btn-primary btn-subscribe hero-button"
-              to="/petinfo"
-              role="button"
               onClick={handleSubscribeClick}
             >
               立即訂閱
-            </Link>
+            </button>
           </div>
           <div className="col-md-6 col-12 hero-image-col">
             <img src={heroImg} className="img-fluid w-100" alt="hero_img" />

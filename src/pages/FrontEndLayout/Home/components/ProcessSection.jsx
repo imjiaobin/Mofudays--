@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 // --- 圖片引入  ---
 // 標題與裝飾
 import processHeadlineDesktop from "../../../../assets/images/index/04_process_headline_desktop.svg";
@@ -23,7 +25,7 @@ import box01 from "../../../../assets/images/index/box_01.png";
 import box02 from "../../../../assets/images/index/box_02.png";
 import box03 from "../../../../assets/images/index/box_03.png";
 
-import { checkLoginStatus } from "../../../../api/userApi";
+// import { checkLoginStatus } from "../../../../api/userApi";
 
 const ProcessSection = () => {
   const navigate = useNavigate();
@@ -53,14 +55,14 @@ const ProcessSection = () => {
 
   // 處理「立即訂閱」的點擊事件
   const handleSubscribeClick = () => {
-    const isAuthed = checkLoginStatus();
-
+    const isAuthed = checkLoginStatus(); // 為了測試路由先做第17行 2025/2/15 by 納森
+    // const isAuthed = true;
     if (isAuthed) {
       // 已登入：跳轉至寵物資訊頁 (依據你的需求)
       navigate("/petinfo");
     } else {
-      // 未登入：跳轉至註冊頁
-      navigate("/signup");
+      toast.warn("請先登入以使用此功能！");
+      navigate("/login");
     }
   };
   return (

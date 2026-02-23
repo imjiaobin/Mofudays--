@@ -1,7 +1,7 @@
 import serviceStep1 from "../../../assets/images/subscribe/service_step_1.svg";
 import serviceStep2 from "../../../assets/images/subscribe/service_step_2.svg";
 
-const ProgressBar1 = () => {
+const ProgressBar1 = ({ step = 1 }) => {
   return (
     <div className="d-flex justify-content-between align-items-center flex-col-sm px-110 px-24-sm mb-6 mb-24-sm">
       {/* 標題 */}
@@ -20,8 +20,8 @@ const ProgressBar1 = () => {
           />
           <p className="text-center fs-14">填寫毛孩資料</p>
         </div>
-        <div className="step-line disabled"></div>
-        <div className="step-item disabled">
+        <div className={`step-line${step < 2 ? " disabled" : ""}`}></div>
+        <div className={`step-item${step < 2 ? " disabled" : ""}`}>
           <img
             src={serviceStep2}
             alt="step_2"

@@ -17,15 +17,20 @@ import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
 
 function Checkout() {
   const [carts, setCarts] = useState([]);
-  const [form, setForm] = useState({
-    name: "",
-    city: "",
-    district: "",
-    street: "",
-    tel: "",
-    email: "",
-    paymentMethod: "",
-    remark: "",
+  const [form, setForm] = useState(() => {
+    const saved = localStorage.getItem("checkoutForm");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          name: "",
+          city: "",
+          district: "",
+          street: "",
+          tel: "",
+          email: "",
+          paymentMethod: "",
+          remark: "",
+        };
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({
@@ -38,6 +43,10 @@ function Checkout() {
     paymentMethod: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("checkoutForm", JSON.stringify(form));
+  }, [form]);
 
   useEffect(() => {
     getCarts(getCurrentUserId()).then(setCarts).catch(console.error);
@@ -54,25 +63,25 @@ function Checkout() {
   const handlePlaceOrder = async () => {
     if (isSubmitting) return;
 
-    const telReg = /^(09\d{2}-\d{3}-\d{3}|0\d-\d{3}-\d{4}|0\d-\d{4}-\d{4})$/;
+    const telReg = /^(\d{10}|(?!09)\d{9})$/;
     const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const newErrors = {
-      name: !form.name.trim() ? "請輸入姓名" : "",
-      city: !form.city ? "請選擇縣市" : "",
-      district: !form.district ? "請選擇地區" : "",
-      street: !form.street.trim() ? "請輸入街道與門牌" : "",
+      name: !form.name.trim() ? "⚠️請輸入姓名" : "",
+      city: !form.city ? "⚠️請選擇縣市" : "",
+      district: !form.district ? "⚠️請選擇地區" : "",
+      street: !form.street.trim() ? "⚠️請輸入街道與門牌" : "",
       tel: !form.tel.trim()
-        ? "請輸入手機號碼"
+        ? "⚠️請輸入手機號碼"
         : !telReg.test(form.tel.trim())
-          ? "格式錯誤"
+          ? "⚠️請檢查是否輸入錯誤"
           : "",
       email: !form.email.trim()
-        ? "請輸入電子郵件"
+        ? "⚠️請輸入電子郵件"
         : !emailReg.test(form.email.trim())
-          ? "電子郵件格式錯誤"
+          ? "⚠️電子郵件格式錯誤"
           : "",
-      paymentMethod: !form.paymentMethod ? "請選擇付款方式" : "",
+      paymentMethod: !form.paymentMethod ? "⚠️請選擇付款方式" : "",
     };
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
@@ -126,6 +135,7 @@ function Checkout() {
 
       await createOrder(orderPayload);
       await Promise.all(carts.map((c) => deleteCart(c.id)));
+      localStorage.removeItem("checkoutForm");
       navigate(`/finish?orderId=${orderId}`);
     } catch (err) {
       console.error("建立訂單失敗", err);
@@ -140,7 +150,7 @@ function Checkout() {
       <main className="checkout py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 title="訂單確認" />
+          <ProgressBar2 title="訂單確認" step={2} />
 
           {/* 訂單明細卡片 */}
           <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">

@@ -1,6 +1,22 @@
-const ActiveButtonWeb = ({ active1, active2, onBack, onSubmit }) => {
+const ActiveButtonWeb = ({
+  active1,
+  active2,
+  active3,
+  onBack,
+  onSubmit,
+  onExtra,
+}) => {
   return (
     <div className="text-center d-none-sm">
+      {active3 && (
+        <button
+          className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
+          role="button"
+          onClick={onExtra}
+        >
+          {active3}
+        </button>
+      )}
       <button
         className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
         role="button"
