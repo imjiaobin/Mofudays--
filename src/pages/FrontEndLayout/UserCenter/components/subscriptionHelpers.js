@@ -59,7 +59,6 @@ export const filterOrdersByTab = (orders, activeTab) => {
 /**
  * 組裝「再次訂閱」要帶去 /cart 的資料
  * 過濾掉 subscriptionStatus === "已取消" 的項目
- * 帶入 Cart 渲染所需的完整欄位
  */
 export const buildResubscribePayload = (order) => {
   const activeSubscriptions = order.subscriptions.filter(
@@ -67,14 +66,13 @@ export const buildResubscribePayload = (order) => {
   );
   return {
     orderId: order.id,
-    perCycleAmount: order.perCycleAmount,
+    month: order.month, // ✅ 修正：perCycleAmount → month（API 無 perCycleAmount）
     subscriptions: activeSubscriptions.map((s) => ({
       subscriptionId: s.subscriptionId,
-      planId: s.planId,
-      planName: s.subscriptionPlan,
-      termCycles: s.termCycles,
-      subscriptionQuantity: s.subscriptionQuantity,
-      planContent: s.planContent, // { snacks:[], cans:[], toys:[] }
+      planName: s.planName, // ✅ 修正：subscriptionPlan → planName
+      planPrice: s.planPrice, // ✅ 修正：新增 planPrice
+      planQty: s.planQty, // ✅ 修正：subscriptionQuantity → planQty
+      content: s.content, // ✅ 修正：planContent → content
     })),
   };
 };

@@ -3,7 +3,7 @@ import SubscriptionCardBody from "./MemberOrderCardBody";
 import { deriveOrderStatus, getStatusType } from "./subscriptionHelpers";
 
 /**
- * <SubscriptionCard></SubscriptionCard>
+ * <SubscriptionCard />
  *
  * Props:
  * - order           {object}   完整訂單資料（來自 API）
@@ -43,7 +43,7 @@ export default function SubscriptionCard({
       {isExpanded && (
         <SubscriptionCardBody
           subscriptions={order.subscriptions}
-          perCycleAmount={order.perCycleAmount}
+          order={order} // ✅ 新增：Body 需要 order.month / order.orderDate
           isCancelling={isCancelling}
           selectedItems={selectedItems}
           onToggleItem={onToggleItem}
