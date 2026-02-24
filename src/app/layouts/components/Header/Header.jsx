@@ -2,7 +2,7 @@ import "./Header.scss";
 import "./Header-logout.scss";
 import { useNavigate } from "react-router-dom";
 import { Menu, ShoppingCart, Newspaper, HeartPlus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Navigate } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
@@ -58,8 +58,6 @@ export default function Header() {
               height={28}
             />
           </a>
-          <Link to="/usercenter">會員中心</Link>
-          {/*  20250215 納森測試路由用 */}
           {/* 右邊（手機）：menu + cart */}
           <MobileTopActions />
 
@@ -313,8 +311,7 @@ function MobileOffcanvasMenu() {
 // }
 
 function MobileTopActions() {
-  const navigate = useNavigate();
-  const { isAuthed } = useAuth();
+  const handleCartClick = useCartNavigate();
 
   // const handleCartClick = () => {
   //   if (isAuthed) {
@@ -325,13 +322,13 @@ function MobileTopActions() {
   // };
 
   //以下為vivian 0223修改
-  const handleCartClick = () => {
-    if (isAuthed) {
-      navigate("/cart");
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <div className="d-flex align-items-center gap-3 d-lg-none">
@@ -386,8 +383,7 @@ function NavBlogItem() {
 }
 
 function NavCartItem() {
-  const navigate = useNavigate();
-  const { isAuthed } = useAuth();
+  const handleCartClick = useCartNavigate();
 
   // const handleCartClick = () => {
   //   if (isAuthed) {
@@ -398,13 +394,13 @@ function NavCartItem() {
   // };
 
   //以下為vivian 0223修改
-  const handleCartClick = () => {
-    if (isAuthed) {
-      navigate("/cart");
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <li className="nav-item d-none d-md-flex">

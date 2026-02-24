@@ -15,8 +15,7 @@ export default function SubscriptionCardHeader({
   statusType,
   onClick,
 }) {
-  // 計算訂閱總期數：取第一個 subscription 的 termCycles
-  const termCycles = order.subscriptions?.[0]?.termCycles ?? "-";
+  const termCycles = order.month ?? "-";
 
   // 日期格式化：ISO → YYYY/MM/DD
   const formatDate = (isoString) => {
@@ -32,7 +31,6 @@ export default function SubscriptionCardHeader({
         borderColor: isExpanded ? "#FFE0D0" : "#E0E0E0",
         cursor: "pointer",
         transition: "background-color 0.3s ease",
-        // 收合：四角全圓；展開：上圓角下直角，與 body 無縫接合
         borderRadius: isExpanded ? "24px 24px 0 0" : "24px",
         position: "relative",
         zIndex: 1,
@@ -41,7 +39,7 @@ export default function SubscriptionCardHeader({
     >
       <div className="col p2 text-brown">{formatDate(order.orderDate)}</div>
       <div className="col p2 fw-bold text-dark">#{order.id}</div>
-      <div className="col p2">{termCycles}</div>
+      <div className="col p2">{termCycles} 個月</div>
       <div className="col p2 fw-bold">
         ${order.orderTotalAmount?.toLocaleString() ?? "-"}
       </div>
@@ -50,10 +48,10 @@ export default function SubscriptionCardHeader({
         style={{
           color:
             {
-              completed: "#4CAF50", // 綠
-              processing: "#FF9800", // 橘
-              cancelled: "#F44336", // 紅
-              partial: "#FF9800", // 橘（部分取消）
+              completed: "#4CAF50",
+              processing: "#FF9800",
+              cancelled: "#F44336",
+              partial: "#FF9800",
             }[statusType] ?? "inherit",
         }}
       >
