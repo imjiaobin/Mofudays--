@@ -3,7 +3,7 @@
  *
  * Props:
  * - subscriptions    {array}    order.subscriptions 陣列（來自 API）
- * - perCycleAmount   {number}   order.perCycleAmount，單一訂閱方案的單價
+ * - order            {object}   完整訂單資料，用於取得 month / orderDate
  * - isCancelling     {boolean}  是否進入取消流程
  * - selectedItems    {array}    勾選的 subscriptionId 陣列
  * - onToggleItem     {function} (subscriptionId) => void
@@ -13,7 +13,7 @@
  */
 export default function SubscriptionCardBody({
   subscriptions = [],
-  perCycleAmount,
+  order = {},
   isCancelling,
   selectedItems = [],
   onToggleItem,
@@ -21,15 +21,19 @@ export default function SubscriptionCardBody({
   onConfirmCancel,
   onResubscribe,
 }) {
-  // 全部 subscription 都已取消時，禁用「再次訂閱」按鈕
   const allCancelled =
     subscriptions.length > 0 &&
     subscriptions.every((s) => s.subscriptionStatus === "已取消");
 
-  // 全部 subscription 都已完成時，禁用「取消訂閱」按鈕
   const allCompleted =
     subscriptions.length > 0 &&
     subscriptions.every((s) => s.subscriptionStatus === "已完成");
+
+  // 日期格式化：ISO → YYYY/MM/DD
+  const formatDate = (isoString) => {
+    if (!isoString) return "-";
+    return isoString.slice(0, 10).replace(/-/g, "/");
+  };
 
   return (
     <div
@@ -49,11 +53,11 @@ export default function SubscriptionCardBody({
         <div className="col-6">訂閱方案</div>
         <div className="col text-center">單價/期</div>
         <div className="col text-center">數量</div>
-        <div className="col text-center">期數</div>
+        <div className="col text-center">訂閱月數</div>
         <div className="col text-end">狀態</div>
       </div>
 
-      {/* 訂閱品項列表（每個 subscription 為一行） */}
+      {/* 訂閱品項列表 */}
       {subscriptions.map((sub) => {
         const isCancelled = sub.subscriptionStatus === "已取消";
         return (
@@ -74,25 +78,25 @@ export default function SubscriptionCardBody({
                 />
               )}
               <div>
-                <div className="fw-bold p2">{sub.subscriptionPlan}</div>
+                <div className="fw-bold p2">{sub.planName}</div>
                 <div className="p4 text-brown">
-                  {sub.startDate} 起 · 第 {sub.currentCycleIndex}/
-                  {sub.currentCycleTotal} 期
+                  {formatDate(order.orderDate)} 起 · 第 {sub.currentCycleIndex}/
+                  {order.month ?? "-"} 期
                 </div>
               </div>
             </div>
             <div className="col text-center p2">
-              ${perCycleAmount?.toLocaleString() ?? "-"}
+              ${sub.planPrice?.toLocaleString() ?? "-"}
             </div>
-            <div className="col text-center p2">{sub.subscriptionQuantity}</div>
-            <div className="col text-center p2">{sub.termCycles}</div>
+            <div className="col text-center p2">{sub.planQty}</div>
+            <div className="col text-center p2">{order.month ?? "-"}</div>
             <div
               className="col text-end p2 fw-bold"
               style={{
                 color:
                   {
                     已取消: "#F44336",
-                    進行中: "#4CAF50",
+                    訂閱中: "#4CAF50",
                     已完成: "#4CAF50",
                   }[sub.subscriptionStatus] ?? "inherit",
               }}
@@ -107,10 +111,11 @@ export default function SubscriptionCardBody({
       <div className="d-flex justify-content-end mt-4">
         {!isCancelling ? (
           <>
-            {/* 取消訂閱：全部已完成時 disabled */}
             <button
               className={`btn rounded-pill px-4 me-3 b3 ${
-                allCompleted ? "btn-gray disabled" : "btn-outline-orange"
+                allCompleted || allCancelled
+                  ? "btn-gray disabled"
+                  : "btn-outline-orange"
               }`}
               onClick={() => {
                 if (allCompleted || allCancelled) return;
@@ -128,7 +133,6 @@ export default function SubscriptionCardBody({
               取消訂閱
             </button>
 
-            {/* 再次訂閱：全部已取消時 disabled */}
             <button
               className={`btn rounded-pill px-4 b3 ${
                 allCancelled ? "btn-gray disabled" : "btn-orange text-white"

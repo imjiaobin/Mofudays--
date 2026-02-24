@@ -16,7 +16,6 @@ export default function UserCenterLayout() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-md-10 position-relative">
-            {/* 裝飾區塊：保留腳印與狗狗圖片 */}
             <div className="d-flex align-items-center justify-content-between gap-4 mt-16 mb-24">
               <img
                 src={faqFootprint}
@@ -24,8 +23,6 @@ export default function UserCenterLayout() {
                 className="foot-print"
                 aria-hidden="true"
               />
-
-              {/* 中間留空，因為現在沒有 Tab 了 */}
               <div className="flex-fill"></div>
 
               <img
@@ -34,8 +31,6 @@ export default function UserCenterLayout() {
                 className="member-img-tab flex-fill"
               />
             </div>
-
-            {/* 內容區塊：黃色背景框 */}
             <div className="tab-content p-48 bg-yellow bg-radius py-40 px-55">
               <Outlet /> {/* 這裡會渲染 Profile, Orders, 或 Events */}
             </div>

@@ -1,24 +1,23 @@
-import {
-  filterOrdersByTab,
-  buildResubscribePayload,
-} from "./components/subscriptionHelpers";
+import { filterOrdersByTab } from "./components/subscriptionHelpers";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import SubscriptionCard from "./components/MemberOrderCard";
 import {
   getUserOrders,
   cancelSubscriptions,
-} from "../../../api/subscriptionApi";
+  getUserDogs,
+  addToCart,
+} from "../../../api/Subscriptionapi";
 
-// 裝飾圖片路徑（路徑依專案實際位置調整）
 import petToy from "../../../assets/images/userCenter/pet-toy.png";
 import petSnack from "../../../assets/images/userCenter/pet_snack.png";
+
+import { toast } from "react-toastify";
 
 const TABS = [
   { key: "all", label: "訂閱總覽" },
   { key: "completed", label: "已完成" },
   { key: "processing", label: "進行中" },
-  // { key: "partial", label: "部分取消" },
   { key: "cancelled", label: "已取消" },
 ];
 
@@ -39,6 +38,12 @@ export default function OrderLists() {
   const [cancellingId, setCancellingId] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
+  // ── 再次訂閱：選狗 modal state ───────────────────────────────
+  const [resubscribeOrder, setResubscribeOrder] = useState(null); // 暫存待再訂閱的 order
+  const [dogs, setDogs] = useState([]);
+  const [selectedDogId, setSelectedDogId] = useState(null);
+  const [isResubmitting, setIsResubmitting] = useState(false);
+
   // ── 取得訂單列表 ─────────────────────────────────────────────
   useEffect(() => {
     const fetchOrders = async () => {
@@ -47,7 +52,7 @@ export default function OrderLists() {
         const data = await getUserOrders();
         setOrders(data);
       } catch (err) {
-        setError("訂單資料載入失敗，請稍後再試。");
+        toast.error(`操作失敗：${err.message || "請稍後再試"}`);
       } finally {
         setIsLoading(false);
       }
@@ -80,7 +85,6 @@ export default function OrderLists() {
 
   const handleToggleExpand = (orderId) => {
     setExpandedId((prev) => (prev === orderId ? null : orderId));
-    // 切換卡片時清除取消流程
     if (cancellingId && cancellingId !== orderId) {
       setCancellingId(null);
       setSelectedItems([]);
@@ -92,7 +96,6 @@ export default function OrderLists() {
     setSelectedItems([]);
   };
 
-  // 取消流程的返回：由 onToggleItem 用特殊 id 觸發
   const handleToggleItem = (subscriptionId) => {
     if (subscriptionId === "__cancel_mode_exit__") {
       setCancellingId(null);
@@ -110,20 +113,60 @@ export default function OrderLists() {
     if (selectedItems.length === 0) return;
     try {
       const updated = await cancelSubscriptions(orderId, selectedItems);
-      // 用更新後的資料取代本地對應訂單
       setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
       setCancellingId(null);
       setSelectedItems([]);
     } catch (err) {
-      alert("取消失敗，請稍後再試。");
+      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
     }
   };
 
-  const handleResubscribe = (order) => {
-    const payload = buildResubscribePayload(order);
-    // 將資料存入 sessionStorage，讓 /cart 頁面取用
-    sessionStorage.setItem("resubscribePayload", JSON.stringify(payload));
-    navigate("/cart");
+  // ── 再次訂閱：開啟選狗 modal ─────────────────────────────────
+  const handleResubscribe = async (order) => {
+    try {
+      const dogList = await getUserDogs();
+      if (!dogList || dogList.length === 0) {
+        alert("找不到寵物資料，請先建立寵物檔案。");
+        return;
+      }
+      setDogs(dogList);
+      // 若只有一隻狗，直接預選
+      setSelectedDogId(dogList.length === 1 ? dogList[0].id : null);
+      setResubscribeOrder(order);
+    } catch (err) {
+      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
+    }
+  };
+
+  // ── 再次訂閱：確認選狗後寫入 cart ───────────────────────────
+  const handleConfirmResubscribe = async () => {
+    if (!selectedDogId || !resubscribeOrder) return;
+    const dog = dogs.find((d) => d.id === selectedDogId);
+    if (!dog) return;
+
+    setIsResubmitting(true);
+    try {
+      // 只對非已取消的 subscriptions 新增購物車
+      const activeSubs = resubscribeOrder.subscriptions.filter(
+        (s) => s.subscriptionStatus !== "已取消",
+      );
+      await Promise.all(
+        activeSubs.map((sub) => addToCart(sub, dog, resubscribeOrder.month)),
+      );
+      setResubscribeOrder(null);
+      setSelectedDogId(null);
+      navigate("/cart");
+    } catch (err) {
+      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
+    } finally {
+      setIsResubmitting(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setResubscribeOrder(null);
+    setSelectedDogId(null);
+    setDogs([]);
   };
 
   // ── Render ───────────────────────────────────────────────────
@@ -244,6 +287,98 @@ export default function OrderLists() {
           </li>
         </ul>
       </nav>
+
+      {/* 選狗 Modal（自訂 overlay，避免觸發全域 .modal 樣式） */}
+      {resubscribeOrder && (
+        <div
+          onClick={handleCloseModal}
+          style={{
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "rgba(0,0,0,0.4)",
+            zIndex: 1050,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#fff",
+              borderRadius: "24px",
+              padding: "32px",
+              width: "100%",
+              maxWidth: "480px",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+            }}
+          >
+            {/* 標題 */}
+            <h5 className="fw-bold text-brown mb-1">選擇訂閱寵物</h5>
+            <p className="p3 text-brown mb-3">
+              請選擇這次再次訂閱要對應的寵物：
+            </p>
+
+            {/* 狗狗列表 */}
+            <div className="d-flex flex-column gap-2 mb-4">
+              {dogs.map((dog) => (
+                <label
+                  key={dog.id}
+                  className={`d-flex align-items-center gap-3 p-3 rounded-3 border ${
+                    selectedDogId === dog.id ? "border-orange" : "border-light"
+                  }`}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor:
+                      selectedDogId === dog.id ? "#FFF5F0" : "#fff",
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="dogSelect"
+                    className="form-check-input mt-0"
+                    checked={selectedDogId === dog.id}
+                    onChange={() => setSelectedDogId(dog.id)}
+                  />
+                  <div>
+                    <div className="fw-bold p2">{dog.name}</div>
+                    <div className="p4 text-brown">
+                      {dog.size === "S"
+                        ? "小型犬"
+                        : dog.size === "M"
+                          ? "中型犬"
+                          : "大型犬"}
+                      ·{dog.ageLabel}
+                      {dog.allergies?.length > 0 && (
+                        <span>·過敏：{dog.allergies.join("、")}</span>
+                      )}
+                    </div>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            {/* 按鈕 */}
+            <div className="d-flex justify-content-end gap-2">
+              <button
+                className="btn btn-outline-gray rounded-pill px-4 b3"
+                onClick={handleCloseModal}
+              >
+                取消
+              </button>
+              <button
+                className={`btn btn-orange text-white rounded-pill px-4 b3 ${
+                  !selectedDogId || isResubmitting ? "disabled" : ""
+                }`}
+                onClick={handleConfirmResubscribe}
+                disabled={!selectedDogId || isResubmitting}
+              >
+                {isResubmitting ? "處理中..." : "確認並加入購物車"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

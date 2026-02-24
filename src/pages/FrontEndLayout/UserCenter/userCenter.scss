@@ -1384,3 +1384,52 @@ p {
     border-color: #f8723f;
   }
 }
+
+/* 會員資料容器：大圓角與背景色 */
+.member-data-container {
+  background-color: #fff9f6; // 淺米色背景
+  border-radius: 40px;
+  padding: 48px 80px;
+  box-shadow: none; // 根據設計稿，不需要陰影
+}
+
+/* 輸入框樣式：純白背景、極細邊框或無邊框、圓角 */
+.form-control,
+.form-select {
+  background-color: #ffffff !important;
+  border: 1px solid #eaeaea !important;
+  border-radius: 12px !important;
+  padding: 12px 16px;
+  color: #5d4037; // 深褐色文字
+
+  &:focus {
+    border-color: #f8723f !important;
+    box-shadow: 0 0 0 0.2rem rgba(248, 114, 63, 0.1);
+  }
+}
+
+/* 標籤樣式：與圖標並排，褐色文字 */
+.form-label {
+  color: #5d4037;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* 編輯按鈕：亮橘色、大圓角、滿版感 */
+.btn-save {
+  background-color: #f8723f !important; // 亮橘色
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 15px !important;
+  padding: 12px 64px !important;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(248, 114, 63, 0.2);
+
+  &:hover {
+    background-color: #e06538 !important;
+  }
+}
