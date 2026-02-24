@@ -43,7 +43,7 @@ export default function SubscriptionCard({
       {isExpanded && (
         <SubscriptionCardBody
           subscriptions={order.subscriptions}
-          order={order} // ✅ 新增：Body 需要 order.month / order.orderDate
+          order={order}
           isCancelling={isCancelling}
           selectedItems={selectedItems}
           onToggleItem={onToggleItem}

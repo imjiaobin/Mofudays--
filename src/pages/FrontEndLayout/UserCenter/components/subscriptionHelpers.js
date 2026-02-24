@@ -55,24 +55,3 @@ export const filterOrdersByTab = (orders, activeTab) => {
     (order) => deriveOrderStatus(order.subscriptions) === statusMap[activeTab],
   );
 };
-
-/**
- * 組裝「再次訂閱」要帶去 /cart 的資料
- * 過濾掉 subscriptionStatus === "已取消" 的項目
- */
-export const buildResubscribePayload = (order) => {
-  const activeSubscriptions = order.subscriptions.filter(
-    (s) => s.subscriptionStatus !== "已取消",
-  );
-  return {
-    orderId: order.id,
-    month: order.month, // ✅ 修正：perCycleAmount → month（API 無 perCycleAmount）
-    subscriptions: activeSubscriptions.map((s) => ({
-      subscriptionId: s.subscriptionId,
-      planName: s.planName, // ✅ 修正：subscriptionPlan → planName
-      planPrice: s.planPrice, // ✅ 修正：新增 planPrice
-      planQty: s.planQty, // ✅ 修正：subscriptionQuantity → planQty
-      content: s.content, // ✅ 修正：planContent → content
-    })),
-  };
-};

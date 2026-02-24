@@ -21,12 +21,10 @@ export default function SubscriptionCardBody({
   onConfirmCancel,
   onResubscribe,
 }) {
-  // ✅ 修正：API 狀態值為「訂閱中」、「已取消」，無「進行中」、「已完成」
   const allCancelled =
     subscriptions.length > 0 &&
     subscriptions.every((s) => s.subscriptionStatus === "已取消");
 
-  // ✅ 目前 API 沒有「已完成」狀態，保留邏輯但不會觸發
   const allCompleted =
     subscriptions.length > 0 &&
     subscriptions.every((s) => s.subscriptionStatus === "已完成");
@@ -80,22 +78,17 @@ export default function SubscriptionCardBody({
                 />
               )}
               <div>
-                {/* ✅ 修正：subscriptionPlan → planName */}
                 <div className="fw-bold p2">{sub.planName}</div>
                 <div className="p4 text-brown">
-                  {/* ✅ 修正：startDate → order.orderDate；currentCycleIndex 保留（API 有此欄）；currentCycleTotal → order.month */}
                   {formatDate(order.orderDate)} 起 · 第 {sub.currentCycleIndex}/
                   {order.month ?? "-"} 期
                 </div>
               </div>
             </div>
-            {/* ✅ 修正：perCycleAmount prop → sub.planPrice 直接讀 */}
             <div className="col text-center p2">
               ${sub.planPrice?.toLocaleString() ?? "-"}
             </div>
-            {/* ✅ 修正：subscriptionQuantity → planQty */}
             <div className="col text-center p2">{sub.planQty}</div>
-            {/* ✅ 修正：termCycles → order.month */}
             <div className="col text-center p2">{order.month ?? "-"}</div>
             <div
               className="col text-end p2 fw-bold"
@@ -103,7 +96,7 @@ export default function SubscriptionCardBody({
                 color:
                   {
                     已取消: "#F44336",
-                    訂閱中: "#4CAF50", // ✅ 修正：「進行中」→「訂閱中」
+                    訂閱中: "#4CAF50",
                     已完成: "#4CAF50",
                   }[sub.subscriptionStatus] ?? "inherit",
               }}

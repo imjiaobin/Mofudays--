@@ -191,7 +191,6 @@ export default function UserProfile({ onSave }) {
               value={formData.birthday}
               onChange={handleChange}
             />
-            {/* pe-none 避免 icon 擋住 date picker 的原生箭頭 */}
           </div>
           <div className="valid-tooltip">正確!</div>
           <div className="invalid-tooltip">請選擇生日!</div>

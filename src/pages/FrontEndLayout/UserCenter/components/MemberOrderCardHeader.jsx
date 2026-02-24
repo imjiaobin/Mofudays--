@@ -15,7 +15,6 @@ export default function SubscriptionCardHeader({
   statusType,
   onClick,
 }) {
-  // ✅ 修正：termCycles 改從 order.month 取得（API 無 sub.termCycles）
   const termCycles = order.month ?? "-";
 
   // 日期格式化：ISO → YYYY/MM/DD
@@ -40,7 +39,6 @@ export default function SubscriptionCardHeader({
     >
       <div className="col p2 text-brown">{formatDate(order.orderDate)}</div>
       <div className="col p2 fw-bold text-dark">#{order.id}</div>
-      {/* ✅ 修正：顯示 order.month（幾個月） */}
       <div className="col p2">{termCycles} 個月</div>
       <div className="col p2 fw-bold">
         ${order.orderTotalAmount?.toLocaleString() ?? "-"}
