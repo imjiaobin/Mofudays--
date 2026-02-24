@@ -170,18 +170,18 @@ header .nav-link .nav-icon {
 
 header .dropdown-menu {
   --bs-dropdown-min-width: auto;
-  position: relative;
+  // position: relative;
 }
 
-header .dropdown-menu li::after {
-  content: "";
-  display: block;
-  width: 65%;
-  height: 2px;
-  background: lighten($primary-500, 30%);
-  margin: 0 auto;
-  border-radius: 2px;
-}
+// header .dropdown-menu li::after {
+//   content: "";
+//   display: block;
+//   width: 65%;
+//   height: 2px;
+//   background: $primary-200;
+//   margin: 0 auto;
+//   border-radius: 2px;
+// }
 
 /* 最後一個不要線 */
 header .dropdown-menu li:last-child::after {

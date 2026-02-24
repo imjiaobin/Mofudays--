@@ -1,15 +1,49 @@
 import "./Header.scss";
 import "./Header-logout.scss";
+import { useNavigate } from "react-router-dom";
 import { Menu, ShoppingCart, Newspaper, HeartPlus } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState, Navigate } from "react";
 import { useAuth } from "../../../../contexts/AuthContext";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-
 //匯入圖片
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
+import avatarDefalut from "../../../../assets/images/header/avatar_defalut.png";
 
+import { toast } from "react-toastify";
+
+// 購物車跳轉邏輯 hook
+function useCartNavigate() {
+  const navigate = useNavigate();
+  const { isAuthed } = useAuth();
+
+  const handleCartClick = async () => {
+    if (!isAuthed) {
+      toast.warn("尚未登入，請先登入會員！");
+      navigate("/login");
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const res = await fetch(`http://localhost:3000/carts?userId=${userId}`);
+      const data = await res.json();
+
+      if (data && data.length > 0) {
+        navigate("/cart");
+      } else {
+        toast.info("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
+        navigate("/petinfo");
+      }
+    } catch (err) {
+      console.error("查詢購物車失敗", err);
+      toast.error("查詢購物車時發生錯誤，請稍後再試。");
+    }
+  };
+
+  return handleCartClick;
+}
 export default function Header() {
   return (
     <header className="container" id="top">
@@ -24,13 +58,11 @@ export default function Header() {
               height={28}
             />
           </a>
-          <Link to='/usercenter'>會員中心</Link>{/*  20250215 納森測試路由用 */}
           {/* 右邊（手機）：menu + cart */}
           <MobileTopActions />
 
           {/* 右邊（桌機）：nav + cart */}
           <DesktopMenu />
-
         </div>
 
         <NewsModal />
@@ -63,7 +95,6 @@ function DesktopMenu() {
           <NavNewsItem />
           <NavBlogItem />
 
-          {/*這裡：原本 NavLoginItem() 改成 AuthMenu */}
           <AuthMenu variant="desktop" />
           <NavCartItem />
         </ul>
@@ -74,7 +105,72 @@ function DesktopMenu() {
 
 /* ------------------ Mobile Offcanvas ------------------ */
 
+// function MobileOffcanvasMenu() {
+//   const { isAuthed, user, logout } = useAuth();
+//   return (
+//     <div
+//       className="offcanvas offcanvas-top offcanvas-mobile-full d-md-none"
+//       tabIndex={-1}
+//       id="mobileMenu"
+//       aria-labelledby="mobileMenuLabel"
+//       data-bs-scroll="true"
+//     >
+//       <div className="offcanvas-body d-flex flex-column align-items-center justify-content-between px-4 py-4">
+//         <nav className="w-100" aria-label="Mobile main">
+//           <button
+//             type="button"
+//             className="btn-close position-absolute top-0 end-0 mt-3 me-3 z-3"
+//             data-bs-dismiss="offcanvas"
+//             aria-label="Close"
+//           />
+
+//           <ul className="list-mb list-unstyled mb-4">
+//             <li className="nav-item py-3 border-bottom text-center">
+//               <a
+//                 className="nav-link active"
+//                 href="/"
+//                 data-bs-toggle="modal"
+//                 data-bs-target="#newsModal"
+//                 aria-current="page"
+//               >
+//                 <i
+//                   data-lucide="newspaper"
+//                   className="align-bottom me-2 nav-icon"
+//                 />
+//                 最新消息
+//               </a>
+//             </li>
+
+//             <li className="nav-item text-center py-3">
+//               <a className="nav-link" href="blog.html">
+//                 <i
+//                   data-lucide="heart-plus"
+//                   className="align-bottom me-2 nav-icon"
+//                 />
+//                 毛孩照護
+//               </a>
+//             </li>
+//           </ul>
+//         </nav>
+
+//         <ul className="w-100 text-center my-2">
+//           <AuthMenu variant="mobile" />
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// }
 function MobileOffcanvasMenu() {
+  const { isAuthed, user, logout } = useAuth();
+  const storedName = localStorage.getItem("userName");
+  const displayName = user?.name || storedName || "會員";
+
+  const handleClickLink = () => closeOffcanvasIfAny();
+  const handleLogout = () => {
+    logout();
+    closeOffcanvasIfAny();
+  };
+
   return (
     <div
       className="offcanvas offcanvas-top offcanvas-mobile-full d-md-none"
@@ -84,6 +180,7 @@ function MobileOffcanvasMenu() {
       data-bs-scroll="true"
     >
       <div className="offcanvas-body d-flex flex-column align-items-center justify-content-between px-4 py-4">
+        {/* 上半：主選單 */}
         <nav className="w-100" aria-label="Mobile main">
           <button
             type="button"
@@ -91,7 +188,6 @@ function MobileOffcanvasMenu() {
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           />
-
           <ul className="list-mb list-unstyled mb-4">
             <li className="nav-item py-3 border-bottom text-center">
               <a
@@ -101,29 +197,90 @@ function MobileOffcanvasMenu() {
                 data-bs-target="#newsModal"
                 aria-current="page"
               >
-                <i
-                  data-lucide="newspaper"
-                  className="align-bottom me-2 nav-icon"
-                />
+                <Newspaper className="align-bottom me-2 nav-icon" />
                 最新消息
               </a>
             </li>
-
             <li className="nav-item text-center py-3">
-              <a className="nav-link" href="blog.html">
-                <i
-                  data-lucide="heart-plus"
-                  className="align-bottom me-2 nav-icon"
-                />
+              <a className="nav-link" href="/blog">
+                <HeartPlus className="align-bottom me-2 nav-icon" />
                 毛孩照護
               </a>
             </li>
           </ul>
         </nav>
 
-        {/*這裡：原本固定顯示登入按鈕，改成 AuthMenu */}
+        {/* 下半：會員區塊 */}
         <div className="w-100 text-center my-2">
-          <AuthMenu variant="mobile" />
+          {isAuthed ? (
+            <>
+              {/* 頭像 + 名稱 */}
+              <div className="d-flex align-items-center justify-content-center gap-2 py-2 mb-2">
+                <img
+                  src={avatarDefalut}
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: 44, height: 44, objectFit: "cover" }}
+                />
+                <div className="fw-medium">{displayName}</div>
+              </div>
+
+              {/* 功能清單 */}
+              <ul className="list-unstyled mx-auto" style={{ maxWidth: 320 }}>
+                <li className="py-3">
+                  <Link
+                    className="nav-link"
+                    to="/orders"
+                    onClick={handleClickLink}
+                  >
+                    訂單管理
+                  </Link>
+                </li>
+                <li className="py-3 border-top">
+                  <Link
+                    className="nav-link"
+                    to="/member"
+                    onClick={handleClickLink}
+                  >
+                    個人資料管理
+                  </Link>
+                </li>
+                <li className="py-3 border-top">
+                  <Link
+                    className="nav-link"
+                    to="/member/exclusive"
+                    onClick={handleClickLink}
+                  >
+                    會員專屬活動
+                  </Link>
+                </li>
+                <li className="py-3 border-top">
+                  <Link
+                    className="nav-link"
+                    to="/coupons"
+                    onClick={handleClickLink}
+                  >
+                    我的折扣碼
+                  </Link>
+                </li>
+                <li className="py-3 border-top">
+                  <button
+                    className="nav-link text-danger bg-transparent border-0 w-100"
+                    onClick={handleLogout}
+                  >
+                    登出
+                  </button>
+                </li>
+              </ul>
+            </>
+          ) : (
+            // 未登入：顯示登入按鈕
+            <Link to="/login" onClick={handleClickLink}>
+              <button className="btn login-btn rounded-pill" type="button">
+                登入會員
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
@@ -132,12 +289,56 @@ function MobileOffcanvasMenu() {
 
 /* ------------------ Mobile top actions ------------------ */
 
+// function MobileTopActions() {
+//   return (
+//     <div className="d-flex align-items-center gap-3 d-lg-none">
+//       <Link to="/cart" className="btn p-0 border-0" aria-label="Cart">
+//         <ShoppingCart className="nav-icon" />
+//       </Link>
+
+//       <button
+//         className="btn p-0 border-0"
+//         type="button"
+//         data-bs-toggle="offcanvas"
+//         data-bs-target="#mobileMenu"
+//         aria-controls="mobileMenu"
+//         aria-label="Open menu"
+//       >
+//         <Menu className="nav-menu-icon" />
+//       </button>
+//     </div>
+//   );
+// }
+
 function MobileTopActions() {
+  const handleCartClick = useCartNavigate();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/petinfo");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
   return (
     <div className="d-flex align-items-center gap-3 d-lg-none">
-      <Link to="/cart" className="btn p-0 border-0" aria-label="Cart">
+      <button
+        className="btn p-0 border-0"
+        onClick={handleCartClick}
+        aria-label="Cart"
+      >
         <ShoppingCart className="nav-icon" />
-      </Link>
+      </button>
 
       <button
         className="btn p-0 border-0"
@@ -182,11 +383,34 @@ function NavBlogItem() {
 }
 
 function NavCartItem() {
+  const handleCartClick = useCartNavigate();
+
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/signup");
+  //   }
+  // };
+
+  //以下為vivian 0223修改
+  // const handleCartClick = () => {
+  //   if (isAuthed) {
+  //     navigate("/cart");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
   return (
     <li className="nav-item d-none d-md-flex">
-      <a className="nav-link cart-btn" href="/cart" aria-label="Cart">
+      <button
+        className="nav-link cart-btn border-2"
+        onClick={handleCartClick}
+        aria-label="Cart"
+      >
         <ShoppingCart className="nav-icon" />
-      </a>
+      </button>
     </li>
   );
 }
@@ -350,11 +574,9 @@ function NewsAccordionItem({
 function AuthMenu({ variant = "desktop" }) {
   const { isAuthed, user, logout } = useAuth();
 
-  // 未登入：顯示按鈕
   if (!isAuthed) {
-    // desktop 是 <li>，mobile 在 offcanvas 裡也可以用 <li> 以保持樣式一致
     return (
-      <li className={`nav-item ${variant === "desktop" ? "me-5" : ""}`}>
+      <li className={`nav-item me-5`}>
         <Link to="/login">
           <button className="btn login-btn rounded-pill" type="button">
             登入會員
@@ -364,84 +586,262 @@ function AuthMenu({ variant = "desktop" }) {
     );
   }
 
-  // 已登入：顯示姓名下拉
-  // 如果是在 offcanvas 裡，點選 dropdown item 後最好順便把 offcanvas 關掉
+  return <LoggedInMenu variant={variant} user={user} logout={logout} />;
+}
+
+// 獨立元件，useEffect 執行時 ref 一定已經 mount
+// function LoggedInMenu({ variant, user, logout }) {
+//   const dropdownRef = useRef(null);
+
+//   useEffect(() => {
+//     if (dropdownRef.current) {
+//       // 先清除舊的 instance 避免重複初始化
+//       window.bootstrap.Dropdown.getOrCreateInstance(dropdownRef.current);
+//     }
+//   }, []); // ← 空陣列，只在 mount 時執行一次就夠了
+
+//   const handleLogout = () => {
+//     logout();
+//     closeOffcanvasIfAny();
+//   };
+
+//   const handleClickLink = () => {
+//     closeOffcanvasIfAny();
+//   };
+
+//   return (
+//     <li className={`nav-item dropdown ${variant === "desktop" ? "me-5" : ""}`}>
+//       <button
+//         ref={dropdownRef}
+//         className="nav-link dropdown-toggle d-flex align-items-center gap-2 border-0 bg-transparent"
+//         type="button"
+//         data-bs-toggle="dropdown"
+//         aria-expanded="false"
+//       >
+//         <span className="fw-bold">{user?.name || "會員"} 您好</span>
+//       </button>
+
+//       <ul
+//         className={`dropdown-menu dropdown-menu-end shadow border-0 rounded-3 ${variant === "mobile" ? "text-center" : ""}`}
+//       >
+//         <li>
+//           <Link
+//             className="dropdown-item text-center py-3 border-bottom"
+//             to="/orders"
+//             onClick={handleClickLink}
+//           >
+//             訂單管理
+//           </Link>
+//         </li>
+//         <li>
+//           <Link
+//             className="dropdown-item text-center py-3 border-bottom"
+//             to="/member"
+//             onClick={handleClickLink}
+//           >
+//             個人資料修改
+//           </Link>
+//         </li>
+//         <li>
+//           <Link
+//             className="dropdown-item text-center py-3 border-bottom"
+//             to="/member/exclusive"
+//             onClick={handleClickLink}
+//           >
+//             會員專屬活動
+//           </Link>
+//         </li>
+//         <li>
+//           <Link
+//             className="dropdown-item text-center py-3 border-bottom"
+//             to="/coupons"
+//             onClick={handleClickLink}
+//           >
+//             我的折扣碼
+//           </Link>
+//         </li>
+//         <li>
+//           <hr className="dropdown-divider" />
+//         </li>
+//         <li>
+//           <button
+//             className="dropdown-item text-danger py-2"
+//             type="button"
+//             onClick={handleLogout}
+//           >
+//             登出系統
+//           </button>
+//         </li>
+//       </ul>
+//     </li>
+//   );
+// }
+
+function LoggedInMenu({ variant, user, logout }) {
+  const storedName = localStorage.getItem("userName"); // 看你 localStorage 存的 key 名稱
+  const displayName = user?.name || storedName || "會員";
+  const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  // 點其他地方時關閉
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".custom-dropdown")) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
-    logout();
-    closeOffcanvasIfAny();
+    toast.info(
+      ({ closeToast }) => (
+        <div className="text-center">
+          <p className="mb-3">確定要登出嗎？</p>
+          <div className="d-flex justify-content-center gap-2">
+            <button className="btn btn-sm btn-secondary" onClick={closeToast}>
+              取消
+            </button>
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={async () => {
+                await logout();
+                setOpen(false);
+                closeOffcanvasIfAny();
+                closeToast();
+                navigate("/");
+              }}
+            >
+              確認登出
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        position: "top-center",
+        autoClose: false, // ❗ 不自動關閉
+        closeOnClick: false,
+        draggable: false,
+      },
+    );
   };
 
   const handleClickLink = () => {
+    setOpen(false);
     closeOffcanvasIfAny();
   };
 
   return (
-    <li className={`nav-item dropdown ${variant === "desktop" ? "me-5" : ""}`}>
+    <li
+      className={`nav-item custom-dropdown position-relative ${variant === "desktop" ? "me-5" : ""}`}
+    >
       <button
-        className="btn login-btn rounded-pill dropdown-toggle d-flex align-items-center gap-2"
+        className="nav-link border-0 bg-transparent d-flex align-items-center gap-2"
         type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+        onClick={() => setOpen((prev) => !prev)}
       >
-        <span className="icon-user" aria-hidden="true" />
-        <span>{user?.name || "會員"}</span>
+        <img
+          src={avatarDefalut}
+          alt="avatar"
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
+        />
+        <span className="fw-bold">{displayName} 您好</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            transition: "transform 0.2s",
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </button>
 
-      <ul className="dropdown-menu dropdown-menu-end">
-        <li>
-          <a className="dropdown-item" href="/orders" onClick={handleClickLink}>
-            訂單管理
-          </a>
-        </li>
-        <li>
-          <Link
-            to="/member"
-            className="dropdown-item"
-            onClick={handleClickLink}
-          >
-            個人資料修改
-          </Link>
-        </li>
-        <li>
-          <a
-            className="dropdown-item"
-            href="/member/exclusive"
-            onClick={handleClickLink}
-          >
-            會員專屬活動
-          </a>
-        </li>
-        <li>
-          <a
-            className="dropdown-item"
-            href="/coupons"
-            onClick={handleClickLink}
-          >
-            我的折扣碼
-          </a>
-        </li>
-        <li>
-          <hr className="dropdown-divider" />
-        </li>
-        <li>
-          <button
-            className="dropdown-item text-danger"
-            type="button"
-            onClick={handleLogout}
-          >
-            登出
-          </button>
-        </li>
-      </ul>
+      {open && (
+        <ul
+          className={`list-unstyled dropdown-menu shadow border-0 rounded-3 show ${variant === "mobile" ? "position-static w-100 text-center" : "dropdown-menu-end"}`}
+          style={
+            variant === "desktop"
+              ? { position: "absolute", right: 0, top: "100%" }
+              : {}
+          }
+        >
+          <li>
+            <Link
+              className="dropdown-item text-center py-2 border-bottom"
+              to="/usercenter/orders"
+            >
+              訂單管理
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="dropdown-item text-center py-2 border-bottom"
+              to="/usercenter/profile"
+            >
+              個人資料修改
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="dropdown-item text-center py-2 border-bottom"
+              to="/usercenter/events"
+            >
+              會員專屬活動
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="dropdown-item text-center py-2 border-bottom"
+              to="/coupons"
+              onClick={handleClickLink}
+            >
+              我的折扣碼
+            </Link>
+          </li>
+          {/* <li>
+            <hr className="dropdown-divider" />
+          </li> */}
+          <li>
+            <button
+              className="dropdown-item text-primary text-center py-3 fw-bold"
+              type="button"
+              onClick={handleLogout}
+            >
+              登出系統
+            </button>
+          </li>
+        </ul>
+      )}
     </li>
   );
 }
 
-// 在 mobile offcanvas 點選選單後希望自動關閉
+/**自動關閉 Mobile Offcanvas，避免點擊選單後，側邊欄還擋在畫面上**/
+
 function closeOffcanvasIfAny() {
   const el = document.getElementById("mobileMenu");
   if (!el) return;
-  // bootstrap offcanvas instance
-  const instance = window.bootstrap?.Offcanvas?.getInstance(el);
-  if (instance) instance.hide();
+
+  // 檢查 Bootstrap 是否已載入
+  const bootstrap = window.bootstrap;
+  if (bootstrap) {
+    const instance = bootstrap.Offcanvas.getInstance(el);
+    if (instance) instance.hide();
+  }
 }
