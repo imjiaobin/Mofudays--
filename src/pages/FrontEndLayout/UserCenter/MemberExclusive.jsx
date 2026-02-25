@@ -16,7 +16,7 @@ import imgThemeEvent3 from "../../../assets/images/member/theme_event_3.png";
 export default function MemberExclusives() {
   const navigate = useNavigate();
   return (
-    <>
+    <div className="tab-content bg-yellow bg-radius py-40 px-55">
       {/* 會員專屬優惠 - 毛寶貝開箱秀 */}
       <section className="unbox mt-16 mb-132 position-relative">
         <img
@@ -170,6 +170,6 @@ export default function MemberExclusives() {
           />
         </div>
       </section>
-    </>
+    </div>
   );
 }

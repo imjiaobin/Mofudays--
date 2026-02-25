@@ -39,8 +39,8 @@ export default function Signup() {
       password: "",
       passwordConfirm: "",
       // 拆解地址欄位
-      city: "基隆市",
-      district: "仁愛區",
+      city: "",
+      district: "",
       address: "",
     },
   });
@@ -452,6 +452,9 @@ export default function Signup() {
                               className={`form-select ${errors.city ? "is-invalid" : ""}`}
                               {...register("city", { required: "請選擇縣市" })}
                             >
+                              <option value="" disabled>
+                                請選擇縣市
+                              </option>
                               {taiwanRegions.map((city) => (
                                 <option key={city.name} value={city.name}>
                                   {city.name}
@@ -469,6 +472,9 @@ export default function Signup() {
                                 required: "請選擇區域",
                               })}
                             >
+                              <option value="" disabled>
+                                請選擇區域
+                              </option>
                               {districts.map((dist) => (
                                 <option key={dist} value={dist}>
                                   {dist}

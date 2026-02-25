@@ -1383,6 +1383,16 @@ p {
     background-color: #f8723f;
     border-color: #f8723f;
   }
+
+  .member-center {
+    &__inner {
+      width: 100% !important;
+      max-width: 1296px !important; // 與 Navbar 同寬
+      margin: 0 auto !important;
+      padding: 0 24px !important; // 左右留 24px 安全邊距（小螢幕不貼邊）
+      box-sizing: border-box !important;
+    }
+  }
 }
 
 /* 會員資料容器：大圓角與背景色 */
@@ -1434,7 +1444,7 @@ p {
   }
 }
 
-/* 針對會員中心的下拉選單進行優化 */
+/* 針對會員中心的下拉選單優化 */
 .member-center {
   .form-select {
     font-size: 0.875rem !important;
@@ -1453,4 +1463,19 @@ p {
   .form-control {
     font-size: 0.875rem !important;
   }
+}
+
+.member-profile-wrapper {
+  margin-top: 80px;
+
+  .h1 {
+    font-size: 2.25rem; // 依照設計稿微調標題大小
+    font-weight: 700;
+    color: #5d4037; // 深褐色文字
+  }
+}
+
+.member-profile-title {
+  padding-left: 110px;
+  padding-right: 110px;
 }

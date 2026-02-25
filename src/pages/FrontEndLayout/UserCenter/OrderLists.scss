@@ -1,0 +1,841 @@
+// ════════════════════════════════════════════════════════════════
+// Design Tokens
+// ════════════════════════════════════════════════════════════════
+$primary: #fc762f;
+$primary-hover: #e8651e;
+$primary-light: #fff5f0;
+$primary-shadow: rgba(252, 118, 47, 0.25);
+
+$teal: #58baab;
+$teal-light: #e8f7f5;
+
+$brown-500: #534741;
+$brown-300: #8c837e;
+$brown-100: #d5ccc8;
+
+$success: #4caf50;
+$success-light: #e8f5e9;
+$error: #f44336;
+$error-light: #ffebee;
+$warning: #ff9800;
+$warning-light: #fff3e0;
+
+$neutral-50: #fafafa;
+$neutral-100: #f5f5f5;
+$white: #ffffff;
+
+$page-bg: #fff8f5;
+$border-color: #ffe0d0;
+
+$font-title: "Noto Sans TC", sans-serif;
+$font-body: "Noto Sans TC", sans-serif;
+
+$radius-card: 16px;
+$radius-pill: 40px;
+$radius-sm: 8px;
+
+// ════════════════════════════════════════════════════════════════
+// Mixins
+// ════════════════════════════════════════════════════════════════
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ════════════════════════════════════════════════════════════════
+// OrderLists（父元件）
+// ════════════════════════════════════════════════════════════════
+.member-orderlist {
+  font-family: $font-body;
+  padding: 40px 0 0; // 上方留空給 header
+
+  // 頁首：標題 + Tabs（在橘框外）
+  &__header {
+    @include flex-between;
+    margin-bottom: 28px;
+    padding-left: 110px;
+    padding-right: 110px;
+  }
+
+  &__title {
+    font-family: $font-title;
+    font-weight: 700;
+    font-size: 28px;
+    color: $brown-500;
+    letter-spacing: 0.05em;
+  }
+
+  // Tab 按鈕群
+  &__tabs {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__tab-btn {
+    padding: 8px 20px;
+    border-radius: $radius-pill;
+    border: none;
+    background: transparent;
+    color: $brown-500;
+    font-family: $font-body;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      font-weight 0.2s ease;
+
+    &:hover:not(&--active) {
+      background: #ffe8d8;
+      color: $primary;
+    }
+
+    &--active {
+      background: $primary;
+      color: $white;
+      font-weight: 600;
+    }
+  }
+
+  // 欄位標題列 — 淡橘底容器內的文字標題
+  &__table-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 24px 20px 16px;
+    gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
+
+    span {
+      flex: 1;
+      font-family: $font-body;
+      font-weight: 500;
+      font-size: 15px;
+      color: $brown-300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:first-child {
+        justify-content: flex-start;
+      }
+      &.chevron-spacer {
+        flex: 0 0 24px;
+      }
+    }
+  }
+
+  // 淡橘底大圓角容器（包住標題列 + 卡片 + 分頁）
+  &__orange-box {
+    width: 100%;
+    background: #fff0e8;
+    border-radius: 24px;
+    padding: 0 32px 32px;
+    box-sizing: border-box;
+  }
+
+  // 卡片清單內層
+  &__card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // 空狀態 / 載入中
+  &__empty,
+  &__loading {
+    text-align: center;
+    padding: 48px 0;
+    color: $brown-300;
+    font-size: 16px;
+  }
+
+  // 分頁置中（在 orange-box 底部）
+  &__footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+  }
+
+  // 分頁
+  &__pagination {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__page-btn {
+    @include flex-center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: $radius-sm;
+    background: $neutral-100;
+    color: $brown-500;
+    font-family: $font-body;
+    font-size: 15px;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &--active {
+      background: $primary;
+      color: $white;
+      font-weight: 600;
+      box-shadow: 0 2px 8px $primary-shadow;
+    }
+
+    &--arrow {
+      background: transparent;
+      font-size: 18px;
+    }
+
+    &:disabled {
+      color: $brown-100;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// SubscriptionCard wrapper
+// ════════════════════════════════════════════════════════════════
+.subscription-card {
+  width: 100%;
+}
+
+// ════════════════════════════════════════════════════════════════
+// MemberOrderCardHeader
+// ════════════════════════════════════════════════════════════════
+.subscription-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 24px;
+  width: 100%;
+  height: 64px;
+  background: $white;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  border-radius: $radius-card;
+  margin-bottom: 8px;
+
+  &:hover {
+    background: #fffaf8;
+  }
+
+  // 展開狀態：底部直角，無下間距
+  &--expanded {
+    border-radius: $radius-card $radius-card 0 0;
+    margin-bottom: 0;
+    background: $white;
+  }
+
+  // 欄位
+  &__col {
+    flex: 1;
+    font-family: $font-body;
+    font-size: 16px;
+    color: $brown-500;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--date {
+      justify-content: flex-start;
+      font-size: 16px;
+    }
+
+    &--id {
+      font-size: 13px;
+      color: $brown-300;
+    }
+
+    &--amount {
+      font-weight: 700;
+      color: $teal;
+    }
+  }
+
+  // 展開箭頭
+  &__chevron {
+    flex: 0 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $brown-500;
+    transition: transform 0.25s ease;
+
+    &--expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  // 狀態 badge
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 14px;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+
+    &--processing {
+      background: $teal-light;
+      color: $teal;
+    }
+    &--completed {
+      background: $success-light;
+      color: $success;
+    }
+    &--cancelled {
+      background: $error-light;
+      color: $error;
+    }
+    &--partial {
+      background: $warning-light;
+      color: $warning;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// MemberOrderCardBody
+// ════════════════════════════════════════════════════════════════
+.subscription-card-body {
+  background: $white;
+  border: none;
+  border-radius: 0 0 $radius-card $radius-card;
+  padding: 0 20px 24px;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 8px;
+
+  // 子標題列
+  &__subheader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid $neutral-100;
+    font-family: $font-body;
+    font-weight: 700;
+    font-size: 14px;
+    color: $brown-300;
+    letter-spacing: 0.05em;
+  }
+
+  // 訂閱品項列
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 16px;
+    border-bottom: 1px solid $neutral-100;
+    transition: opacity 0.2s;
+
+    &--cancelled {
+      opacity: 0.45;
+    }
+  }
+
+  // 欄位共用
+  &__col {
+    flex: 1;
+    font-family: $font-body;
+    font-size: 16px;
+    color: $brown-500;
+    letter-spacing: 0.05em;
+    text-align: center;
+
+    &--plan {
+      flex: 3;
+      text-align: left;
+    }
+
+    &--checkbox {
+      flex: 0 0 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    &--desktop-only {
+      // 桌機預設顯示，手機版由 media query 隱藏
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--header-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: $brown-300;
+    }
+
+    &--subtotal {
+      text-align: right;
+      justify-content: flex-end;
+      font-weight: 500;
+      color: $brown-500;
+    }
+
+    &--status {
+      text-align: right;
+      font-weight: 700;
+
+      &.is-active {
+        color: $teal;
+      }
+      &.is-complete {
+        color: $teal;
+      }
+      &.is-cancel {
+        color: $error;
+      }
+      &.is-partial {
+        color: $warning;
+      }
+    }
+  }
+
+  // 方案名稱
+  &__plan-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: $brown-500;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+  }
+
+  &__plan-meta {
+    font-size: 13px;
+    color: $brown-300;
+    letter-spacing: 0.05em;
+  }
+
+  // checkbox
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: $primary;
+    cursor: pointer;
+  }
+
+  // 操作按鈕區
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-right: 16px;
+  }
+
+  // 按鈕共用
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 28px;
+    height: 43px;
+    border-radius: $radius-pill;
+    font-family: $font-body;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+    border: none;
+
+    // 實心橘
+    &--primary {
+      background: $primary;
+      color: $white;
+      box-shadow: 0 4px 12px $primary-shadow;
+      &:hover:not(:disabled) {
+        background: $primary-hover;
+        box-shadow: 0 6px 16px $primary-shadow;
+      }
+    }
+
+    // 空心橘
+    &--outline {
+      background: transparent;
+      color: $primary;
+      border: 2px solid $primary;
+      &:hover:not(:disabled) {
+        background: $primary-light;
+      }
+    }
+
+    // 灰色（返回）
+    &--ghost {
+      background: transparent;
+      color: $brown-300;
+      border: 2px solid $brown-100;
+      &:hover:not(:disabled) {
+        background: $neutral-100;
+      }
+    }
+
+    // 寬版（確認取消）
+    &--wide {
+      padding: 8px 40px;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// 再次訂閱 Modal
+// ════════════════════════════════════════════════════════════════
+.resubscribe-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__dialog {
+    background: $white;
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  &__title {
+    font-family: $font-body;
+    font-weight: 700;
+    font-size: 18px;
+    color: $brown-500;
+    margin-bottom: 4px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: $brown-300;
+    margin-bottom: 20px;
+  }
+
+  &__dog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  &__dog-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid $neutral-100;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+
+    &--selected {
+      border-color: $primary;
+      background: $primary-light;
+    }
+
+    &:hover:not(&--selected) {
+      border-color: $brown-100;
+    }
+  }
+
+  &__dog-radio {
+    width: 18px;
+    height: 18px;
+    accent-color: $primary;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  &__dog-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: $brown-500;
+  }
+
+  &__dog-meta {
+    font-size: 13px;
+    color: $brown-300;
+    margin-top: 2px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+// (no keyframes needed)
+
+// ════════════════════════════════════════════════════════════════
+// RWD — 手機版 (≤ 768px)
+// ════════════════════════════════════════════════════════════════
+@media (max-width: 768px) {
+  // ── 整頁 padding ──────────────────────────────────────────────
+  .member-orderlist {
+    padding: 0;
+
+    &__header {
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 80px 24px 24px;
+      margin-bottom: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &__title {
+      font-size: 28px;
+      text-align: center;
+    }
+
+    // Tabs 換行成 2×2 grid
+    &__tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+
+    &__tab-btn {
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      padding: 8px 32px;
+
+      &--active {
+        background: $primary;
+        color: $white;
+        border: none;
+      }
+
+      &:not(&--active) {
+        border: 1px solid $brown-300;
+        color: $brown-300;
+      }
+    }
+
+    // 橘框：上圓角 80px，左右 padding 12px
+    &__orange-box {
+      border-radius: 80px 80px 0 0;
+      padding: 80px 12px 32px;
+    }
+
+    // 桌機欄位標題列隱藏
+    &__table-header {
+      display: none;
+    }
+
+    &__footer {
+      padding-top: 16px;
+    }
+  }
+
+  // ── Card Header ───────────────────────────────────────────────
+  .subscription-card-header {
+    height: auto;
+    padding: 16px;
+    border-radius: $radius-sm;
+    margin-bottom: 0;
+
+    &--expanded {
+      border-radius: $radius-sm $radius-sm 0 0;
+    }
+
+    // 桌機版隱藏
+    &__desktop {
+      display: none;
+    }
+
+    // 手機版顯示
+    &__mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    &__mobile-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    &__mobile-label {
+      flex: 1;
+      font-size: 14px;
+      color: $brown-300;
+      letter-spacing: 0.05em;
+    }
+
+    &__mobile-value {
+      font-size: 16px;
+      color: $brown-500;
+      letter-spacing: 0.05em;
+      text-align: right;
+
+      &--id {
+        font-size: 13px;
+        color: $brown-300;
+      }
+
+      &--amount {
+        font-weight: 700;
+        color: $teal;
+      }
+    }
+
+    // 展開/收合 文字按鈕
+    &__mobile-toggle {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 4px;
+      color: $primary;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    &__mobile-chevron {
+      transition: transform 0.25s ease;
+      &--expanded {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  // ── Card Body ─────────────────────────────────────────────────
+  .subscription-card-body {
+    padding: 0 16px 16px;
+
+    // 子標題列隱藏（手機版直排，不需要 header）
+    &__subheader {
+      display: none;
+    }
+
+    // 品項列改直排
+    &__row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 16px 0;
+    }
+
+    // checkbox 欄調整
+    &__col--checkbox {
+      flex: 0 0 auto;
+    }
+
+    // 桌機版單價/數量/小計隱藏
+    &__col--desktop-only {
+      display: none;
+    }
+
+    // 手機版直排價格顯示
+    &__mobile-prices {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+    }
+
+    &__mobile-price-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: $brown-500;
+    }
+
+    &__mobile-label {
+      flex: 1;
+      color: $brown-300;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    // 按鈕區：平分兩欄
+    &__actions {
+      padding-right: 0;
+      gap: 16px;
+    }
+
+    &__btn {
+      flex: 1;
+      font-size: 18px;
+    }
+  }
+
+  // ── Subscription Card wrapper ─────────────────────────────────
+  .subscription-card {
+    margin-bottom: 16px;
+  }
+}
+
+// ── 桌機版：手機 layout 元素隱藏 ──────────────────────────────
+@media (min-width: 769px) {
+  .subscription-card-header {
+    &__mobile {
+      display: none;
+    }
+    &__desktop {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+    }
+  }
+
+  .subscription-card-body {
+    &__mobile-prices {
+      display: none;
+    }
+    &__col--desktop-only {
+      display: flex;
+    }
+  }
+}
