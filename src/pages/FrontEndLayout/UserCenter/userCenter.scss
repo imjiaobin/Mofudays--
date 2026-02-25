@@ -1383,4 +1383,14 @@ p {
     background-color: #f8723f;
     border-color: #f8723f;
   }
+
+  .member-center {
+    &__inner {
+      width: 100% !important;
+      max-width: 1296px !important; // 與 Navbar 同寬
+      margin: 0 auto !important;
+      padding: 0 24px !important; // 左右留 24px 安全邊距（小螢幕不貼邊）
+      box-sizing: border-box !important;
+    }
+  }
 }

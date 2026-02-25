@@ -1,9 +1,10 @@
-import SubscriptionCardHeader from "./MemberOrderCardHeader";
-import SubscriptionCardBody from "./MemberOrderCardBody";
+import MemberOrderCardHeader from "./MemberOrderCardHeader";
+import MemberOrderCardBody from "./MemberOrderCardBody";
 import { deriveOrderStatus, getStatusType } from "./subscriptionHelpers";
+import "../OrderLists.scss";
 
 /**
- * <SubscriptionCard />
+ * MemberOrderCard（SubscriptionCard）
  *
  * Props:
  * - order           {object}   完整訂單資料（來自 API）
@@ -16,7 +17,7 @@ import { deriveOrderStatus, getStatusType } from "./subscriptionHelpers";
  * - onToggleItem    {function} (subscriptionId) => void
  * - onResubscribe   {function} () => void
  */
-export default function SubscriptionCard({
+export default function MemberOrderCard({
   order,
   isExpanded,
   isCancelling,
@@ -31,8 +32,8 @@ export default function SubscriptionCard({
   const statusType = getStatusType(derivedStatus);
 
   return (
-    <div className="subscription-card-wrapper mb-16">
-      <SubscriptionCardHeader
+    <div className="subscription-card">
+      <MemberOrderCardHeader
         order={order}
         isExpanded={isExpanded}
         derivedStatus={derivedStatus}
@@ -41,7 +42,7 @@ export default function SubscriptionCard({
       />
 
       {isExpanded && (
-        <SubscriptionCardBody
+        <MemberOrderCardBody
           subscriptions={order.subscriptions}
           order={order}
           isCancelling={isCancelling}
