@@ -4,6 +4,7 @@ import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { taiwanRegions } from "./taiwanRegions";
 
 //圖片載入
 import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
@@ -25,6 +26,8 @@ export default function Signup() {
     handleSubmit,
     getValues,
     setError,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -35,9 +38,29 @@ export default function Signup() {
       email: "",
       password: "",
       passwordConfirm: "",
+      // 拆解地址欄位
+      city: "基隆市",
+      district: "仁愛區",
       address: "",
     },
   });
+
+  // 監控縣市的變動
+  const selectedCityName = watch("city");
+
+  // 根據選中的縣市，找出對應的區域列表
+  const districts =
+    taiwanRegions.find((c) => c.name === selectedCityName)?.districts || [];
+
+  // 當縣市改變時，自動將區域設為該縣市的第一個選項，避免邏輯錯誤
+  useEffect(() => {
+    if (districts.length > 0) {
+      const currentDistrict = getValues("district");
+      if (!districts.includes(currentDistrict)) {
+        setValue("district", districts[0]);
+      }
+    }
+  }, [selectedCityName, setValue]);
 
   // 輪播初始化
   useEffect(() => {
@@ -398,7 +421,7 @@ export default function Signup() {
                     </div>
 
                     {/* 地址 */}
-                    <div className="mb-6 d-flex align-items-start">
+                    {/* <div className="mb-6 d-flex align-items-start">
                       <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
                         地址<sup className="inp-required">*</sup>
                       </label>
@@ -411,6 +434,60 @@ export default function Signup() {
                         />
                         <div className="invalid-feedback">
                           {errors.address?.message}
+                        </div>
+                      </div>
+                    </div> */}
+
+                    {/* 地址三段式佈局 */}
+                    <div className="mb-6 d-flex align-items-start">
+                      <label className="form-label flex-shrink-0 col-3 me-2 text-brown-500 pt-1">
+                        地址<sup className="inp-required">*</sup>
+                      </label>
+                      <div className="w-100">
+                        <div className="row g-2">
+                          {/* 縣市選擇 */}
+                          <div className="col-6">
+                            <select
+                              key={selectedCityName}
+                              className={`form-select ${errors.city ? "is-invalid" : ""}`}
+                              {...register("city", { required: "請選擇縣市" })}
+                            >
+                              {taiwanRegions.map((city) => (
+                                <option key={city.name} value={city.name}>
+                                  {city.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* 區域選擇 */}
+                          <div className="col-6">
+                            <select
+                              key="city-select"
+                              className={`form-select ${errors.district ? "is-invalid" : ""}`}
+                              {...register("district", {
+                                required: "請選擇區域",
+                              })}
+                            >
+                              {districts.map((dist) => (
+                                <option key={dist} value={dist}>
+                                  {dist}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          {/* 詳細地址 */}
+                          <div className="col-12 col-md-12">
+                            <input
+                              type="text"
+                              className={`form-control ${errors.address ? "is-invalid" : ""}`}
+                              placeholder="詳細地址"
+                              {...register("address", {
+                                required: "地址為必填",
+                              })}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>

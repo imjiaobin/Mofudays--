@@ -85,7 +85,7 @@ p {
 
   // ----------------------------------------  標題通用
   .h {
-    font-family: "Zen Maru Gothic";
+    font-family: "Noto Sans TC";
   }
 
   .h1 {
@@ -1431,5 +1431,26 @@ p {
 
   &:hover {
     background-color: #e06538 !important;
+  }
+}
+
+/* 針對會員中心的下拉選單進行優化 */
+.member-center {
+  .form-select {
+    font-size: 0.875rem !important;
+    padding: 0.5rem 2rem 0.5rem 0.75rem !important;
+    white-space: nowrap;
+    background-position: right 0.4rem center !important;
+
+    // 針對行動裝置微調
+    @media (max-width: 576px) {
+      font-size: 0.8rem !important;
+      padding-right: 1.5rem !important;
+    }
+  }
+
+  /* 如果詳細地址的 input 也有同樣問題，可以一併調整 */
+  .form-control {
+    font-size: 0.875rem !important;
   }
 }
