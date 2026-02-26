@@ -1,22 +1,48 @@
-.announcement .container {
-  background-color: $tertiary-500;
-  color: white;
-  padding-top: 9.5px;
-  padding-bottom: 9.5px;
-  border-radius: 8px; /* 新增圓角 */
-}
+/* Announcement.scss */
 
 .announcement {
+  // 讓整個區塊在手機上有一點邊距，不貼死螢幕邊緣
+  padding: 0 10px;
+  margin-top: 10px;
+
+  .container {
+    background-color: $tertiary-500;
+    color: white;
+    padding: 8px 15px; // 減少上下 padding，增加左右 padding
+    border-radius: 8px;
+
+    // 確保在極小螢幕下文字大小適中
+    @media (max-width: 576px) {
+      padding: 12px 10px;
+    }
+  }
+
   .btn-signup {
     background-color: white !important;
     color: $tertiary-500 !important;
     border: 2px solid white !important;
     border-radius: 8px;
 
+    // 手機版按鈕可以寬一點比較好按
+    @media (max-width: 576px) {
+      width: 100%;
+      margin-top: 5px;
+      padding: 4px 0;
+      font-size: 0.9rem;
+    }
+
     &:hover {
       background-color: transparent !important;
       color: white !important;
       border: 2px solid white !important;
+    }
+  }
+
+  // 調整 Close 按鈕在小螢幕的大小
+  .btn-close {
+    @media (max-width: 576px) {
+      width: 0.5em;
+      height: 0.5em;
     }
   }
 }

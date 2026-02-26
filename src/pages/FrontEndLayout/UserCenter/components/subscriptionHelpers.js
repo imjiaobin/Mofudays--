@@ -1,11 +1,5 @@
 /**
  * 根據訂單內的 subscriptions 陣列推導訂單狀態
- *
- * 規則：
- * - 全部 subscriptionStatus === "已取消" → "已取消"
- * - 部分 subscriptionStatus === "已取消"  → "部分取消"
- * - 全部 subscriptionStatus === "訂閱中"  → "進行中"
- * - 其餘（如已完成）                      → "已完成"
  */
 export const deriveOrderStatus = (subscriptions = []) => {
   if (!subscriptions.length) return "已完成";
@@ -41,7 +35,6 @@ export const getStatusType = (statusLabel) => {
 
 /**
  * Tab 篩選邏輯
- * activeTab "all" 回傳全部，其餘比對 deriveOrderStatus 結果
  */
 export const filterOrdersByTab = (orders, activeTab) => {
   if (activeTab === "all") return orders;
@@ -54,25 +47,4 @@ export const filterOrdersByTab = (orders, activeTab) => {
   return orders.filter(
     (order) => deriveOrderStatus(order.subscriptions) === statusMap[activeTab],
   );
-};
-
-/**
- * 組裝「再次訂閱」要帶去 /cart 的資料
- * 過濾掉 subscriptionStatus === "已取消" 的項目
- */
-export const buildResubscribePayload = (order) => {
-  const activeSubscriptions = order.subscriptions.filter(
-    (s) => s.subscriptionStatus !== "已取消",
-  );
-  return {
-    orderId: order.id,
-    month: order.month, // ✅ 修正：perCycleAmount → month（API 無 perCycleAmount）
-    subscriptions: activeSubscriptions.map((s) => ({
-      subscriptionId: s.subscriptionId,
-      planName: s.planName, // ✅ 修正：subscriptionPlan → planName
-      planPrice: s.planPrice, // ✅ 修正：新增 planPrice
-      planQty: s.planQty, // ✅ 修正：subscriptionQuantity → planQty
-      content: s.content, // ✅ 修正：planContent → content
-    })),
-  };
 };

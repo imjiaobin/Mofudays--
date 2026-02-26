@@ -21,19 +21,19 @@ const Announcement = () => {
   return (
     <nav className="announcement">
       <div className="container">
-        <div className="row align-items-center">
-          <div className="col-3"></div>
-          <div className="col-4">
+        <div className="row align-items-center g-2">
+          {" "}
+          {/* 加入 g-2 增加間距 */}
+          {/* 1. 跑馬燈：手機版佔 10，留 2 給關閉按鈕；桌機版維持原本比例 */}
+          <div className="col-10 col-md-4 offset-md-3">
             <AnnouncementCarousel items={announcementMessages} />
           </div>
-
-          <div className="col-1"></div>
-
-          <div className="col-2 text-center">
+          {/* 2. 按鈕：手機版置中並換行；桌機版恢復原本排列 */}
+          <div className="col-12 col-md-2 text-center order-last order-md-0">
             <AnnouncementButton isLoggedIn={isAuthed} />
           </div>
-
-          <div className="col-2 text-end">
+          {/* 3. 關閉按鈕：絕對定位或在手機版靠右 */}
+          <div className="col-2 col-md-2 text-end">
             <button
               type="button"
               className="btn-close btn-close-white shadow-none"

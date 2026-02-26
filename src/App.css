@@ -40,3 +40,11 @@
 .read-the-docs {
   color: #888;
 }
+
+select.form-select {
+  position: static !important;
+  left: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 100% !important;
+}
