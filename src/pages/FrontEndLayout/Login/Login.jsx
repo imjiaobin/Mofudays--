@@ -1,31 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import * as bootstrap from "bootstrap";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../../slices/userAuthSlice";
 import "./Login.scss";
 
-//圖片載入
 import loginSlider01 from "../../../assets/images/common/login-slider-01.png";
 import loginSlider02 from "../../../assets/images/common/login-slider-02.png";
 import loginSlider03 from "../../../assets/images/common/login-slider-03.png";
 
 import { toast } from "react-toastify";
 
-const API_BASE_URL = "http://localhost:3000";
-
 export default function Login() {
-  const { login } = useAuth(); // 取得全域登入函式
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const carouselRef = useRef(null);
-  const location = useLocation();
-  const [apiError, setApiError] = useState(""); // 僅保留全域 API 錯誤
-  // const [wasValidated, setWasValidated] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
 
   const {
     register,
@@ -43,70 +33,47 @@ export default function Login() {
   // 輪播初始化
   useEffect(() => {
     if (!carouselRef.current) return;
-
     const instance = bootstrap.Carousel.getOrCreateInstance(
       carouselRef.current,
       {
         interval: 3000,
         ride: "carousel",
-        pause: false, // 可選：不要 hover 暫停
+        pause: false,
         touch: true,
         wrap: true,
       },
     );
-
     instance.cycle();
-
-    return () => instance.dispose(); // 切頁時清掉，避免重複綁定
+    return () => instance.dispose();
   }, []);
 
   const onSubmit = async (data) => {
-    setApiError("");
-    try {
-      const res = await axios.post(`${API_BASE_URL}/login`, {
+    const result = await dispatch(
+      userLogin({
         email: data.email,
         password: data.password,
-      });
+        rememberMe: data.rememberMe,
+      }),
+    );
 
-      const { accessToken, user } = res.data;
-      if (!accessToken) throw new Error("登入成功但未取得 token");
-
-      await axios.patch(
-        `${API_BASE_URL}/users/${user.id}`,
-        {
-          isLoggedIn: true,
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
-      );
-
-      login(user, accessToken, data.rememberMe);
+    if (userLogin.fulfilled.match(result)) {
       toast.success("登入成功！歡迎回來 👋");
       navigate("/", { replace: true });
-    } catch (err) {
-      console.error("登入錯誤詳情：", err.response?.data);
-      const status = err?.response?.status;
-      if (status === 400 || status === 401) {
-        setError("password", { type: "manual", message: "帳號或密碼錯誤" });
-        setError("email", { type: "manual", message: " " });
-      } else {
-        toast.error("登入失敗，伺服器連線異常");
-      }
+    } else {
+      // result.payload 就是 rejectWithValue 傳回的錯誤訊息
+      const errMsg = result.payload || "登入失敗";
+      setError("password", { type: "manual", message: errMsg });
+      setError("email", { type: "manual", message: " " });
     }
   };
 
   return (
     <>
-      {/* <Header /> */}
       <main>
-        {/* <Announcement /> */}
-
         <div className="container login-section py-9">
           <div className="split-card overflow-hidden">
             <div className="row g-0">
-              {/* <!-- 輪播圖 --> */}
+              {/* 輪播圖 */}
               <section className="col-6 d-none p-0 d-md-block">
                 <div
                   id="carouselExampleInterval"
@@ -191,7 +158,8 @@ export default function Login() {
                   </button>
                 </div>
               </section>
-              {/* <!-- 登入表單 --> */}
+
+              {/* 登入表單 */}
               <section className="col-12 col-md-6 p-0">
                 <div className="login-form">
                   <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -199,13 +167,7 @@ export default function Login() {
                       <h2 className="text-brown-500">會員登入</h2>
                     </div>
 
-                    {apiError && (
-                      <div className="alert alert-danger" role="alert">
-                        {apiError}
-                      </div>
-                    )}
-
-                    {/* Email 欄位 */}
+                    {/* Email */}
                     <div className="mb-4 d-flex align-items-center">
                       <label
                         htmlFor="email"
@@ -218,7 +180,6 @@ export default function Login() {
                           type="email"
                           id="email"
                           placeholder="輸入你的帳號"
-                          // 6. 註冊與驗證規則
                           className={`form-control ${errors.email ? "is-invalid" : ""}`}
                           {...register("email", {
                             required: "請輸入 Email",
@@ -234,7 +195,7 @@ export default function Login() {
                       </div>
                     </div>
 
-                    {/* Password 欄位 */}
+                    {/* Password */}
                     <div className="mb-5 d-flex align-items-center">
                       <label
                         htmlFor="password"
@@ -287,7 +248,7 @@ export default function Login() {
                       <button
                         className="btn btn-form-login w-100"
                         type="submit"
-                        disabled={isSubmitting} // 使用 RHF 內建的提交狀態
+                        disabled={isSubmitting}
                       >
                         {isSubmitting ? "登入中..." : "登入"}
                       </button>
@@ -313,8 +274,6 @@ export default function Login() {
           </div>
         </div>
       </main>
-
-      {/* <Footer /> */}
     </>
   );
 }
