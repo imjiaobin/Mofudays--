@@ -14,11 +14,13 @@ import { Link } from "react-router-dom";
 import maoriheLogoDefalut from "../../../../assets/images/header/maorihe_logo_defalut.svg";
 import avatarDefalut from "../../../../assets/images/header/avatar_defalut.png";
 import { toast } from "react-toastify";
+import { fetchCart } from "../../../../slices/cartSlice";
 
 // 購物車跳轉邏輯 hook
 function useCartNavigate() {
   const navigate = useNavigate();
   const isAuthed = useSelector(selectIsUserAuthed);
+  const dispatch = useDispatch();
 
   const handleCartClick = async () => {
     if (!isAuthed) {
@@ -27,20 +29,16 @@ function useCartNavigate() {
       return;
     }
 
-    const userId = localStorage.getItem("userId");
-
     try {
-      const res = await fetch(`http://localhost:3000/carts?userId=${userId}`);
-      const data = await res.json();
-
-      if (data && data.length > 0) {
+      const action = await dispatch(fetchCart());
+      const result = action.payload;
+      if (result) {
         navigate("/cart");
       } else {
         toast.info("您的購物車目前沒有商品，將為您跳轉至訂閱流程！");
         navigate("/petinfo");
       }
-    } catch (err) {
-      console.error("查詢購物車失敗", err);
+    } catch {
       toast.error("查詢購物車時發生錯誤，請稍後再試。");
     }
   };

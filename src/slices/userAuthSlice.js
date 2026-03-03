@@ -8,11 +8,11 @@ const USER_ID_KEY = "userId";
 const USER_NAME_KEY = "userName";
 const USER_ROLE_KEY = "userRole";
 
-// 工具：從 localStorage 或 sessionStorage 讀取
+// 從 localStorage 或 sessionStorage 讀取
 const readStorage = (key) =>
   localStorage.getItem(key) || sessionStorage.getItem(key) || null;
 
-// 工具：清除兩邊的 storage
+// 清除兩邊的 storage
 const clearAuthStorage = () => {
   [TOKEN_KEY, USER_ID_KEY, USER_NAME_KEY, USER_ROLE_KEY].forEach((key) => {
     localStorage.removeItem(key);
@@ -26,12 +26,12 @@ const initialState = {
   user: null, // user profile 需要非同步取得，不從 localStorage 初始化
   status: "idle", // idle | loading | succeeded | failed
   error: null,
-  isInitialized: false, // 取代 AuthContext 的 isLoading，用來表示「是否完成初始驗證」
+  isInitialized: false,
 };
 
-// ── Async Thunks ────────────────────────────────────────────────
+// Async Thunks
 
-// 1. App 啟動時的 token 驗證（取代 AuthContext 的 useEffect initAuth）
+// 1. App 啟動時的 token 驗證
 export const initUserAuth = createAsyncThunk(
   "userAuth/init",
   async (_, { rejectWithValue }) => {
@@ -117,7 +117,7 @@ export const userLogout = createAsyncThunk(
   },
 );
 
-// ── Slice ───────────────────────────────────────────────────────
+// Slice
 
 export const userAuthSlice = createSlice({
   name: "userAuth",
@@ -133,7 +133,7 @@ export const userAuthSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // ── initUserAuth ──
+    // initUserAuth
     builder
       .addCase(initUserAuth.pending, (state) => {
         state.status = "loading";
@@ -153,7 +153,7 @@ export const userAuthSlice = createSlice({
         state.isInitialized = true;
       });
 
-    // ── userLogin ──
+    // userLogin
     builder
       .addCase(userLogin.pending, (state) => {
         state.status = "loading";
@@ -169,7 +169,7 @@ export const userAuthSlice = createSlice({
         state.error = action.payload || "登入失敗";
       });
 
-    // ── userLogout ──
+    // userLogout
     builder.addCase(userLogout.fulfilled, (state) => {
       state.token = null;
       state.user = null;
@@ -182,7 +182,7 @@ export const userAuthSlice = createSlice({
 
 export const { clearUserError, updateUserProfile } = userAuthSlice.actions;
 
-// ── Selectors ───────────────────────────────────────────────────
+// Selectors
 export const selectUserAuth = (state) => state.userAuth;
 export const selectIsUserAuthed = (state) =>
   Boolean(state.userAuth.token && state.userAuth.user);
