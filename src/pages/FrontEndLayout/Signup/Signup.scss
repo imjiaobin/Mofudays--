@@ -34,6 +34,20 @@ input[type="date"] {
   display: block;
 }
 
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // 這是關鍵：讓圖片像背景一樣鋪滿，自動裁切多餘部分
+  object-position: center; // 確保圖片中心對齊
+}
+
+// 確保輪播的所有層級都撐滿高度
+.carousel,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+}
+
 .form-select {
   color: #000 !important; // 或你的主題文字色
 }

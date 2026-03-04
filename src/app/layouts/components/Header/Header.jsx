@@ -307,8 +307,8 @@ function AuthMenu({ variant = "desktop" }) {
   return <LoggedInMenu variant={variant} user={user} dispatch={dispatch} />;
 }
 
-function LoggedInMenu({ variant, user, dispatch }) {
-  const storedName = localStorage.getItem("userName");
+function LoggedInMenu({ variant, user, logout }) {
+  const storedName = localStorage.getItem("userName"); // 看你 localStorage 存的 key 名稱
   const displayName = user?.name || storedName || "會員";
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -434,7 +434,7 @@ function LoggedInMenu({ variant, user, dispatch }) {
               會員專屬活動
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               className="dropdown-item text-center py-2 border-bottom"
               to="/coupons"
@@ -442,7 +442,10 @@ function LoggedInMenu({ variant, user, dispatch }) {
             >
               我的折扣碼
             </Link>
-          </li>
+          </li> */}
+          {/* <li>
+            <hr className="dropdown-divider" />
+          </li> */}
           <li>
             <button
               className="dropdown-item text-primary text-center py-3 fw-bold"

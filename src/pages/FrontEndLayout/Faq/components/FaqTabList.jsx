@@ -9,7 +9,7 @@ const FaqTabList = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <ul className="faq-tabs d-flex align-items-end">
+    <ul className="faq-tabs d-flex align-items-end mt-5">
       {tabs.map((tab) => (
         <li key={tab.id}>
           <div

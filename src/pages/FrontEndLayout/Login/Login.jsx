@@ -73,8 +73,8 @@ export default function Login() {
         <div className="container login-section py-9">
           <div className="split-card overflow-hidden">
             <div className="row g-0">
-              {/* 輪播圖 */}
-              <section className="col-6 d-none p-0 d-md-block">
+              {/* <!-- 輪播圖 --> */}
+              <section className="col-6 d-none p-0 d-md-flex flex-column">
                 <div
                   id="carouselExampleInterval"
                   className="carousel slide h-100"

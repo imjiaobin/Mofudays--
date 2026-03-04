@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Footer.scss";
+import { Link } from "react-router-dom";
 
 //圖片載入
 import footerLogo from "../../../../assets/images/footer/footer-logo.png";
@@ -115,10 +116,10 @@ function FooterRight() {
         <FooterLinkList
           title="常見問題"
           items={[
-            { label: "FAQ", href: "faq.html" },
-            { label: "物流配送", href: "faq.html" },
-            { label: "退換貨政策", href: "#" },
-            { label: "細則與條款", href: "#" },
+            { label: "FAQ", to: "/faq" },
+            { label: "物流配送", to: "/faq" },
+            { label: "退換貨政策", to: "/faq" },
+            { label: "細則與條款", to: "/faq" },
           ]}
         />
       </div>
@@ -135,7 +136,12 @@ function FooterLinkList({ title, items }) {
         </li>
         {items.map((it) => (
           <li className="py-2" key={it.label}>
-            <a href={it.href}>{it.label}</a>
+            {/* 判斷：如果有 to 屬性就用 React Router 的 Link，否則用一般 a 標籤 */}
+            {it.to ? (
+              <Link to={it.to}>{it.label}</Link>
+            ) : (
+              <a href={it.href || "#"}>{it.label}</a>
+            )}
           </li>
         ))}
       </ul>

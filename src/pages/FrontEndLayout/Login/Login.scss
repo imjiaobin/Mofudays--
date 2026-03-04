@@ -59,7 +59,14 @@ button.btn-form-signup:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  object-position: center; // 確保圖片中心對齊
+}
+
+// 確保輪播的所有層級都撐滿高度
+.carousel,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
 }
 
 .split-card .carousel-indicators {
