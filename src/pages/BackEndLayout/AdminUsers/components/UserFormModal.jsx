@@ -55,7 +55,7 @@ export default function AdminFormModal({
       createdAt: formatDateTimeDisplay(initialData?.createdAt) || "—",
       updatedAt: now,
     };
-  }, [mode, initialData, open]);
+  }, [mode, initialData]);
 
   const {
     register,
@@ -70,7 +70,7 @@ export default function AdminFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 
@@ -95,7 +95,7 @@ export default function AdminFormModal({
 
   return (
     <div
-      className="modal d-block admin-modal__backdrop"
+      className="modal d-block admin-modal__backdrop admin-pages"
       tabIndex="-1"
       role="dialog"
       onMouseDown={(e) => {

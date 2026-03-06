@@ -18,7 +18,7 @@ export default function HouseholdResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
@@ -62,18 +62,18 @@ export default function HouseholdResultsTable({
                       <td>
                         {!isDeleted ? (
                           <div
-                            className="d-flex justify-content-center gap-2 flex-wrap"
+                            className="d-flex justify-content-center gap-2 flex-nowrap"
                             role="group"
                           >
                             <button
-                              className="btn btn-sm btn-bg-edit"
+                              className="btn btn-sm btn-bg-edit text-nowrap"
                               onClick={() => onEdit(row)}
                             >
                               <Pencil size={14} className="me-1" />
                               編輯
                             </button>
                             <button
-                              className="btn btn-sm btn-bg-delete"
+                              className="btn btn-sm btn-bg-delete text-nowrap"
                               onClick={() => onSoftDelete(row)}
                             >
                               <Trash2 size={14} className="me-1" />
@@ -82,7 +82,7 @@ export default function HouseholdResultsTable({
                           </div>
                         ) : (
                           <button
-                            className="btn btn-sm btn-outline-success"
+                            className="btn btn-sm btn-outline-success text-nowrap"
                             onClick={() => onRestore(row)}
                           >
                             <RotateCcw size={14} className="me-1" />
@@ -91,15 +91,15 @@ export default function HouseholdResultsTable({
                         )}
                       </td>
 
-                      <td>{row.itemName ?? "—"}</td>
-                      <td>
+                      <td className="text-nowrap">{row.itemName ?? "—"}</td>
+                      <td className="text-nowrap">
                         {joinLabels(
                           [row.category].filter(Boolean),
                           HOUSEHOLD_CATEGORY_LABEL,
                         )}
                       </td>
-                      <td>{joinLabels(row.tags, HOUSEHOLD_TAG_LABEL)}</td>
-                      <td>
+                      <td className="text-nowrap">{joinLabels(row.tags, HOUSEHOLD_TAG_LABEL)}</td>
+                      <td className="text-nowrap">
                         {row.isActive === false ? (
                           <span className="badge badge-bg-notActive">停用</span>
                         ) : (

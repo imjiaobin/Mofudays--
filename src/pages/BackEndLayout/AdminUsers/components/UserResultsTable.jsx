@@ -12,11 +12,11 @@ export default function UserResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th style={{ width: 170 }}></th>
+                <th className="text-center" style={{ width: 90 }}></th>
                 <th className="text-center">Email</th>
                 <th className="text-center" style={{ width: 110 }}>
                   姓名
@@ -69,7 +69,7 @@ export default function UserResultsTable({
                           <div className="btn-group" role="group">
                             <button
                               type="button"
-                              className="btn btn-sm btn-bg-edit"
+                              className="btn btn-sm btn-bg-edit text-nowrap"
                               onClick={() => onEdit(u)}
                             >
                               <Pencil size={14} className="me-1" />
@@ -88,9 +88,9 @@ export default function UserResultsTable({
                         )}
                       </td>
 
-                      <td className="text-break">{u.email ?? "—"}</td>
-                      <td>{u.name ?? "—"}</td>
-                      <td>{u.nickname ?? "—"}</td>
+                      <td className="text-nowrap">{u.email ?? "—"}</td>
+                      <td className="text-nowrap">{u.name ?? "—"}</td>
+                      <td className="text-nowrap">{u.nickname ?? "—"}</td>
                       <td className="text-nowrap">{formatYMD(u.birthday)}</td>
 
                       <td>

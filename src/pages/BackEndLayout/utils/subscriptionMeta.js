@@ -20,20 +20,6 @@ export function getResolvedSubscriptionStatus(subscription) {
   return subscription?.subscriptionStatus ?? "訂閱中";
 }
 
-export function getStatusDotVariant(status) {
-  switch (status) {
-    case "已完成":
-      return "success";
-    case "訂閱中":
-      return "primary";
-    case "暫停中":
-      return "warning";
-    case "已取消":
-      return "danger";
-    default:
-      return "secondary";
-  }
-}
 
 export function getCycleText(subscription) {
   const current = subscription?.currentCycleIndex ?? "—";

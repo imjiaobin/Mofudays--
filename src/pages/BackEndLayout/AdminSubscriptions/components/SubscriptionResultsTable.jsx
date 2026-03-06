@@ -4,9 +4,9 @@ import {
   getCycleText,
   getPlanName,
   getResolvedSubscriptionStatus,
-  getStatusDotVariant,
   getSubscriptionId,
 } from "../../utils/subscriptionMeta";
+import { getSubscriptionStatusDotVariant } from "../../utils/dotVariant";
 
 export default function SubscriptionResultsTable({
   loading,
@@ -19,12 +19,12 @@ export default function SubscriptionResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th className="text-center text-nowrap" style={{ width: 220 }}>
-                  操作
+                <th className="text-center text-nowrap">
+                  
                 </th>
                 <th className="text-center text-nowrap">訂閱編號</th>
                 <th className="text-center text-nowrap">訂單編號</th>
@@ -60,13 +60,13 @@ export default function SubscriptionResultsTable({
                 subscriptions.map((sub) => {
                   const isDeleted = Boolean(sub?.deletedAt) || sub?.isActive === false;
                   const resolvedStatus = getResolvedSubscriptionStatus(sub);
-                  const dotVariant = getStatusDotVariant(resolvedStatus);
+                  const dotVariant = getSubscriptionStatusDotVariant(resolvedStatus);
 
                   return (
                     <tr key={sub.id}>
-                      <td className="text-center">
+                      <td className="text-center text-nowrap">
                         {!isDeleted ? (
-                          <div className="d-flex justify-content-center gap-2 flex-wrap">
+                          <div className="d-flex justify-content-center gap-2 ">
                             <button
                               type="button"
                               className="btn btn-sm btn-bg-edit"

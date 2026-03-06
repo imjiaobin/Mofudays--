@@ -21,8 +21,8 @@ export default function OrderFormDetail({ subscriptions = [], defaultOpen = fals
       </div>
 
       {open && (
-        <div className="table-responsive">
-          <table className="table admin-pages__table align-middle mb-0">
+        <div className="table-responsive ad-modal-border">
+          <table className="table admin-pages__table align-middle mb-0 ">
             <thead>
               <tr className="small">
                 <th className="text-center text-nowrap">操作</th>
@@ -53,7 +53,7 @@ export default function OrderFormDetail({ subscriptions = [], defaultOpen = fals
                             <button
                               type="button"
                               className="btn btn-sm btn-bg-edit"
-                              onClick={() => onEdit(o)}
+                              // onClick={() => onEdit(o)}
                             >
                               <Pencil size={14} className="me-1" />
                               編輯
@@ -62,7 +62,7 @@ export default function OrderFormDetail({ subscriptions = [], defaultOpen = fals
                             <button
                               type="button"
                               className="btn btn-sm btn-bg-delete"
-                              onClick={() => onCancel(o)}
+                              // onClick={() => onCancel(o)}
                             >
                               <Trash2 size={14} className="me-1" />
                               取消

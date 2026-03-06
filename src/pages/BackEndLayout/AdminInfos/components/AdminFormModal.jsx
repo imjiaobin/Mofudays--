@@ -2,20 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { X } from "lucide-react";
 
-function formatDateTimeDisplay(input) {
-  if (!input) return "";
-  const d = new Date(input);
-  if (Number.isNaN(d.getTime())) return String(input);
+import {formatDateTimeDisplay, nowDateTimeDisplay} from "../../utils/date"
 
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
-    d.getHours(),
-  )}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-}
 
-function nowDateTimeDisplay() {
-  return formatDateTimeDisplay(new Date());
-}
 
 export default function AdminFormModal({
   open, // 開啟或關閉
@@ -34,6 +23,7 @@ export default function AdminFormModal({
       nickname: initialData?.nickname ?? "",
       birthday: initialData?.birthday ?? "",
       phone: initialData?.phone ?? "",
+      address: initialData?.address ?? "",
       // avatar: initialData?.avatar ?? "",
       isActive: String(initialData?.isActive ?? true),
     }),
@@ -55,7 +45,7 @@ export default function AdminFormModal({
       createdAt: formatDateTimeDisplay(initialData?.createdAt) || "—",
       updatedAt: now, // 修改時顯示本次預計更新時間
     };
-  }, [mode, initialData, open]);
+  }, [mode, initialData]);
 
   const {
     register,
@@ -70,7 +60,7 @@ export default function AdminFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, reset, defaultValues]);
 

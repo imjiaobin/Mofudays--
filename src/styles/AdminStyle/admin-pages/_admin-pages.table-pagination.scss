@@ -9,6 +9,7 @@
   &__tableWrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    border-radius: 1rem;
   }
 
 
@@ -26,6 +27,8 @@
     @media (max-width: 576px) {
       min-width: 980px;
     }
+
+    border-radius: 1rem;
 
     thead th {
       background: $brown-500;
@@ -92,10 +95,10 @@
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem;
+    // gap: 0.25rem;
 
     width: auto !important;
-    min-width: 84px;
+    // min-width: 84px;
 
     white-space: nowrap !important;
     word-break: keep-all !important;

@@ -1,5 +1,8 @@
 .admin-pages {
   /* ----- title ----- */
+
+  margin-bottom: 2.5rem;
+
   &__titleCard {
     color: #fff;
     background: $brown-500;
@@ -47,7 +50,7 @@
   &__panel {
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.075);
-    border-radius: 1rem;
+    border-radius: 1rem !important;
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.025);
   }
@@ -61,6 +64,7 @@
     justify-content: space-between;
     gap: 1rem;
     color: $white;
+    border-radius: 1rem 1rem 0 0;
 
     @media (min-width: 992px) {
       padding: 1.05rem 1.25rem;
@@ -70,6 +74,7 @@
   &__panelBody {
     padding: 1rem;
 
+
     @media (min-width: 992px) {
       padding: 1.25rem 1.25rem 1.1rem;
     }
@@ -78,6 +83,7 @@
   &__panelFooter {
     padding: 0.85rem 1rem;
     background: #fff;
+    border-radius:0 0 1rem 1rem;
 
     @media (min-width: 992px) {
       padding: 0.95rem 1.25rem;
@@ -140,5 +146,33 @@
     color: $neutral-400 !important;
     background-color: $white;
     border-color: $neutral-300 !important;
+  }
+
+ &__pagination {
+    flex-direction: row;
+  }
+
+  &__paginationSummary {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  &__paginationNav .pagination {
+    flex-wrap: wrap;           
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  &__pageSize {
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  &__pageSizeText {
+    display: inline-flex;
+    white-space: nowrap;      
+    flex-shrink: 0;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
   }
 }

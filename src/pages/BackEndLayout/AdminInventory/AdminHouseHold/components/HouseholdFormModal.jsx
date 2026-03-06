@@ -75,7 +75,7 @@ export default function HouseholdFormModal({
       createdAt: formatDateTimeDisplay(initialData?.createdAt) || "—",
       updatedAt: now,
     };
-  }, [mode, initialData, open]);
+  }, [mode, initialData]);
 
   const {
     register,
@@ -91,7 +91,7 @@ export default function HouseholdFormModal({
     }
   }, [open, reset, defaultValues]);
 
-  const submit = async (data) => {
+  const onSubmit = async (data) => {
     setRootError("");
     try {
       await onSave(data);
@@ -113,7 +113,7 @@ export default function HouseholdFormModal({
             </h4>
           </div>
 
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="modal-body admin-modal__body admin-pages__panelBody">
               {rootError && <div className="alert alert-danger py-2 mb-3">{rootError}</div>}
 

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useMemo, useState} from "react";
+import { useForm, useWatch  } from "react-hook-form";
 import SubscriptionDetailModal from "./SubscriptionDetailModal";
 
 const SUBSCRIPTION_STATUS_OPTIONS = ["訂閱中", "暫停中", "已完成", "已取消"];
@@ -60,27 +60,29 @@ export default function SubscriptionFormModal({
       createdAt: formatDateTimeDisplay(initialData?.createdAt) || "—",
       updatedAt: formatDateTimeDisplay(now),
     };
-  }, [mode, initialData, open]);
+  }, [mode, initialData]);
 
   const {
     register,
     handleSubmit,
     reset,
-    watch,
     setValue,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: "onBlur",
     defaultValues,
   });
 
-  const termCycles = Number(watch("termCycles") || 1);
-  const currentCycleIndex = Number(watch("currentCycleIndex") || 1);
+  // const termCycles = Number(watch("termCycles") || 1);
+  const termCycles = useWatch({ control, name: "termCycles" });
+  // const currentCycleIndex = Number(watch("currentCycleIndex") || 1);
+  const currentCycleIndex = useWatch({ control, name: "currentCycleIndex" });
 
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
   }, [open, defaultValues, reset]);
 

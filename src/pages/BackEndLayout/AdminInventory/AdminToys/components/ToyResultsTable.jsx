@@ -20,11 +20,11 @@ export default function ToyResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th style={{ width: 220 }}></th>
+                <th style={{ width: 180 }}></th>
                 <th className="text-center">玩具名稱</th>
                 <th className="text-center">適用體型</th>
                 <th className="text-center">適用年齡</th>
@@ -67,18 +67,18 @@ export default function ToyResultsTable({
                       <td>
                         {!isDeleted ? (
                           <div
-                            className="d-flex justify-content-center gap-2 flex-wrap"
+                            className="d-flex justify-content-center gap-2 text-nowrap"
                             role="group"
                           >
                             <button
-                              className="btn btn-sm btn-bg-edit"
+                              className="btn btn-sm btn-bg-edit text-nowrap"
                               onClick={() => onEdit(row)}
                             >
                               <Pencil size={14} className="me-1" />
                               編輯
                             </button>
                             <button
-                              className="btn btn-sm btn-bg-delete"
+                              className="btn btn-sm btn-bg-delete text-nowrap"
                               onClick={() => onSoftDelete(row)}
                             >
                               <Trash2 size={14} className="me-1" />
@@ -87,7 +87,7 @@ export default function ToyResultsTable({
                           </div>
                         ) : (
                           <button
-                            className="btn btn-sm btn-outline-success"
+                            className="btn btn-sm btn-outline-success text-nowrap"
                             onClick={() => onRestore(row)}
                           >
                             <RotateCcw size={14} className="me-1" />
@@ -96,11 +96,11 @@ export default function ToyResultsTable({
                         )}
                       </td>
 
-                      <td>{row.toyName ?? "—"}</td>
-                      <td>{joinLabels(row.petSize, SIZE_LABEL)}</td>
-                      <td>{joinLabels(row.dietStage, DIET_STAGE_LABEL)}</td>
-                      <td>{joinLabels(row.playStyle, PLAY_STYLE_LABEL)}</td>
-                      <td>
+                      <td className="text-nowrap">{row.toyName ?? "—"}</td>
+                      <td className="text-nowrap">{joinLabels(row.petSize, SIZE_LABEL)}</td>
+                      <td className="text-nowrap">{joinLabels(row.dietStage, DIET_STAGE_LABEL)}</td>
+                      <td className="text-nowrap">{joinLabels(row.playStyle, PLAY_STYLE_LABEL)}</td>
+                      <td className="text-nowrap">
                         {row.isActive === false ? (
                           <span className="badge badge-bg-notActive">停用</span>
                         ) : (

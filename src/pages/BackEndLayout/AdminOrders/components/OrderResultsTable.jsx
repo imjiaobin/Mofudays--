@@ -23,20 +23,10 @@ export default function OrderResultsTable({
       <div className="admin-pages__panel">
         <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
-            <colgroup>
-              <col className="admin-pages__colActions" />
-              <col />
-              <col />
-              <col />
-              <col />
-              <col />
-              <col />
-              <col />
-            </colgroup>
 
             <thead>
               <tr className="small">
-                <th className="text-center text-nowrap">操作</th>
+                <th className="text-center text-nowrap"></th>
                 <th className="text-center text-nowrap">訂閱編號</th>
                 <th className="text-center text-nowrap">客戶名稱</th>
                 <th className="text-center text-nowrap">付款狀態</th>
@@ -84,7 +74,7 @@ export default function OrderResultsTable({
                               onClick={() => onEdit(o)}
                             >
                               <Pencil size={14} className="me-1" />
-                              <span className="admin-pages__btnText">編輯</span>
+                              編輯
                             </button>
 
                             <button
@@ -93,7 +83,7 @@ export default function OrderResultsTable({
                               onClick={() => onCancel(o)}
                             >
                               <Trash2 size={14} className="me-1" />
-                              <span className="admin-pages__btnText">取消</span>
+                              取消
                             </button>
                           </div>
                         ) : (

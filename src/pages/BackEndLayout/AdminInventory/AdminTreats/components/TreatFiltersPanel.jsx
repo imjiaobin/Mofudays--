@@ -227,9 +227,9 @@ export default function TreatFiltersPanel({
           <div className="row align-items-center g-3">
             <div className="col-12 col-md-4" />
             <div className="col-12 col-md-4">
-              <div className="d-flex flex-wrap justify-content-center gap-4">
+              <div className="d-flex justify-content-center gap-4">
                 <button
-                  className="btn btn-style btn-sm"
+                  className="btn btn-style btn-sm text-nowrap"
                   type="button"
                   onClick={onCreate}
                 >
@@ -237,7 +237,7 @@ export default function TreatFiltersPanel({
                   新增零食
                 </button>
                 <button
-                  className="btn btn-style btn-sm"
+                  className="btn btn-style btn-sm text-nowrap"
                   type="button"
                   onClick={onRefresh}
                   disabled={loading}
@@ -246,7 +246,7 @@ export default function TreatFiltersPanel({
                   重新整理
                 </button>
                 <button
-                  className="btn btn-style btn-sm"
+                  className="btn btn-style btn-sm text-nowrap"
                   type="button"
                   onClick={clearFilters}
                   disabled={!hasActiveFilters}

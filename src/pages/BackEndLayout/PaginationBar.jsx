@@ -12,16 +12,23 @@ export default function PaginationBar({
   if (loading || totalRows === 0) return null;
 
   return (
-    <div className="d-flex flex-column flex-md-row align-items-center justify-content-center gap-5 p-3 border-top">
+    <div className="admin-pages__pagination d-flex flex-row flex-wrap align-items-center justify-content-center justify-content-md-center justify-content-xs-between gap-4 gap-md-3 gap-xs-2 p-3 border-top">
+      
+      {/* 摘要：桌機完整 / 手機精簡 */}
+      <div className="admin-pages__paginationSummary small text-muted">
+        <span className="d-none d-md-inline">
+          目前顯示 <span className="fw-bold">{rangeText}</span> /{" "}
+          <span className="fw-bold">{totalRows}</span> 筆（第 {page} / {totalPages} 頁）
+        </span>
 
-      {/* 目前顯示頁數筆數 */}
-      <div className="small text-muted">
-        目前顯示 <span className="fw-bold">{rangeText}</span> /{" "}
-        <span className="fw-bold">{totalRows}</span> 筆（第 {page} / {totalPages} 頁）
+        <span className="d-md-none">
+          第 <span className="fw-bold">{page}</span> /{" "}
+          <span className="fw-bold">{totalPages}</span> 頁
+        </span>
       </div>
 
-      {/* 顯示目前第幾頁 包含 上/下一頁, 第一頁最後一頁 */}
-      <nav aria-label="Admin pagination">
+      {/* 頁碼 */}
+      <nav aria-label="Admin pagination" className="admin-pages__paginationNav">
         <ul className="pagination pagination-sm mb-0">
           <li className={`page-item ${page === 1 ? "disabled" : ""}`}>
             <button className="page-link" type="button" onClick={() => setPage(1)} disabled={page === 1}>
@@ -76,23 +83,22 @@ export default function PaginationBar({
           </li>
         </ul>
       </nav>
-      
-      {/* 顯示每頁幾筆 10/20/50 */}
-      <div className="d-flex align-items-center gap-2">
-        <span className="small text-muted">每頁</span>
+
+      {/* 每頁幾筆 */}
+      <div className="admin-pages__pageSize d-inline-flex align-items-center gap-2 flex-nowrap">
+        <span className="admin-pages__pageSizeText small text-muted">每頁</span>
         <select
           className="form-select form-select-sm w-auto"
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
         >
+          <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>
         </select>
-        <span className="small text-muted">筆</span>
+        <span className="admin-pages__pageSizeText small text-muted">筆</span>
       </div>
-
-      
     </div>
   );
 }

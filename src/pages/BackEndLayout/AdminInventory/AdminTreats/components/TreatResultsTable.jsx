@@ -19,11 +19,11 @@ export default function TreatResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th style={{ width: 220 }}></th>
+                <th style={{ width: 180 }}></th>
                 <th className="text-center" >零食名稱</th>
                 <th className="text-center" >成分</th>
                 <th className="text-center">口感</th>
@@ -65,18 +65,18 @@ export default function TreatResultsTable({
                       <td>
                         {!isDeleted ? (
                           <div
-                            className="d-flex justify-content-center gap-2 flex-wrap"
+                            className="d-flex justify-content-center gap-2"
                             role="group"
                           >
                             <button
-                              className="btn btn-sm btn-bg-edit"
+                              className="btn btn-sm btn-bg-edit text-nowrap"
                               onClick={() => onEdit(row)}
                             >
                               <Pencil size={14} className="me-1" />
                               編輯
                             </button>
                             <button
-                              className="btn btn-sm btn-bg-delete"
+                              className="btn btn-sm btn-bg-delete text-nowrap"
                               onClick={() => onSoftDelete(row)}
                             >
                               <Trash2 size={14} className="me-1" />
@@ -94,9 +94,9 @@ export default function TreatResultsTable({
                         )}
                       </td>
 
-                      <td>{row.treatName ?? "—"}</td>
-                      <td>{joinLabels(row.ingredients, INGREDIENT_LABEL)}</td>
-                      <td className="text-center">
+                      <td className="text-nowrap">{row.treatName ?? "—"}</td>
+                      <td className="text-nowrap">{joinLabels(row.ingredients, INGREDIENT_LABEL)}</td>
+                      <td className="text-center text-nowrap">
                         {joinLabels(
                           Array.isArray(row.texture)
                             ? row.texture
@@ -104,8 +104,8 @@ export default function TreatResultsTable({
                           TEXTURE_LABEL,
                         )}
                       </td>
-                      <td>{joinLabels(row.healthCare, HEALTH_CARE_LABEL)}</td>
-                      <td>
+                      <td className="text-nowrap">{joinLabels(row.healthCare, HEALTH_CARE_LABEL)}</td>
+                      <td className="text-nowrap">
                         {row.isActive === false ? (
                           <span className="badge badge-bg-notActive">停用</span>
                         ) : (

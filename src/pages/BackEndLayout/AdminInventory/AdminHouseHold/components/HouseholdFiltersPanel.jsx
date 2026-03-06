@@ -126,16 +126,16 @@ export default function HouseholdFiltersPanel({
           <div className="row align-items-center g-3">
             <div className="col-12 col-md-4" />
             <div className="col-12 col-md-4">
-              <div className="d-flex flex-wrap justify-content-center gap-4">
-                <button className="btn btn-style btn-sm" type="button" onClick={onCreate}>
+              <div className="d-flex justify-content-center gap-4">
+                <button className="btn btn-style btn-sm text-nowrap" type="button" onClick={onCreate}>
                   <Plus size={16} className="me-2" />
                   新增生活小物
                 </button>
-                <button className="btn btn-style btn-sm" type="button" onClick={onRefresh} disabled={loading}>
+                <button className="btn btn-style btn-sm text-nowrap" type="button" onClick={onRefresh} disabled={loading}>
                   <RefreshCw size={16} className="me-2" />
                   重新整理
                 </button>
-                <button className="btn btn-style btn-sm" type="button" onClick={clearFilters} disabled={!hasActiveFilters}>
+                <button className="btn btn-style btn-sm text-nowrap" type="button" onClick={clearFilters} disabled={!hasActiveFilters}>
                   <Eraser size={16} className="me-2" />
                   清除條件
                 </button>

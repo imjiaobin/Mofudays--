@@ -5,7 +5,7 @@ export default function AdminResultsTable({
   loading,
   admins,       // 傳「pagedAdmins」
   hasNoData,    // 傳 visibleAdmins.length === 0
-  currentAdmin,
+  // currentAdmin,
   onEdit,
   // onSoftDelete,
   onRestore,
@@ -13,12 +13,12 @@ export default function AdminResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
-                <th style={{ width: 150 }}></th>
-                <th className="text-center">Email</th>
+                <th style={{ width: 90 }}></th>
+                <th className="text-center" style={{ width: 150 }}>Email</th>
                 <th className="text-center" style={{ width: 100 }}>
                   角色
                 </th>
@@ -65,24 +65,26 @@ export default function AdminResultsTable({
 
                   return (
                     <tr key={a.id}>
-                      <td>
+                      <td className="text-center ">
                         {!isDeleted ? (
-                          <div className="btn-group" role="group">
-                            <button className="btn btn-sm btn-bg-edit" onClick={() => onEdit(a)}>
+
+                          <button className="btn btn-sm btn-bg-edit text-nowrap" onClick={() => onEdit(a)}>
                               <Pencil size={14} className="me-1" />
                               編輯
                             </button>
+                          // <div className="btn-group" role="group">
+                            
 
-                            {/* <button
-                              className={`btn btn-sm ${isMe ? "btn-disabled" : "btn-bg-delete"}`}
-                              onClick={() => onSoftDelete(a)}
-                              disabled={isMe}
-                              title={isMe ? "不能刪除目前登入的自己" : ""}
-                            >
-                              <Trash2 size={14} className="me-1" />
-                              刪除
-                            </button> */}
-                          </div>
+                          //   {/* <button
+                          //     className={`btn btn-sm ${isMe ? "btn-disabled" : "btn-bg-delete"}`}
+                          //     onClick={() => onSoftDelete(a)}
+                          //     disabled={isMe}
+                          //     title={isMe ? "不能刪除目前登入的自己" : ""}
+                          //   >
+                          //     <Trash2 size={14} className="me-1" />
+                          //     刪除
+                          //   </button> */}
+                          // </div>
                         ) : (
                           <button className="btn btn-sm btn-outline-success" onClick={() => onRestore(a)}>
                             <RotateCcw size={16} className="me-1" />
@@ -91,7 +93,7 @@ export default function AdminResultsTable({
                         )}
                       </td>
 
-                      <td className="text-break">{a.email ?? "—"}</td>
+                      <td className="text-nowrap">{a.email ?? "—"}</td>
                       <td>
                         <span>{a.role ?? "—"}</span>
                       </td>

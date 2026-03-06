@@ -138,6 +138,7 @@ export default function AdminSubscriptions() {
       setTreats([]);
       setToys([]);
       setHousehold([]);
+      console.log(e);
     }
   };
 

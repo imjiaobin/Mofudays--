@@ -46,7 +46,6 @@ export default function AdminHousehold() {
     rangeText,
   } = usePagination(visibleHousehold, {
     initialPageSize: 10,
-    resetDeps: [filters],
   });
 
   const fetchItems = async () => {
@@ -93,7 +92,9 @@ export default function AdminHousehold() {
 
   const softDelete = async (row) => {
     if (!row?.id) return;
-    const ok = window.confirm(`確定要刪除生活小物「${row?.itemName ?? "—"}」嗎？`);
+    const ok = window.confirm(
+      `確定要刪除生活小物「${row?.itemName ?? "—"}」嗎？`,
+    );
     if (!ok) return;
 
     setFlash(null);
@@ -180,7 +181,11 @@ export default function AdminHousehold() {
         setFlash({ type: "success", message: "新增生活小物成功！" });
       } else {
         if (!editing?.id) throw new Error("Missing household id");
-        await axios.patch(`${API_BASE}/household/${editing.id}`, payload, authHeaders());
+        await axios.patch(
+          `${API_BASE}/household/${editing.id}`,
+          payload,
+          authHeaders(),
+        );
         setFlash({ type: "success", message: "更新生活小物成功！" });
       }
 

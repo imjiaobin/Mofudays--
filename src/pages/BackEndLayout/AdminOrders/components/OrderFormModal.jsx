@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import OrderFormDetail from "./OrderDetailModal";
 
 export default function OrderFormModal({
@@ -46,13 +46,13 @@ export default function OrderFormModal({
       createdAt: formatDateTimeDisplay(initialData?.createdAt) || "—",
       updatedAt: formatDateTimeDisplay(now),
     };
-  }, [mode, initialData, open]);
+  }, [mode, initialData]);
 
   const {
     register,
     handleSubmit,
     reset,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -63,15 +63,15 @@ export default function OrderFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      setRootError("");
+      // setRootError("");
     }
    
   }, [open, defaultValues, reset]);
 
   // 自動計算總金額（期數 * 每期金額）
-  const termCycles = Number(watch("termCycles") || 0);
-  const perCycleAmount = Number(watch("perCycleAmount") || 0);
-  const paymentStatus = watch("paymentStatus");
+   const termCycles = useWatch({ control, name: "termCycles" });
+   const perCycleAmount = useWatch({ control, name: "perCycleAmount" });
+   const paymentStatus = useWatch({ control, name: "paymentStatus" });
 
   useEffect(() => {
     const total = termCycles * perCycleAmount;
@@ -98,7 +98,7 @@ export default function OrderFormModal({
 
   return (
     <div
-      className="modal d-block admin-modal__backdrop"
+      className="modal d-block admin-modal__backdrop admin-pages"
       tabIndex="-1"
       role="dialog"
       onMouseDown={(e) => {

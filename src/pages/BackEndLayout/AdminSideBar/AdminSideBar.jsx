@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { adminLogout, selectAdminAuth } from "../../../slices/adminAuthSlice";
@@ -51,8 +51,7 @@ export default function AdminSideBar({
   const isOrderGroupActive = location.pathname.startsWith("/admin/orders");
   const isUserGroupActive = location.pathname.startsWith("/admin/users");
   const isAdminGroupActive = location.pathname.startsWith("/admin/admins");
-  const isInventoryGroupActive =
-    location.pathname.startsWith("/admin/inventory");
+  const isInventoryGroupActive = location.pathname.startsWith("/admin/inventory");
 
   // 預設如果正在群組頁面內，就自動展開
   const [ordersOpen, setOrdersOpen] = useState(isOrderGroupActive);
@@ -60,21 +59,21 @@ export default function AdminSideBar({
   const [adminsOpen, setAdminsOpen] = useState(isAdminGroupActive);
   const [inventoryOpen, setInventoryOpen] = useState(isInventoryGroupActive);
 
-  useEffect(() => {
-    if (isOrderGroupActive) setOrdersOpen(true);
-  }, [isOrderGroupActive]);
+  // useEffect(() => {
+  //   // if (isOrderGroupActive) setOrdersOpen(true);
+  // }, [isOrderGroupActive]);
 
-  useEffect(() => {
-    if (isUserGroupActive) setUsersOpen(true);
-  }, [isUserGroupActive]);
+  // useEffect(() => {
+  //   // if (isUserGroupActive) setUsersOpen(true);
+  // }, [isUserGroupActive]);
 
-  useEffect(() => {
-    if (isAdminGroupActive) setAdminsOpen(true);
-  }, [isAdminGroupActive]);
+  // useEffect(() => {
+  //   // if (isAdminGroupActive) setAdminsOpen(true);
+  // }, [isAdminGroupActive]);
 
-  useEffect(() => {
-    if (isInventoryGroupActive) setInventoryOpen(true);
-  }, [isInventoryGroupActive]);
+  // useEffect(() => {
+  //   // if (isInventoryGroupActive) setInventoryOpen(true);
+  // }, [isInventoryGroupActive]);
 
   const handleLogout = (e) => {
     e.preventDefault();

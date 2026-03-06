@@ -7,11 +7,7 @@ function renderNamePool(namePool, limit = 10) {
   const text = namePool.filter(Boolean).join("、");
   if (text.length <= limit) return text;
 
-  return (
-    <span title={text}>
-      {text.slice(0, limit)}...
-    </span>
-  );
+  return <span title={text}>{text.slice(0, limit)}...</span>;
 }
 
 function renderSubtitle(text, limit = 10) {
@@ -36,7 +32,7 @@ export default function PlanResultsTable({
   return (
     <section className="admin-pages__results">
       <div className="admin-pages__panel">
-        <div className="table-responsive">
+        <div className="table-responsive admin-pages__tableWrap">
           <table className="table admin-pages__table align-middle mb-0">
             <thead>
               <tr className="small">
@@ -44,9 +40,15 @@ export default function PlanResultsTable({
                 <th className="text-center" style={{ width: 40 }}>
                   價格
                 </th>
-                <th className="text-center" style={{ width: 150 }}>方案名稱池</th>
-                <th className="text-center" style={{ width: 150 }}>副標</th>
-                <th className="text-center" style={{ width: 150 }}>內容物</th>
+                <th className="text-center" style={{ width: 150 }}>
+                  方案名稱池
+                </th>
+                <th className="text-center" style={{ width: 150 }}>
+                  副標
+                </th>
+                <th className="text-center" style={{ width: 150 }}>
+                  內容物
+                </th>
                 <th className="text-center text-nowrap" style={{ width: 90 }}>
                   建立日
                 </th>
@@ -78,36 +80,43 @@ export default function PlanResultsTable({
                 plans.map((row) => (
                   <tr key={row.id}>
                     <td>
+                      <div className="d-flex justify-content-center gap-2 text-nowrap">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-bg-edit text-nowrap"
+                          onClick={() => onEdit(row)}
+                        >
+                          <Pencil size={14} className="me-1" />
+                          編輯
+                        </button>
 
-                      <div className="d-flex justify-content-center gap-2 flex-wrap">
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-bg-edit"
-                              onClick={() => onEdit(row)}
-                            >
-                              <Pencil size={14} className="me-1" />
-                              編輯
-                            </button>
-
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-bg-delete"
-                              onClick={() => onToggleActive(row)}
-                            >
-                              <Trash2 size={14} className="me-1" />
-                              取消
-                            </button>
-                          </div>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-bg-delete text-nowrap"
+                          onClick={() => onToggleActive(row)}
+                        >
+                          <Trash2 size={14} className="me-1" />
+                          取消
+                        </button>
+                      </div>
                     </td>
 
-                    <td className="text-end">${Number(row.planPrice ?? 0).toLocaleString()}</td>
-                    <td>{renderNamePool(row.namePool)}</td>
-                    <td>{renderSubtitle(row.subtitle, 10)}</td>
-                    <td className="text-center">{renderContent(row.content)}</td>
-                    <td className="text-muted text-center">
+                    <td className="text-nowrap text-end">
+                      ${Number(row.planPrice ?? 0).toLocaleString()}
+                    </td>
+                    <td className="text-nowrap">
+                      {renderNamePool(row.namePool)}
+                    </td>
+                    <td className="text-nowrap">
+                      {renderSubtitle(row.subtitle, 10)}
+                    </td>
+                    <td className="text-center text-nowrap">
+                      {renderContent(row.content)}
+                    </td>
+                    <td className="text-muted text-center text-nowrap">
                       {formatYMD(row.createdAt)}
                     </td>
-                    <td className="text-muted text-center">
+                    <td className="text-muted text-center text-nowrap">
                       {formatYMD(row.updatedAt)}
                     </td>
                   </tr>

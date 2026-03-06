@@ -468,7 +468,7 @@
       "id": "MOF20260109-0001",
       "userId": "32ad2039-0085-4c22-9483-dbecf01ab18c",
       "cartId": "cart_0001",
-      "orderDate": "2026-01-09T18:00:00+08:00",
+      "orderDate": "2026-01-09T18:00",
       "termCycles": 6,
       "perCycleAmount": 699,
       "orderTotalAmount": 4194,
@@ -481,7 +481,7 @@
         "phone": "0912-345-678",
         "address": "台北市大安區忠孝東路四段100號"
       },
-      "note": "自動從購物車 cart_0001 建立。",
+      "note": "自動從購物車 cart_0001 建立",
       "subscriptionPlans": [
         {
           "planId": 1,
@@ -537,7 +537,13 @@
         }
       ],
       "createdAt": "2026-01-09T18:00:00+08:00",
-      "updatedAt": "2026-01-09T18:00:00+08:00"
+      "updatedAt": "2026-03-06T07:18:26.530Z",
+      "orderNo": "MOF20260109-0001",
+      "orderStatus": "待確認",
+      "buyerName": "王鬢角",
+      "buyerEmail": "bingjiao@example.com",
+      "buyerPhone": "0912-345-678",
+      "buyerAddress": "台北市大安區忠孝東路四段100號"
     },
     {
       "id": "MOF20260107-0002",
@@ -614,7 +620,7 @@
       "id": "MOF20260112-0003",
       "userId": "",
       "cartId": "",
-      "orderDate": "2026-01-12T02:30:00.000Z",
+      "orderDate": "2026-01-12T10:30",
       "termCycles": 3,
       "perCycleAmount": 699,
       "orderTotalAmount": 2097,
@@ -625,9 +631,9 @@
         "name": "許小花",
         "email": "huahsu@gmail.com",
         "phone": "0918-222-333",
-        "address": "莊敬路253號"
+        "address": "莊敬路252號"
       },
-      "note": "自動從購物車 cart_0003 建立。",
+      "note": "自動從購物車 cart_0003 建立",
       "subscriptionPlans": [
         {
           "planId": 1,
@@ -675,12 +681,16 @@
         }
       ],
       "createdAt": "2026-01-12T10:30:00+08:00",
-      "updatedAt": "2026-02-26T05:56:48.409Z",
+      "updatedAt": "2026-03-06T07:18:43.907Z",
       "orderNo": "MOF20260112-0003",
-      "orderStatus": "處理中",
+      "orderStatus": "已完成",
       "shippingStatus": "待出貨",
       "subscriptionStatus": "訂閱中",
-      "isActive": true
+      "isActive": true,
+      "buyerName": "許小花",
+      "buyerEmail": "huahsu@gmail.com",
+      "buyerPhone": "0918-222-333",
+      "buyerAddress": "莊敬路252號"
     }
   ],
   "subscriptions": [
@@ -1951,7 +1961,8 @@
       "isActive": true,
       "description": "魚類蛋白好吸收，腸胃敏感毛孩適用。",
       "createdAt": "2026-02-27T23:00:00+08:00",
-      "deletedAt": null
+      "deletedAt": null,
+      "updatedAt": "2026-03-06T07:17:20.113Z"
     },
     {
       "id": "b7c4d9e1-2a8f-4d93-8c12-9a1f2e7d4c55",

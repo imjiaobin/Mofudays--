@@ -3,12 +3,15 @@
   .admin-modal__backdrop {
     background: rgba(0, 0, 0, 0.35);
     padding-inline: 0.5rem;
+    
   }
 
   .admin-modal__dialog {
     width: 100%;
     max-width: min(1280px, calc(100vw - 2rem));
     margin: 0.75rem auto;
+    margin-bottom: 2rem;
+    // margin: 0 auto;
   }
 
   .admin-modal__content {
@@ -21,6 +24,13 @@
     overflow: hidden;
     background: #fff;
     max-height: calc(100dvh - 1.5rem);
+  }
+
+  .admin-modal__content > form {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
   }
 
   .admin-modal__header.modal-header {
@@ -59,6 +69,7 @@
 
   .admin-modal__body.modal-body {
     padding: 1rem;
+    flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
 
@@ -69,7 +80,6 @@
 
   .admin-modal__footer.modal-footer {
     flex: 0 0 auto;
-    margin: 0;
     padding: 0.9rem 1rem 1rem;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     background: #fff;
@@ -189,41 +199,27 @@
     background-color: #6c757d;
   }
 
-  // .admin-modal__closeBtn {
-  //   width: 30px;
-  //   height: 30px;
-  //   border: 0;
-  //   border-radius: 0.5rem;
-  //   background: $brown-500;
-  //   color: #fff;
-  //   display: inline-flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   padding: 0;
-  //   cursor: pointer;
-  //   transition:
-  //     background-color 160ms ease,
-  //     transform 160ms ease;
-  //   flex: 0 0 auto;
-  // }
-
-  // .admin-modal__closeBtn:hover {
-  //   background: $brown-300;
-  // }
-
-  // .admin-modal__closeBtn:active {
-  //   background: $brown-300;
-  //   transform: scale(0.96);
-  // }
-
-  // .admin-modal__closeBtn:disabled {
-  //   opacity: 0.55;
-  //   cursor: not-allowed;
-  // }
-
   @media (max-width: 576px) {
     .admin-modal__header.modal-header {
       padding: 0.45rem 0.7rem;
     }
+  }
+
+  @media (max-width: 1076px) {
+    .admin-modal__backdrop {
+      padding-block: 1.5rem;
+    }
+
+    .admin-modal__dialog {
+      max-width: calc(100vw - 1rem);
+    }
+
+    .admin-modal__content {
+      max-height: calc(100dvh - 2.5rem);
+    }
+  }
+
+  .ad-modal-border {
+    border-radius: 1rem;
   }
 }
