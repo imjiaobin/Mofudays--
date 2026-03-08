@@ -1,17 +1,31 @@
 import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { Pencil, ChevronDown, ChevronUp } from "lucide-react";
-import {
-  getOrderPlanText,
-  getOrderQty,
-  getOrderStatus,
-} from "../../utils/adminDashboard";
 import { getOrderStatusDotVariant } from "../../utils/dotVariant";
 import { formatDate } from "../../utils/date";
 import { formatMoney } from "../../utils/money";
 import Dot from "../../components/Dots";
 import { usePagination } from "../../hooks/usePagination";
-import PaginationBar from "../../PaginationBar"; 
+import PaginationBar from "../../PaginationBar";
+
+function getOrderPlanText(order) {
+  if (!Array.isArray(order.subscriptions) || order.subscriptions.length === 0) {
+    return "-";
+  }
+  return order.subscriptions.map((p) => p.planName).join(" / ");
+}
+
+function getOrderQty(order) {
+  if (!Array.isArray(order.subscriptions)) return 0;
+  return order.subscriptions.reduce(
+    (sum, p) => sum + Number(p.planQty || 0),
+    0,
+  );
+}
+
+function getOrderStatus(order) {
+  return order.paymentStatus || "待處理";
+}
 
 export default function LatestOrders({ loading, latestOrders = [], onEdit }) {
   const [open, setOpen] = useState(true);
@@ -88,7 +102,10 @@ export default function LatestOrders({ loading, latestOrders = [], onEdit }) {
                     </tr>
                   ) : orders.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="text-center py-4 text-secondary">
+                      <td
+                        colSpan={8}
+                        className="text-center py-4 text-secondary"
+                      >
                         目前沒有訂單資料
                       </td>
                     </tr>
@@ -107,7 +124,10 @@ export default function LatestOrders({ loading, latestOrders = [], onEdit }) {
                             </a>
                           </td>
                           <td>{formatDate(o.orderDate)}</td>
-                          <td className="text-truncate" style={{ maxWidth: 260 }}>
+                          <td
+                            className="text-truncate"
+                            style={{ maxWidth: 260 }}
+                          >
                             {getOrderPlanText(o)}
                           </td>
                           <td className="text-end">{getOrderQty(o)}</td>
@@ -124,7 +144,7 @@ export default function LatestOrders({ loading, latestOrders = [], onEdit }) {
                               type="button"
                               className="btn ad-iconBtn"
                               title="編輯"
-                              onClick={()=>{onEdit?.(o.id)}}
+                              onClick={() => onEdit?.(o.id)}
                             >
                               <Pencil size={16} />
                             </button>
