@@ -183,7 +183,7 @@ function Checkout() {
         orderDate: today.toISOString(),
         orderTotalAmount: grandTotal,
         currency: "TWD",
-        paymentStatus: "未付款",
+        paymentStatus: "已付款",
         paymentMethod: form.paymentMethod,
         buyerInfo: {
           name: form.name,
