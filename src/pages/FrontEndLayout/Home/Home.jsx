@@ -10,7 +10,6 @@ import NewsModal from "./components/NewsModal";
 import Announcement from "../../../app/layouts/components/Announcement/Announcement";
 
 function Home() {
-  console.log("Build Mode API:", import.meta.env.VITE_API_BASE);
   const [isNewsModalOpen, setIsNewsModalOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false); //FloatingChat 預設關閉
 
