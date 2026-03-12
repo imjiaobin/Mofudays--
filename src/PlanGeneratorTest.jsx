@@ -112,8 +112,7 @@ export default function PlanGeneratorTest() {
         if (cancelled) return;
         setDbError(e);
       } finally {
-        if (cancelled) return;
-        setDbLoading(false);
+        if (!cancelled) setDbLoading(false);
       }
     };
 

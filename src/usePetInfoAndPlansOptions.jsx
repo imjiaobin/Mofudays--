@@ -55,8 +55,8 @@ export function usePetInfoAndPlansOptions() {
         if (cancelled) return;
         setError(err);
       } finally {
-        if (cancelled) return;
-        setLoading(false);
+        // 移除 finally 裡的 return，改用條件式
+        if (!cancelled) setLoading(false);
       }
     };
 

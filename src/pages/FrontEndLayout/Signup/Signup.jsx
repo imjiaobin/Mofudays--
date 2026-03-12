@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useRef, useEffect, useMemo } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
@@ -26,7 +26,7 @@ export default function Signup() {
     handleSubmit,
     getValues,
     setError,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -46,11 +46,14 @@ export default function Signup() {
   });
 
   // 監控縣市的變動
-  const selectedCityName = watch("city");
+  const selectedCityName = useWatch({ control, name: "city" });
 
   // 根據選中的縣市，找出對應的區域列表
-  const districts =
-    taiwanRegions.find((c) => c.name === selectedCityName)?.districts || [];
+  const districts = useMemo(
+    () =>
+      taiwanRegions.find((c) => c.name === selectedCityName)?.districts ?? [],
+    [selectedCityName],
+  );
 
   // 當縣市改變時，自動將區域設為該縣市的第一個選項，避免邏輯錯誤
   useEffect(() => {
@@ -60,7 +63,7 @@ export default function Signup() {
         setValue("district", districts[0]);
       }
     }
-  }, [selectedCityName, setValue]);
+  }, [selectedCityName, districts, getValues, setValue]);
 
   // 輪播初始化
   useEffect(() => {

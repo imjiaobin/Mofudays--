@@ -54,7 +54,6 @@ import RequireAuth from "./components/RequireAuth";
 //後台管理員權限守衛
 import RequireAdmin from "./components/RequireAdmin";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const router = createHashRouter([
   // 前台（ FrontLayout ）
   {
