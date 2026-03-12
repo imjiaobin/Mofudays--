@@ -281,7 +281,7 @@ function PetInfo() {
       setIsSubmitting(true);
 
       // 取得 db 資料
-      const API_BASE = "http://localhost:3000";
+      const API_BASE = import.meta.env.VITE_API_BASE;
       const [plans, toys, treats, household] = await Promise.all([
         axios.get(`${API_BASE}/plans`),
         axios.get(`${API_BASE}/toys`),
