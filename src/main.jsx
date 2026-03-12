@@ -13,7 +13,21 @@ import "./styles/global.scss";
 import { Provider } from "react-redux";
 import { store } from "./store";
 
+// AOS
+import AOS from "aos";
+// swiper
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 window.bootstrap = bootstrap;
+
+AOS.init({
+  duration: 800,
+  easing: "ease-out-cubic",
+  once: true,
+  offset: 60,
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

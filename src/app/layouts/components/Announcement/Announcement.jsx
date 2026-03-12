@@ -7,9 +7,12 @@ import "./Announcement.scss";
 
 const Announcement = () => {
   const announcementMessages = [
-    "新註冊會員：首單現折$60",
+    "新註冊會員：首單現折 $60",
     "滿千免運優惠中！",
     "訂閱禮盒，每月驚喜送到家",
+    "精選天然食材，毛孩吃得安心",
+    "限時優惠：訂閱首月享 85 折",
+    "超過 500 種商品，總有牠的最愛",
   ];
 
   const isAuthed = useSelector(selectIsUserAuthed);

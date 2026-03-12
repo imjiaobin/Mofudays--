@@ -1,24 +1,21 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 const AnnouncementCarousel = ({ items }) => {
   return (
-    <div
-      id="announcementCarousel"
-      className="carousel slide"
-      data-bs-ride="carousel"
-      data-bs-interval="3000"
+    <Swiper
+      modules={[Autoplay]}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      loop
+      allowTouchMove={false}
     >
-      <div className="carousel-inner">
-        {items.map((text, index) => (
-          <div
-            key={index}
-            className={`carousel-item ${index === 0 ? "active" : ""}`}
-          >
-            <p className="mb-0 text-center">{text}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+      {items.map((text, index) => (
+        <SwiperSlide key={index}>
+          <p className="mb-0 text-center">{text}</p>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

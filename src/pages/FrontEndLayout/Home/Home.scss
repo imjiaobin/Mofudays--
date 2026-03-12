@@ -692,35 +692,6 @@ body::before {
   font-size: 1.2rem; /* 星星大小 */
 }
 
-.carousel-inner .row {
-  margin-left: 0;
-  margin-right: 0;
-}
-.carousel-item .col-12 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (max-width: 767.98px) {
-  .carousel-item:first-child .col-12:not(:nth-child(1)) {
-    display: none !important;
-  }
-  .carousel-item:nth-child(2) .col-12 {
-    display: block !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .carousel-item > .row > .col-12 {
-    display: block !important;
-  }
-  /* 移除 col-md-3 的左右內邊距，提供更好的並排視覺效果 */
-  .carousel-item .col-md-3 {
-    padding-left: 1rem; /* 可根據您的設計調整間距 */
-    padding-right: 1rem;
-  }
-}
-
 /* 客服中心按鈕樣式 */
 .customer-service-btn {
   position: fixed;
@@ -1063,4 +1034,39 @@ body::before {
 .modal-content
   > *:not(.modal-header):not(.modal-footer)::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+// Swiper 修正
+.comment {
+  .swiper {
+    padding-bottom: 8px;
+  }
+
+  .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
+
+  .review-card,
+  .review-card-pink {
+    min-height: 329px; // 統一用較大的高度
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .p2 {
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+  }
 }

@@ -25,20 +25,32 @@ const ServiceSection = () => {
           src={headlineDesktop}
           alt="service_headline"
           className="mb-3 d-none d-md-block mx-auto"
+          data-aos="fade-down"
+          data-aos-delay="100"
         />
         <img
           src={headlineMobile}
           alt="service_headline_mobile"
           className="mb-3 d-block d-md-none mx-auto"
+          data-aos="fade-down"
+          data-aos-delay="100"
         />
 
-        <h3 className="mb-12 mb-md-6 text-center title-large text-primary-500">
+        <h3
+          className="mb-12 mb-md-6 text-center title-large text-primary-500"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           與毛孩創造不一樣的回憶
         </h3>
 
         <div className="row">
           {/* 卡片 1 */}
-          <div className="service_card col-md-3 p-4">
+          <div
+            className="service_card col-md-3 p-4"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             <div className="image-wrapper mb-5 d-block mx-auto">
               <img
                 src={service01}
@@ -57,7 +69,11 @@ const ServiceSection = () => {
           </div>
 
           {/* 卡片 2 */}
-          <div className="service_card col-md-3 p-4">
+          <div
+            className="service_card col-md-3 p-4"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             <div className="image-wrapper mb-5 d-block mx-auto">
               <img
                 src={service02}
@@ -76,7 +92,11 @@ const ServiceSection = () => {
           </div>
 
           {/* 卡片 3 */}
-          <div className="service_card col-md-3 p-4">
+          <div
+            className="service_card col-md-3 p-4"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
             <div className="image-wrapper mb-5 d-block mx-auto">
               <img
                 src={service03}
@@ -95,7 +115,11 @@ const ServiceSection = () => {
           </div>
 
           {/* 卡片 4 */}
-          <div className="service_card col-md-3 p-4">
+          <div
+            className="service_card col-md-3 p-4"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             <div className="image-wrapper mb-5 d-block mx-auto">
               <img
                 src={service04}
