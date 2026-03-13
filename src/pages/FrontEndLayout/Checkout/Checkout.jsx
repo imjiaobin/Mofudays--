@@ -194,6 +194,7 @@ function Checkout() {
         note: form.remark,
         subscriptions: carts.map((cart, i) => ({
           subscriptionId: `${orderId}-${i + 1}`,
+          dogId: cart.dogId, // 每筆訂單補上狗狗ID BY James
           planName: cart.planName,
           planPrice: cart.planPrice,
           planQty: cart.planQty,
