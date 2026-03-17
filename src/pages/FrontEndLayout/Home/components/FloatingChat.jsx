@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./floating-chat-dogs.scss";
@@ -8,7 +8,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE;
 const SIZE_MAP = { S: "小型", M: "中型", L: "大型" };
 const DIET_MAP = { PUPPY: "幼犬", ADULT: "成犬", SENIOR: "熟齡" };
 
-// 訂閱狀態
 const StatusBadge = ({ status }) => {
   const map = {
     訂閱中: { cls: "fq-badge--active", text: "● 訂閱中" },
@@ -19,7 +18,6 @@ const StatusBadge = ({ status }) => {
   return <span className={`fq-badge ${cls}`}>{text}</span>;
 };
 
-// 狗狗列表
 const DogList = ({ onBack }) => {
   const [dogs, setDogs] = useState([]);
   const [statusMap, setStatusMap] = useState({});
@@ -41,9 +39,6 @@ const DogList = ({ onBack }) => {
 
         const dogList = dogsRes.data;
         const orders = ordersRes.data;
-
-        // 攤平所有訂單的 subscriptions，依 dogId 找出最新訂閱狀態
-        // 同一隻狗可能有多筆（例如重新訂閱），以「訂閱中」優先，其次「已取消」
         const allSubs = orders.flatMap((o) => o.subscriptions || []);
 
         const map = {};
@@ -76,7 +71,6 @@ const DogList = ({ onBack }) => {
         <i className="bi bi-arrow-left"></i> 返回
       </button>
       <div className="fq-section-title">我的毛孩</div>
-
       {loading ? (
         <div className="fq-loading">載入中...</div>
       ) : dogs.length === 0 ? (
@@ -101,7 +95,6 @@ const DogList = ({ onBack }) => {
   );
 };
 
-// 主選單
 const MainMenu = ({ onGoFaq, onGoDogs, isLoggedIn }) => (
   <div className="px-4">
     <a
@@ -132,13 +125,47 @@ const MainMenu = ({ onGoFaq, onGoDogs, isLoggedIn }) => (
   </div>
 );
 
-// 主元件
 const FloatingChat = ({ isOpen, toggleChat }) => {
   const navigate = useNavigate();
-  const [view, setView] = useState("menu"); // 'menu' | 'dogs'
+  const [view, setView] = useState("menu");
   const isLoggedIn = !!localStorage.getItem("token");
+  const isOpenRef = useRef(isOpen);
 
-  // 關閉時重置回 menu
+  // 同步 ref，讓 modal 事件 handler 能拿到最新的 isOpen
+  useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  // FocusTrap 防護
+  useEffect(() => {
+    const modalEl = document.getElementById("newsModal");
+    if (!modalEl) return;
+
+    const chatBtn = document.querySelector(".customer-service-btn");
+    const chatPanel = document.querySelector(".customer-service-chat");
+
+    const handleShow = () => {
+      chatBtn?.setAttribute("inert", "");
+      chatPanel?.setAttribute("inert", "");
+      // modal 開啟時若 chat 是開的，強制關掉
+      if (isOpenRef.current) toggleChat();
+    };
+
+    const handleHide = () => {
+      chatBtn?.removeAttribute("inert");
+      chatPanel?.removeAttribute("inert");
+    };
+
+    modalEl.addEventListener("show.bs.modal", handleShow);
+    modalEl.addEventListener("hidden.bs.modal", handleHide);
+
+    return () => {
+      modalEl.removeEventListener("show.bs.modal", handleShow);
+      modalEl.removeEventListener("hidden.bs.modal", handleHide);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 空陣列：只掛一次，透過 ref 拿最新狀態
+
   const handleToggle = () => {
     toggleChat();
     if (isOpen) setView("menu");
@@ -152,7 +179,6 @@ const FloatingChat = ({ isOpen, toggleChat }) => {
 
   return (
     <>
-      {/* ── 觸發按鈕：沿用原本垂直文字樣式 ── */}
       <button
         className="customer-service-btn"
         type="button"
@@ -164,19 +190,15 @@ const FloatingChat = ({ isOpen, toggleChat }) => {
         </span>
       </button>
 
-      {/* ── Panel：沿用原本 customer-service-chat + show ── */}
       <div
         className={`customer-service-chat py-3 ${isOpen ? "show" : ""}`}
         id="customerServiceChat"
       >
-        {/* Panel 標題列 */}
         <div className="chat-header mb-3 text-center px-4">
           <div className="title-large">
             {view === "dogs" ? "我的毛孩 🐾" : "需要幫忙嗎？"}
           </div>
         </div>
-
-        {/* Panel 內容：menu 或 dogs */}
         <div className="chat-body">
           {view === "menu" ? (
             <MainMenu
@@ -192,7 +214,6 @@ const FloatingChat = ({ isOpen, toggleChat }) => {
         </div>
       </div>
 
-      {/* ── 手機版背景遮罩 ── */}
       {isOpen && (
         <div className="fq-overlay" onClick={handleToggle} aria-hidden="true" />
       )}
