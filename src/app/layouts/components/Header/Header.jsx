@@ -475,7 +475,6 @@ function closeOffcanvasIfAny() {
   }
 }
 
-// NewsModal 和 NewsAccordionItem 不涉及 auth，保持不變
 function NewsModal() {
   return (
     <div
@@ -485,7 +484,7 @@ function NewsModal() {
       aria-labelledby="newsModalLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-md modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content rounded-4">
           <div className="modal-header border-0">
             <button
@@ -502,7 +501,7 @@ function NewsModal() {
             </div>
           </div>
           <div className="modal-body">
-            <div className="custom-accordion py-8">
+            <div className="custom-accordion">
               <div className="accordion" id="customAccordion">
                 <NewsAccordionItem
                   headingId="headingOne"
@@ -537,7 +536,7 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingThree"
                   collapseId="collapseThree"
-                  tag="回饋 / 參與活動"
+                  tag="參與活動"
                   title="月月開箱投稿募集！曬毛孩照片登上首頁"
                   date="2025 / 08 / 01"
                 >
@@ -552,7 +551,7 @@ function NewsModal() {
                 <NewsAccordionItem
                   headingId="headingFour"
                   collapseId="collapseFour"
-                  tag="產品與品牌合作"
+                  tag="品牌合作"
                   title="全品牌快閃市集毛日和首次實體活動即將開跑！"
                   date="2025 / 07 / 15"
                 >
@@ -583,8 +582,9 @@ function NewsAccordionItem({
 }) {
   return (
     <div className="accordion-item">
-      <div className="accordion-header" id={headingId}>
-        <div className="function-tag">{tag}</div>
+      {/* accordion-header 改回 div，但拿掉 id（id 放在這層沒作用，Bootstrap 用 aria-labelledby 對應 collapse） */}
+      <div className="accordion-header d-flex align-items-center">
+        <span className="function-tag">{tag}</span>
         <button
           className="accordion-button collapsed"
           type="button"
