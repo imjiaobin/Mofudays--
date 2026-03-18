@@ -336,12 +336,9 @@ export default function UserProfile({ onSave }) {
                     />
                     <div className="invalid-tooltip">請輸入詳細地址!</div>
                   </div>
-                </div>{" "}
-                {/* 結束 row g-3 */}
-              </div>{" "}
-              {/* 結束 col-md-10 */}
-            </div>{" "}
-            {/* 結束 row mb-56 */}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 送貨資料 */}
@@ -428,6 +425,7 @@ export default function UserProfile({ onSave }) {
                     name="shippingAddress"
                     placeholder="詳細地址"
                     required
+                    style={{ height: "38px" }}
                     disabled={sameAsHome}
                     value={formData.shippingAddress}
                     onChange={handleChange}
