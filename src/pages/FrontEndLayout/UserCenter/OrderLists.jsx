@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 
 import MemberOrderCard from "./components/MemberOrderCard";
-import { filterOrdersByTab } from "./components/subscriptionHelpers";
+import {
+  filterOrdersByTab,
+  deriveOrderStatus,
+} from "./components/subscriptionHelpers";
 
 import {
   fetchUserOrders,
@@ -61,15 +64,26 @@ export default function OrderLists() {
   }, [dispatch]);
 
   // ── Tab 篩選 + 分頁 ──────────────────────────────────────────
-  const filteredOrders = useMemo(
-    () => filterOrdersByTab(orders, activeTab),
-    [orders, activeTab],
+  const enrichedOrders = useMemo(
+    () =>
+      orders.map((order) => ({
+        ...order,
+        derivedStatus: deriveOrderStatus(order.subscriptions),
+      })),
+    [orders],
   );
 
-  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE) || 1;
+  const filteredOrders = useMemo(
+    () => filterOrdersByTab(enrichedOrders, activeTab),
+    [enrichedOrders, activeTab],
+  );
+
+  const totalPages = Math.max(Math.ceil(filteredOrders.length / PAGE_SIZE), 1);
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
   const currentItems = filteredOrders.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+    (safeCurrentPage - 1) * PAGE_SIZE,
+    safeCurrentPage * PAGE_SIZE,
   );
 
   // ── Handlers ─────────────────────────────────────────────────
@@ -121,6 +135,12 @@ export default function OrderLists() {
   };
 
   const handleResubscribe = async (order) => {
+    if (dogs.length > 0) {
+      setSelectedDogId(dogs.length === 1 ? dogs[0].id : null);
+      setResubscribeOrder(order);
+      return;
+    }
+
     dispatch(fetchUserDogs())
       .unwrap()
       .then((dogList) => {
@@ -153,6 +173,17 @@ export default function OrderLists() {
     setResubscribeOrder(null);
     setSelectedDogId(null);
   };
+
+  useEffect(() => {
+    if (!resubscribeOrder) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [resubscribeOrder]);
 
   // ── Render ───────────────────────────────────────────────────
   return (
@@ -214,8 +245,8 @@ export default function OrderLists() {
           <div className="member-orderlist__pagination">
             <button
               className="member-orderlist__page-btn member-orderlist__page-btn--arrow"
-              onClick={() => setCurrentPage((p) => p - 1)}
-              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={safeCurrentPage === 1}
             >
               ‹
             </button>
@@ -223,7 +254,7 @@ export default function OrderLists() {
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
-                className={`member-orderlist__page-btn ${currentPage === i + 1 ? "member-orderlist__page-btn--active" : ""}`}
+                className={`member-orderlist__page-btn ${safeCurrentPage === i + 1 ? "member-orderlist__page-btn--active" : ""}`}
                 onClick={() => setCurrentPage(i + 1)}
               >
                 {i + 1}
@@ -232,8 +263,8 @@ export default function OrderLists() {
 
             <button
               className="member-orderlist__page-btn member-orderlist__page-btn--arrow"
-              onClick={() => setCurrentPage((p) => p + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={safeCurrentPage === totalPages}
             >
               ›
             </button>

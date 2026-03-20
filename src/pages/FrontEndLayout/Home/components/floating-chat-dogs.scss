@@ -29,6 +29,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fq-dog-view .fq-section-title,
+.fq-dog-view .fq-back-btn {
+  flex-shrink: 0;
+}
+
+.fq-dog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-right: 4px;
 }
 
 .fq-back-btn {
@@ -56,15 +77,6 @@
   color: $brown-300;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.fq-dog-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
 .fq-dog-item {
@@ -142,13 +154,8 @@
 
 // 手機版
 .fq-overlay {
-  display: none;
-
-  @media (max-width: 768px) {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(45, 31, 26, 0.3);
-    z-index: 1049; // customer-service-chat 的 z-index 是 1050，遮罩在其下
-  }
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 31, 26, 0.3);
+  z-index: 1049; // customer-service-chat 的 z-index 是 1050，遮罩在其下
 }

@@ -44,7 +44,8 @@ export const filterOrdersByTab = (orders, activeTab) => {
     cancelled: "已取消",
     partial: "部分取消",
   };
-  return orders.filter(
-    (order) => deriveOrderStatus(order.subscriptions) === statusMap[activeTab],
-  );
+  return orders.filter((order) => {
+    const status = order.derivedStatus ?? deriveOrderStatus(order.subscriptions);
+    return status === statusMap[activeTab];
+  });
 };
