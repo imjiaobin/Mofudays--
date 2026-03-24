@@ -74,7 +74,7 @@ export default function Login() {
           <div className="split-card overflow-hidden">
             <div className="row g-0">
               {/* <!-- 輪播圖 --> */}
-              <section className="col-6 d-none p-0 d-md-flex flex-column">
+              <section className="col-lg-6 d-none p-0 d-lg-flex flex-column">
                 <div
                   id="carouselExampleInterval"
                   className="carousel slide h-100"
@@ -160,7 +160,7 @@ export default function Login() {
               </section>
 
               {/* 登入表單 */}
-              <section className="col-12 col-md-6 p-0">
+              <section className="col-12 col-lg-6 p-0">
                 <div className="login-form">
                   <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="text-center mb-7">

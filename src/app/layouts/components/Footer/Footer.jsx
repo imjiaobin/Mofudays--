@@ -40,10 +40,13 @@ function FooterLeft() {
         <div className="d-inline-flex flex-column align-items-center align-items-md-start text-start gap-3 footer-contact">
           {/* Desktop contact */}
           <div>
-            <p className="mb-md-4 d-none d-md-flex">
+            <a
+              href="tel:0227341788"
+              className="d-none d-md-flex align-items-center footer-link mb-md-4"
+            >
               <IconMessageCircle className="me-4 ms-2" />
               02-27341788
-            </p>
+            </a>
 
             <a
               href="mailto:service.maorihe@gmail.com"
@@ -57,14 +60,17 @@ function FooterLeft() {
           <SocialLinks />
 
           {/* Mobile contact */}
-          <div className="d-inline-flex d-md-none flex-column align-items-start text-start gap-3 mx-auto footer-contact mb-40">
-            <p className="d-flex align-items-center gap-2 mb-0">
+          <div className="d-md-none">
+            <a
+              href="tel:0227341788"
+              className="d-flex align-items-center gap-2 footer-link mb-2"
+            >
               <IconMessageCircle className="me-4 ms-2" />
               <span>02-27341788</span>
-            </p>
+            </a>
             <a
               href="mailto:service.maorihe@gmail.com"
-              className="d-flex align-items-center gap-2 footer-link"
+              className="d-flex align-items-center gap-2 footer-link mb-2"
             >
               <IconMail className="me-4 ms-2" />
               <span>service.maorihe@gmail.com</span>
