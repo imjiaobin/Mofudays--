@@ -96,7 +96,6 @@ export default function Signup() {
 
       const res = await axios.post(`${API_BASE_URL}/register`, registerData);
 
-      console.log("註冊成功回傳資料：", res.data);
       toast.success("註冊成功！");
       navigate("/login");
     } catch (err) {
@@ -166,7 +165,6 @@ export default function Signup() {
   //   if (!ok) return;
 
   //   // 表單都合法：你在這裡串接註冊 API
-  //   // console.log(formData);
   // };
 
   return (

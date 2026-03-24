@@ -132,7 +132,7 @@ export default function UserProfile({ onSave }) {
     try {
       const payload = mapFormToUser(formData);
       const result = await updateUserProfile(payload);
-      console.log("[UserProfile] 儲存成功:", result);
+      // console.log("[UserProfile] 儲存成功:", result);
       onSave?.(result);
       toast.success("會員資料已更新！");
       setWasValidated(false);
