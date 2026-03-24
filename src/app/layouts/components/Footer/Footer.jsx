@@ -42,7 +42,7 @@ function FooterLeft() {
           <div>
             <a
               href="tel:0227341788"
-              className="d-none d-md-flex align-items-center footer-link mb-md-4"
+              className="d-none d-lg-flex align-items-center footer-link mb-lg-4"
             >
               <IconMessageCircle className="me-4 ms-2" />
               02-27341788
@@ -60,7 +60,7 @@ function FooterLeft() {
           <SocialLinks />
 
           {/* Mobile contact */}
-          <div className="d-md-none">
+          <div className="d-lg-none">
             <a
               href="tel:0227341788"
               className="d-flex align-items-center gap-2 footer-link mb-2"
@@ -84,7 +84,7 @@ function FooterLeft() {
 
 function SocialLinks() {
   return (
-    <div className="mb-md-0 mb-32 d-flex gap-2">
+    <div className="mb-lg-0 mb-32 d-flex gap-2">
       <a
         href="#"
         className="btn social-btn"
@@ -108,7 +108,7 @@ function SocialLinks() {
 function FooterRight() {
   return (
     <div className="container">
-      <div className="d-flex flex-column flex-lg-row align-items-center justify-content-md-evenly gap-4 gap-md-0">
+      <div className="d-flex flex-column flex-lg-row align-items-center justify-content-md-evenly gap-4 gap-lg-0">
         <FooterLinkList
           title="外部資源"
           items={[
