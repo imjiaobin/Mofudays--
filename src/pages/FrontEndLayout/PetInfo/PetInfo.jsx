@@ -13,7 +13,7 @@ import { generatePlans } from "../../../generatePlans";
 
 import "./PetInfo.scss";
 
-import ProgressBar1 from "../Subscribe/ProgressBar1";
+import PlanProgressBar from "../Subscribe/PlanProgressBar";
 import DietButton from "./DietButton";
 import HealthCard from "./HealthCard";
 import PlayCard from "../PetInfo/PlayCard";
@@ -98,10 +98,16 @@ function PetInfo() {
     // 還原 confirmedExistingDog
     const dogId = location.state?.dogId;
     if (dogId) {
-      getDogsByOwnerId(getCurrentUserId()).then((dogs) => {
-        const dog = dogs.find((d) => d.id === dogId);
-        if (dog) setConfirmedExistingDog(dog);
-      });
+      const fetchDog = async () => {
+        try {
+          const dogs = await getDogsByOwnerId(getCurrentUserId());
+          const dog = dogs.find((d) => d.id === dogId);
+          if (dog) setConfirmedExistingDog(dog);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchDog();
     }
   }, [fromPlan]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -324,7 +330,7 @@ function PetInfo() {
       <main className="pet-info py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar1 />
+          <PlanProgressBar />
 
           {/* 毛孩資料卡片 */}
           <div className="card-bg py-9 px-12-sm mb-6 mb-0-sm">

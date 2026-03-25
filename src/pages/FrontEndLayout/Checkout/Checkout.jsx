@@ -10,7 +10,7 @@ import {
 } from "../../../api/planApi";
 
 import "./Checkout.scss";
-import ProgressBar2 from "../Subscribe/ProgressBar2";
+import CheckoutProgressBar from "../Subscribe/CheckoutProgressBar.jsx";
 import OrderList from "./OrderList";
 import CheckoutInfo from "./CheckoutInfo";
 import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
@@ -78,15 +78,17 @@ function Checkout() {
   }, [hasFormData]);
 
   useEffect(() => {
-    getCarts(getCurrentUserId()).then(setCarts).catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    getUserProfile()
-      .then((profile) => {
+    const fetchData = async () => {
+      try {
+        const carts = await getCarts(getCurrentUserId());
+        setCarts(carts);
+        const profile = await getUserProfile();
         if (profile) setMemberProfile(profile);
-      })
-      .catch(console.error);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
   }, []);
 
   const grandTotal = carts.reduce((sum, c) => sum + c.planPrice * c.planQty, 0);
@@ -223,7 +225,7 @@ function Checkout() {
       <main className="checkout py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2 title="訂單確認" step={2} />
+          <CheckoutProgressBar title="訂單確認" step={2} />
 
           {/* 訂單明細卡片 */}
           <div className="card-bg py-9 px-110 px-60-lg px-12-sm mb-6 mb-0-sm">

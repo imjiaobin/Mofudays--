@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { addToCart, getCarts, getCurrentUserId } from "../../../api/planApi";
 
 import "./Plan.scss";
-import ProgressBar1 from "../Subscribe/ProgressBar1.jsx";
+import PlanProgressBar from "../Subscribe/PlanProgressBar.jsx";
 import PlanCard from "./PlanCard.jsx";
 import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
 import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
@@ -92,7 +92,7 @@ function Plan() {
       <main className="plan py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar1 step={2} />
+          <PlanProgressBar step={2} />
 
           {/* 推薦方案 */}
           <div className="card-bg py-9 px-110 px-60-lg px-12-sm mb-6 mb-0-sm">

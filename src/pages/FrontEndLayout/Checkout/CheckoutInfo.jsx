@@ -52,7 +52,7 @@ const CheckoutInfo = ({
               {/* 姓名 */}
               <div className="col-12 px-4-sm">
                 <input
-                  type="name"
+                  type="text"
                   className={`form-control text-brown-500 ${errors.name ? "border-danger" : ""}`}
                   id="checkout-name"
                   name="checkout-name"

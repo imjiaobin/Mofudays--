@@ -3,7 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getOrderById } from "../../../api/planApi";
 
 import "./Finish.scss";
-import ProgressBar2 from "../Subscribe/ProgressBar2";
+import CheckoutProgressBar from "../Subscribe/CheckoutProgressBar.jsx";
 import FinishOrder from "./FinishOrder";
 import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
 import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
@@ -18,9 +18,15 @@ function Finish() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (orderId) {
-      getOrderById(orderId).then(setOrder).catch(console.error);
-    }
+    const fetchOrder = async () => {
+      try {
+        const order = await getOrderById(orderId);
+        setOrder(order);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchOrder();
   }, [orderId]);
 
   const grandTotal = order?.orderTotalAmount ?? 0;
@@ -30,7 +36,7 @@ function Finish() {
       <main className="finish py-11 pt-80-sm pb-0-sm">
         <div className="container">
           {/* 標題進度條 */}
-          <ProgressBar2
+          <CheckoutProgressBar
             title="訂閱成功！"
             subtitle="謝謝你成為毛日和的夥伴"
             step={3}

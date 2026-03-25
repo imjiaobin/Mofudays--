@@ -3,7 +3,7 @@ import "../PetInfo/PetInfo.scss";
 import serviceStep1 from "../../../assets/images/subscribe/service_step_1.svg";
 import serviceStep2 from "../../../assets/images/subscribe/service_step_2.svg";
 
-const ProgressBar1 = ({ step = 1 }) => {
+const PlanProgressBar = ({ step = 1 }) => {
   return (
     <div className="progressbar-1 d-flex justify-content-between align-items-center d-block-sm px-110 px-60-lg px-24-sm mb-6 mb-24-sm">
       {/* 標題 */}
@@ -41,4 +41,4 @@ const ProgressBar1 = ({ step = 1 }) => {
   );
 };
 
-export default ProgressBar1;
+export default PlanProgressBar;

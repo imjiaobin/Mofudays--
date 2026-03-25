@@ -2,7 +2,7 @@ import serviceStep1 from "../../../assets/images/subscribe/service_step_1.svg";
 import serviceStep2 from "../../../assets/images/subscribe/service_step_2.svg";
 import serviceStep3 from "../../../assets/images/subscribe/service_step_3.svg";
 
-const ProgressBar2 = ({ title, subtitle, step = 1, className = "" }) => {
+const CheckoutProgressBar = ({ title, subtitle, step = 1, className = "" }) => {
   return (
     <div
       className={`progressbar-2 d-flex justify-content-between align-items-center px-110 px-60-lg px-24-sm mb-6 mb-24-sm ${className}`}
@@ -51,4 +51,4 @@ const ProgressBar2 = ({ title, subtitle, step = 1, className = "" }) => {
   );
 };
 
-export default ProgressBar2;
+export default CheckoutProgressBar;

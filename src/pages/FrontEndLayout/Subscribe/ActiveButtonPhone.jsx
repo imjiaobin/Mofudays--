@@ -10,7 +10,7 @@ const ActiveButtonPhone = ({
     <div className="text-center d-none-min-sm px-5-5-sm">
       <div className="row">
         {active3 && (
-          <div className="col-12 mb-3">
+          <div className={`col-12 ${active2 ? "mb-3" : ""}`}>
             <button
               className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm w-100"
               role="button"
@@ -31,15 +31,17 @@ const ActiveButtonPhone = ({
             </button>
           </div>
         )}
-        <div className="col-12">
-          <button
-            className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm w-100"
-            role="button"
-            onClick={onSubmit}
-          >
-            {active2}
-          </button>
-        </div>
+        {active2 && (
+          <div className="col-12">
+            <button
+              className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm w-100"
+              role="button"
+              onClick={onSubmit}
+            >
+              {active2}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
