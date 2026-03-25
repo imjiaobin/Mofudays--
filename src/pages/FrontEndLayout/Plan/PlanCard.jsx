@@ -27,13 +27,13 @@ const PlanCard = ({
         htmlFor={id}
       >
         <div className="d-flex justify-content-between mb-2">
-          <p className="fs-6 fw-bold">{title}</p>
-          <p className="total-text text-end fs-14">
-            <span className="plan-price fw-medium pe-1">${price}</span>
+          <p className="fs-6 fs-18-sm fw-bold text-start">{title}</p>
+          <p className="total-text fs-14 text-brown-500 text-end">
+            <span className="plan-price fs-20-sm fw-medium pe-1">${price}</span>
             /月
           </p>
         </div>
-        <p className="text-brown-300 text-start mb-4">{text}</p>
+        <p className="fs-14-sm text-brown-300 text-start mb-4">{text}</p>
 
         {isSelected && (
           <>

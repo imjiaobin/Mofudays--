@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useRef, useEffect, useMemo } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import "./Signup.scss";
 import axios from "axios";
 import * as bootstrap from "bootstrap";
@@ -13,7 +13,7 @@ import longinSlider03 from "../../../assets/images/common/login-slider-03.png";
 
 import { toast } from "react-toastify";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE;
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Signup() {
     handleSubmit,
     getValues,
     setError,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -46,11 +46,14 @@ export default function Signup() {
   });
 
   // 監控縣市的變動
-  const selectedCityName = watch("city");
+  const selectedCityName = useWatch({ control, name: "city" });
 
   // 根據選中的縣市，找出對應的區域列表
-  const districts =
-    taiwanRegions.find((c) => c.name === selectedCityName)?.districts || [];
+  const districts = useMemo(
+    () =>
+      taiwanRegions.find((c) => c.name === selectedCityName)?.districts ?? [],
+    [selectedCityName],
+  );
 
   // 當縣市改變時，自動將區域設為該縣市的第一個選項，避免邏輯錯誤
   useEffect(() => {
@@ -60,7 +63,7 @@ export default function Signup() {
         setValue("district", districts[0]);
       }
     }
-  }, [selectedCityName, setValue]);
+  }, [selectedCityName, districts, getValues, setValue]);
 
   // 輪播初始化
   useEffect(() => {
@@ -93,7 +96,6 @@ export default function Signup() {
 
       const res = await axios.post(`${API_BASE_URL}/register`, registerData);
 
-      console.log("註冊成功回傳資料：", res.data);
       toast.success("註冊成功！");
       navigate("/login");
     } catch (err) {
@@ -163,7 +165,7 @@ export default function Signup() {
   //   if (!ok) return;
 
   //   // 表單都合法：你在這裡串接註冊 API
-  //   // console.log(formData);
+
   // };
 
   return (
@@ -177,7 +179,7 @@ export default function Signup() {
           <div className="split-card overflow-hidden">
             <div className="row g-0">
               {/* 輪播圖 */}
-              <section className="col-6 d-none p-0 d-md-block col-img">
+              <section className="col-6 d-none p-0 d-md-flex flex-column">
                 <div
                   id="carouselExampleInterval"
                   className="carousel slide h-100"
@@ -508,12 +510,12 @@ export default function Signup() {
                       </button>
                     </div>
 
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
                       <p className="mb-0 me-2 text-brown-300">已經是會員？</p>
                       <Link to="/login">
                         <button
                           type="button"
-                          className="btn btn-form-signup fw-bold"
+                          className="btn btn-form-signup fw-bold text-nowrap"
                         >
                           立即登入
                         </button>

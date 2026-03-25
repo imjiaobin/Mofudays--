@@ -11,7 +11,6 @@ export default function OrderFormModal({
 }) {
   const [rootError, setRootError] = useState("");
 
-   
   const defaultValues = useMemo(
     () => ({
       id: initialData?.id ?? "",
@@ -26,7 +25,6 @@ export default function OrderFormModal({
       buyerEmail: initialData?.buyerInfo?.email ?? "",
       buyerPhone: initialData?.buyerInfo?.phone ?? "",
       buyerAddress: initialData?.buyerInfo?.address ?? "",
-
       note: initialData?.note ?? "",
     }),
     [initialData],
@@ -63,23 +61,22 @@ export default function OrderFormModal({
   useEffect(() => {
     if (open) {
       reset(defaultValues);
-      // setRootError("");
     }
-   
   }, [open, defaultValues, reset]);
 
-  // 自動計算總金額（期數 * 每期金額）
-   const termCycles = useWatch({ control, name: "termCycles" });
-   const perCycleAmount = useWatch({ control, name: "perCycleAmount" });
-   const paymentStatus = useWatch({ control, name: "paymentStatus" });
+  const termCycles = useWatch({ control, name: "termCycles" });
+  const perCycleAmount = useWatch({ control, name: "perCycleAmount" });
+  const paymentStatus = useWatch({ control, name: "paymentStatus" });
 
   useEffect(() => {
+    if (mode !== "create") return;
+
     const total = termCycles * perCycleAmount;
     setValue("orderTotalAmount", Number.isFinite(total) ? total : 0, {
       shouldValidate: false,
       shouldDirty: true,
     });
-  }, [termCycles, perCycleAmount, setValue]);
+  }, [mode, termCycles, perCycleAmount, setValue]);
 
   const submit = async (data) => {
     setRootError("");
@@ -268,11 +265,15 @@ export default function OrderFormModal({
                     />
                   </div>
 
-                  {/* {mode === "edit" && (
-                <OrderFormDetail subscriptions={initialData?.subscriptions || []} />
-              )} */}
+                <div className="col-12 col-xl-4">
+                  <label className="form-label small">更新日</label>
+                  <input
+                    className="form-control form-control-sm"
+                    value={displayMeta.updatedAt}
+                    disabled
+                  />
                 </div>
-              {/* )} */}
+              </div>
 
               {/* 訂閱明細（預設收起） */}
               {mode === "edit" && (
@@ -283,7 +284,7 @@ export default function OrderFormModal({
               )}
             </div>
 
-            <div className="modal-footer admin-modal__footer admin-pages__panelFooter ">
+            <div className="modal-footer admin-modal__footer admin-pages__panelFooter">
               <button
                 className="btn btn-modal-delete"
                 type="button"

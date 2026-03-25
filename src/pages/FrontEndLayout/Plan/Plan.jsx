@@ -1,12 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  addToCart,
-  getCarts,
-  updateCart,
-  getCurrentUserId,
-} from "../../../api/planApi";
+import { addToCart, getCarts, getCurrentUserId } from "../../../api/planApi";
 
 import "./Plan.scss";
 import ProgressBar1 from "../Subscribe/ProgressBar1.jsx";
@@ -19,14 +14,18 @@ import planImg from "../../../assets/images/subscribe/plan-img.png";
 function Plan() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const saved = JSON.parse(localStorage.getItem("planState") || "{}");
   const formData = state?.formData ?? saved.formData;
   const dogId = state?.dogId ?? saved.dogId;
   const generatedPlans = state?.generatedPlans ?? saved.generatedPlans;
 
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  useEffect(() => {
+    if (selectedPlan) localStorage.setItem("selectedPlan", selectedPlan);
+  }, [selectedPlan]);
 
-  const handleBack = () => navigate(-1);
+  const handleBack = () =>
+    navigate("/petinfo", { state: { dogId, fromPlan: true } });
 
   const handleSubmitPlan = async () => {
     if (!selectedPlan) {
@@ -75,11 +74,13 @@ function Plan() {
       );
 
       if (existingCart) {
-        await updateCart(existingCart.id, cartPayload);
-      } else {
-        await addToCart(cartPayload);
+        alert(
+          "此毛孩已有訂閱方案在購物車中，請先完成結帳，或至購物車刪除後再重新添加。",
+        );
+        navigate("/cart");
+        return;
       }
-      localStorage.removeItem("planState");
+      await addToCart(cartPayload);
       navigate("/cart");
     } catch (err) {
       console.error("加入購物車失敗", err);
@@ -94,26 +95,36 @@ function Plan() {
           <ProgressBar1 step={2} />
 
           {/* 推薦方案 */}
-          <div className="card-bg py-9 px-12-sm mb-6 mb-0-sm">
-            <div className="row justify-content-center">
+          <div className="card-bg py-9 px-110 px-60-lg px-12-sm mb-6 mb-0-sm">
+            <div className="justify-content-center">
               {/* 標題 */}
-              <div className="col-10">
-                <h4 className="fw-bold text-primary-500 text-center-sm mb-40">
+              <div className="col-12">
+                <h4 className="fw-bold text-primary-500 text-center-sm mb-40 mb-24-sm">
                   選擇方案
                 </h4>
               </div>
 
-              <div className="col-10 d-flex gap-5">
+              <div className="col-12 d-flex d-block-md gap-5">
                 {/* 左邊欄位 */}
-                <div className="plan-title justify-content-center px-26">
-                  <img src={planImg} alt="推薦方案" className="mb-32" />
+                <div className="plan-title justify-content-center px-26 p-16-md mb-24-md">
+                  <img
+                    src={planImg}
+                    alt="推薦方案"
+                    className="mb-32 mb-16-sm"
+                  />
                   <div>
-                    <h5 className="mb-4 ls-5 text-center-sm">
+                    <h5 className="fs-20-sm ls-5 mb-4 mb-16-sm">
                       給毛孩的三種驚喜提案
                     </h5>
-                    <p className="text-brown-300">
+                    <p className="fs-14-sm text-brown-300 d-none-sm">
                       為了讓你能更輕鬆找到最適合毛孩的盒子，
                       <br />
+                      我們依照內容物、用途與毛孩特性整理出三種不同的訂閱組合。
+                      <br />
+                      無論你是新手爸媽，或是想給毛孩更多陪伴，我們都準備了合適的選擇。
+                    </p>
+                    <p className="fs-14-sm text-brown-300 d-none-min-sm">
+                      為了讓你能更輕鬆找到最適合毛孩的盒子，
                       我們依照內容物、用途與毛孩特性整理出三種不同的訂閱組合。
                       <br />
                       無論你是新手爸媽，或是想給毛孩更多陪伴，我們都準備了合適的選擇。
@@ -122,7 +133,7 @@ function Plan() {
                 </div>
 
                 {/* 右邊欄位 */}
-                <div className="plan-item">
+                <div className="plan-item mb-48-sm">
                   {/* 方案一 */}
                   <PlanCard
                     id="plan1"
@@ -174,16 +185,16 @@ function Plan() {
 
             {/* 儲存按鈕手機版 */}
             <ActiveButtonPhone
-              active1="回上一頁"
+              active1="回上一步"
               active2="加入購物車"
-              onBack={() => navigate(-1)}
+              onBack={handleBack}
               onSubmit={handleSubmitPlan}
             />
           </div>
 
           {/* 儲存按鈕網頁版 */}
           <ActiveButtonWeb
-            active1="回上一頁"
+            active1="回上一步"
             active2="加入購物車"
             onBack={handleBack}
             onSubmit={handleSubmitPlan}

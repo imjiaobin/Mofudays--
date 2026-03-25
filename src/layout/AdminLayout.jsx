@@ -27,7 +27,9 @@ export default function AdminLayout() {
 
   // 路由切換時，自動關閉手機 drawer
   useEffect(() => {
-    setIsMobileSideOpen(false);
+    return () => {
+      setIsMobileSideOpen(false);
+    };
   }, [location.pathname]);
 
   // 手機 drawer 開啟時，鎖住 body 捲動（避免背景跟著滾）

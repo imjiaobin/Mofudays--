@@ -103,7 +103,7 @@ export default function MemberEvent1() {
           <section className="section-spacer auto-show">
             <h2 className="h2 mb-16 text-center text-brown-500">活動流程</h2>
             <div className="row justify-content-center">
-              <div className="col-12 col-md-10 col-lg-8">
+              <div className="col-md-10 col-lg-8">
                 <ul className="timeline">
                   <li>
                     <strong>09:30</strong> — 報到入場
@@ -131,10 +131,10 @@ export default function MemberEvent1() {
           {/* 活動資訊 + CTA */}
           <section className="mb-80">
             <div className="row justify-content-center">
-              <div className="col-12 col-lg-10">
+              <div className="col-lg-10">
                 <div className="cta-wrap position-relative p-4 p-md-5 fade-up">
                   <div className="row g-4 align-items-center">
-                    <div className="col-12 col-md">
+                    <div className="col-md">
                       <h3 className="h3 mb-16">活動時間</h3>
                       <p className="mb-8 fw-500 ps-4">
                         <strong className="fw-700">日期</strong>：2025 年 10 月
@@ -154,7 +154,7 @@ export default function MemberEvent1() {
                       </p>
                     </div>
 
-                    <div className="col-12 col-md-auto text-md-end">
+                    <div className="col-md-auto text-md-end">
                       <div className="position-relative d-inline-block">
                         <a
                           href="#"
@@ -181,7 +181,6 @@ export default function MemberEvent1() {
 
             <div className="row justify-content-center">
               <div className="col-lg-10">
-
                 <div className="accordion" id="faqAccordionEvent1">
                   <div className="accordion-item fade-up-1">
                     <h2 className="accordion-header" id="q1Event1">
@@ -204,7 +203,8 @@ export default function MemberEvent1() {
                       data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
-                        A: 本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
+                        A:
+                        本活動全程免費參加，現場提供的健檢、疫苗與講座皆為公益服務，歡迎攜帶毛孩一起共襄盛舉。
                       </div>
                     </div>
                   </div>
@@ -256,7 +256,8 @@ export default function MemberEvent1() {
                       data-bs-parent="#faqAccordionEvent1"
                     >
                       <div className="accordion-body">
-                        A：免費血液檢查僅限 10 名，採現場報名、先到先登記，請提早到場登記以確保名額。
+                        A：免費血液檢查僅限 10
+                        名，採現場報名、先到先登記，請提早到場登記以確保名額。
                       </div>
                     </div>
                   </div>

@@ -11,7 +11,7 @@ const CartCardWeb = ({
 }) => {
   return (
     <>
-      <div className="table-container-bg d-flex py-4 mb-2 d-none-sm">
+      <div className="table-container-bg d-flex py-4 mb-2 d-none-lg">
         {/* 圖片+品項 */}
         <div className="col-table-5 d-flex ps-4">
           <img
@@ -21,6 +21,7 @@ const CartCardWeb = ({
           />
           <div>
             <p className="table-title fw-bold mb-4">{title}</p>
+            {/* 電腦版 */}
             <p className="table-text fw-normal mb-1">
               零食 x {content?.snacks?.length ?? 0}
             </p>
@@ -42,7 +43,7 @@ const CartCardWeb = ({
         <div className="col-table-2 d-flex align-items-center">
           <div className="input-group px-4" style={{ height: "48px" }}>
             <button
-              className="btn btn-quantity px-4 py-3"
+              className="btn btn-quantity px-2 py-3"
               type="button"
               onClick={onDecrease}
             >
@@ -50,14 +51,14 @@ const CartCardWeb = ({
             </button>
             <input
               type="text"
-              className="form-control text-center input-number px-0"
+              className="form-control text-center input-number radius-0 px-0"
               value={quantity}
               readOnly
               tabIndex="-1"
               aria-label="Example text with two button addons"
             />
             <button
-              className="btn btn-quantity px-4 py-3"
+              className="btn btn-quantity px-2 py-3"
               type="button"
               onClick={onIncrease}
             >

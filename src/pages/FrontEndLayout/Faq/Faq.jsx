@@ -640,7 +640,7 @@ const Faq = () => {
 
   return (
     <div className="faq-page-wrapper">
-      <div className="container py-9 py-md-11">
+      <div className="container">
         <FaqHeader activeTab={activeTab} setActiveTab={setActiveTab} />
         <FaqContent currentData={FAQ_DATA[activeTab]} />
       </div>

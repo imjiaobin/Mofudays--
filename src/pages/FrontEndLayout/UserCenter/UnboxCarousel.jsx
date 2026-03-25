@@ -13,7 +13,7 @@ import imgMix1 from "../../../assets/images/member/member_mix_1.jpg";
 import imgSinglePaw from "../../../assets/images/member/footprint_patten 2.png";
 
 /** ✅ 卡片資料改成常數（component 外） */
-export const UNBOX_CARDS = [
+const UNBOX_CARDS = [
   {
     name: "豆豆",
     meta: "柴犬 5 歲",

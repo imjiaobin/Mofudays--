@@ -19,7 +19,7 @@ select:focus {
   padding: 12px 24px; // 0912 vivian 新增
 }
 
-.form-control:not(:placeholder-shown) {
+.form-control:not(:placeholder-shown):not(:disabled) {
   color: $brown-500;
 }
 
@@ -27,12 +27,27 @@ select:focus {
   color: $brown-500 !important;
 }
 
+.form-control:disabled,
+button.form-select:disabled {
+  background-color: white !important;
+  opacity: 0.65 !important;
+  cursor: not-allowed;
+}
+
 // 移除瀏覽器 autofill 藍色背景
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
   box-shadow: 0 0 0 30px white inset !important;
   -webkit-text-fill-color: $brown-500 !important;
 }
+
+input:-webkit-autofill:disabled,
+input:-webkit-autofill:disabled:hover,
+input:-webkit-autofill:disabled:focus {
+  -webkit-box-shadow: 0 0 0 30px var(--bs-secondary-bg) inset !important;
+  box-shadow: 0 0 0 30px var(--bs-secondary-bg) inset !important;
+  -webkit-text-fill-color: var(--bs-secondary-color) !important;
+}
+// vivian 0308修改

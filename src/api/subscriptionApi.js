@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE;
 
 const getAuthHeader = () => {
   const token = localStorage.getItem("token");
@@ -43,6 +43,7 @@ export const getUserOrders = async () => {
  * 取消訂單內的指定 subscriptions
  * PATCH /600/orders/:orderId
  * 將選取的 subscriptionId 對應的 subscriptionStatus 改為「已取消」
+ * [james新增] 同步根據取消後的結果推算 orderStatus，讓後台欄位一起更新
  */
 export const cancelSubscriptions = async (orderId, subscriptionIdsToCancel) => {
   try {
@@ -51,15 +52,29 @@ export const cancelSubscriptions = async (orderId, subscriptionIdsToCancel) => {
     });
     const order = orderRes.data;
 
+    // 更新 subscriptions 的 subscriptionStatus
     const updatedSubscriptions = order.subscriptions.map((sub) =>
       subscriptionIdsToCancel.includes(sub.subscriptionId)
         ? { ...sub, subscriptionStatus: "已取消" }
         : sub,
     );
 
+    // [新增] 根據更新後的 subscriptions 推算後台 orderStatus
+    // 全部取消 → 已取消
+    // 部分取消 → 處理中（還有進行中的訂閱）
+    const total = updatedSubscriptions.length;
+    const cancelledCount = updatedSubscriptions.filter(
+      (s) => s.subscriptionStatus === "已取消",
+    ).length;
+
+    const newOrderStatus = cancelledCount === total ? "已取消" : "處理中";
+
     const response = await axios.patch(
       `${API_BASE_URL}/600/orders/${orderId}`,
-      { subscriptions: updatedSubscriptions },
+      {
+        subscriptions: updatedSubscriptions,
+        orderStatus: newOrderStatus, // [james新增] 一併更新後台 orderStatus
+      },
       { headers: getAuthHeader() },
     );
     return response.data;

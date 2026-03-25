@@ -1,8 +1,10 @@
-/* eslint-disable no-constant-binary-expression */
+/* eslint-disable no-constant-binary-expression, react-hooks/set-state-in-effect */
+
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useBlocker } from "react-router-dom";
 import {
   createDog,
+  updateDog,
   getCurrentUserId,
   getDogsByOwnerId,
 } from "../../../api/planApi";
@@ -59,46 +61,49 @@ const PLAY_TO_CODE = {
 };
 
 function PetInfo() {
-  const saved = JSON.parse(localStorage.getItem("petInfoForm") || "{}");
-  const [petName, setPetName] = useState(saved.petName ?? "");
-  const [petGender, setPetGender] = useState(saved.petGender ?? "");
-  const [selectedYear, setSelectedYear] = useState(
-    saved.selectedYear ?? "選擇年齡",
-  );
-  const [selectedSize, setSelectedSize] = useState(
-    saved.selectedSize ?? "選擇體型",
-  );
-  const [selectedDiets, setSelectedDiets] = useState(saved.selectedDiets ?? []);
-  const [selectedHealth, setSelectedHealth] = useState(
-    saved.selectedHealth ?? null,
-  );
-  const [selectedPlay, setSelectedPlay] = useState(saved.selectedPlay ?? null);
+  const location = useLocation();
+  const fromPlan = location.state?.fromPlan === true;
+
+  const [petName, setPetName] = useState("");
+  const [petGender, setPetGender] = useState("");
+  const [selectedYear, setSelectedYear] = useState("選擇年齡");
+  const [selectedSize, setSelectedSize] = useState("選擇體型");
+  const [selectedDiets, setSelectedDiets] = useState([]);
+  const [selectedHealth, setSelectedHealth] = useState(null);
+  const [selectedPlay, setSelectedPlay] = useState(null);
+
   // eslint-disable-next-line no-unused-vars
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmedExistingDog, setConfirmedExistingDog] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem(
-      "petInfoForm",
-      JSON.stringify({
-        petName,
-        petGender,
-        selectedYear,
-        selectedSize,
-        selectedDiets,
-        selectedHealth,
-        selectedPlay,
-      }),
-    );
-  }, [
-    petName,
-    petGender,
-    selectedYear,
-    selectedSize,
-    selectedDiets,
-    selectedHealth,
-    selectedPlay,
-  ]);
+    if (!fromPlan) {
+      localStorage.removeItem("petInfoForm");
+      return;
+    }
+    // 從 plan 回來：還原表單資料
+    const savedData = JSON.parse(localStorage.getItem("petInfoForm") || "{}");
+    if (savedData.petName !== undefined) setPetName(savedData.petName);
+    if (savedData.petGender !== undefined) setPetGender(savedData.petGender);
+    if (savedData.selectedYear !== undefined)
+      setSelectedYear(savedData.selectedYear);
+    if (savedData.selectedSize !== undefined)
+      setSelectedSize(savedData.selectedSize);
+    if (savedData.selectedDiets !== undefined)
+      setSelectedDiets(savedData.selectedDiets);
+    if (savedData.selectedHealth !== undefined)
+      setSelectedHealth(savedData.selectedHealth);
+    if (savedData.selectedPlay !== undefined)
+      setSelectedPlay(savedData.selectedPlay);
+    // 還原 confirmedExistingDog
+    const dogId = location.state?.dogId;
+    if (dogId) {
+      getDogsByOwnerId(getCurrentUserId()).then((dogs) => {
+        const dog = dogs.find((d) => d.id === dogId);
+        if (dog) setConfirmedExistingDog(dog);
+      });
+    }
+  }, [fromPlan]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const navigate = useNavigate();
@@ -130,6 +135,7 @@ function PetInfo() {
   };
   const CODE_TO_HEALTH = { JOINT: "joint", DIGEST: "digestion", SKIN: "skin" };
   const CODE_TO_PLAY = { IQ: "brainpower", BITE: "bite", WALK: "walk" };
+
   const prefillFromDog = (dog) => {
     setPetGender(dog.gender === "M" ? "male" : "female");
     setSelectedSize(CODE_TO_SIZE[dog.size] ?? "選擇體型");
@@ -141,11 +147,54 @@ function PetInfo() {
     );
     setSelectedHealth(CODE_TO_HEALTH[dog.healthCareNeeds?.[0]] ?? null);
     setSelectedPlay(CODE_TO_PLAY[dog.activityTypes?.[0]] ?? null);
+    setErrors({
+      petYear: false,
+      petSize: false,
+      petName: false,
+      petGender: false,
+      petDiet: false,
+    });
   };
+
+  const hasFormData =
+    petName !== "" ||
+    petGender !== "" ||
+    selectedYear !== "選擇年齡" ||
+    selectedSize !== "選擇體型" ||
+    selectedDiets.length > 0;
+
+  // 攔截跳頁
+  const blocker = useBlocker(hasFormData);
+  useEffect(() => {
+    if (blocker.state !== "blocked") return;
+
+    if (blocker.location?.pathname === "/plan") {
+      blocker.proceed();
+      return;
+    }
+
+    if (window.confirm("離開此頁面後，已填寫的資料將會清空，確定要離開嗎？")) {
+      blocker.proceed();
+    } else {
+      blocker.reset();
+    }
+  }, [blocker]);
+
+  // 攔截瀏覽器關閉 / 重新整理
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!hasFormData) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [hasFormData]);
 
   // 寵物名稱驗證優化
   const handlePetNameBlur = async () => {
     if (!petName.trim()) return;
+    if (confirmedExistingDog?.name === petName.trim()) return;
 
     const existingDogs = await getDogsByOwnerId(getCurrentUserId());
     const matched = existingDogs.find(
@@ -188,7 +237,10 @@ function PetInfo() {
       petDiet: selectedDiets.length === 0,
     };
     setErrors(newErrors);
-    if (Object.values(newErrors).some(Boolean)) return;
+    if (Object.values(newErrors).some(Boolean)) {
+      alert("請確認所有必填欄位都已填寫完整！");
+      return;
+    }
 
     // 轉換成 API 代碼
     const sizeCode = SIZE_TO_CODE[selectedSize];
@@ -229,7 +281,7 @@ function PetInfo() {
       setIsSubmitting(true);
 
       // 取得 db 資料
-      const API_BASE = "http://localhost:3000";
+      const API_BASE = import.meta.env.VITE_API_BASE;
       const [plans, toys, treats, household] = await Promise.all([
         axios.get(`${API_BASE}/plans`),
         axios.get(`${API_BASE}/toys`),
@@ -246,14 +298,17 @@ function PetInfo() {
       //產生推薦方案
       generatedPlans = generatePlans(formData, db);
 
-      const dogId = confirmedExistingDog
-        ? confirmedExistingDog.id
-        : (await createDog(dogPayload)).id;
+      let dogId;
+      if (confirmedExistingDog) {
+        await updateDog(confirmedExistingDog.id, dogPayload);
+        dogId = confirmedExistingDog.id;
+      } else {
+        dogId = (await createDog(dogPayload)).id;
+      }
       localStorage.setItem(
         "planState",
         JSON.stringify({ formData, dogId, generatedPlans }),
       );
-      localStorage.removeItem("petInfoForm");
       navigate("/plan", { state: { formData, dogId, generatedPlans } });
     } catch (err) {
       console.error("建立毛孩失敗", err);
@@ -276,12 +331,12 @@ function PetInfo() {
             <div className="row justify-content-center">
               {/* 標題 */}
               <div className="col-10">
-                <h4 className="fw-bold text-primary-500 text-center-sm mb-40">
+                <h4 className="fw-bold text-primary-500 fs-24-lg text-center-sm mb-40">
                   幫助我們先認識你的毛孩～
                 </h4>
               </div>
               {/* 左邊欄位 */}
-              <div className="col-4 col-12-sm pe-5 pe-12-sm">
+              <div className="col-4 col-5-lg col-12-sm pe-5 pe-12-sm">
                 <div className="px-16-sm">
                   {/* 毛孩名稱 */}
                   <div className="pet-name mb-7 mb-24-sm">
@@ -289,8 +344,8 @@ function PetInfo() {
                       htmlFor="pet-name"
                       className="form-label d-flex align-items-center mb-4"
                     >
-                      <p className="icon-dog fs-24 fs-20-sm fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold">
+                      <p className="icon-dog fs-24 fs-20-sm me-3"></p>
+                      <p className="item-title fw-bold fs-16-md">
                         毛孩的名字是？
                         <span className="align-top align-text-bottom-sm">
                           *必填
@@ -322,7 +377,7 @@ function PetInfo() {
                   <div className="pet-gender mb-7 mb-24-sm">
                     <div className="d-flex align-items-center mb-4">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold">
+                      <p className="item-title fw-bold fs-16-md">
                         毛孩是什麼性別？
                         <span className="align-top align-text-bottom-sm">
                           *必填
@@ -379,7 +434,7 @@ function PetInfo() {
                   <div className="pet-year mb-7 mb-24-sm">
                     <div className="d-flex mb-2 align-items-center">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold text-middle">
+                      <p className="item-title fw-bold fs-16-md text-middle">
                         毛孩幾歲了？
                         <span className="align-top align-text-bottom-sm">
                           *必填
@@ -394,11 +449,7 @@ function PetInfo() {
                       <button
                         className={`form-select text-start border py-3 px-5
                           ${errors.petYear ? "border-danger" : ""}
-                          ${
-                            selectedYear === "選擇年齡"
-                              ? ""
-                              : "text-primary-500 fw-bold"
-                          }`}
+                          ${selectedYear === "選擇年齡" ? "text-neutral-400" : "text-primary-500 fw-bold"}`}
                         type="button"
                         id="pet-year"
                         name="pet-year"
@@ -466,7 +517,7 @@ function PetInfo() {
                   <div className="pet-size mb-7 mb-24-sm">
                     <div className="d-flex align-items-center mb-2">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold">
+                      <p className="item-title fw-bold fs-16-md">
                         牠是什麼體型的狗狗？
                         <span className="align-top align-text-bottom-sm">
                           *必填
@@ -481,11 +532,7 @@ function PetInfo() {
                       <button
                         className={`form-select text-start border py-3 px-5
                           ${errors.petSize ? "border-danger" : ""}
-                          ${
-                            selectedSize === "選擇體型"
-                              ? ""
-                              : "text-primary-500 fw-bold"
-                          }`}
+                          ${selectedSize === "選擇體型" ? "text-neutral-400" : "text-primary-500 fw-bold"}`}
                         type="button"
                         id="pet-size"
                         onClick={() =>
@@ -547,13 +594,13 @@ function PetInfo() {
               </div>
 
               {/* 右邊欄位 */}
-              <div className="col-6 col-12-sm">
+              <div className="col-6 col-5-lg col-12-sm">
                 <div className="px-16-sm">
                   {/* 過敏食材 */}
                   <div className="pet-diet mb-7 mb-24-sm">
                     <div className="d-flex mb-2 align-items-center">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold text-middle">
+                      <p className="item-title fw-bold fs-16-md text-middle">
                         毛孩有什麼過敏或忌口的食材？ ( 可複選最多 3 項 )
                         <span className="align-top align-text-bottom-sm">
                           *必填
@@ -565,7 +612,7 @@ function PetInfo() {
                     </p>
 
                     {/* 食材按鈕 */}
-                    <div className="diet d-flex flex-wrap gap-3 gap-8-sm">
+                    <div className="diet gap-3 gap-8-sm">
                       {/* 雞肉 */}
                       <DietButton
                         dietId="drumstick"
@@ -747,7 +794,7 @@ function PetInfo() {
                   <div className="pet-health mb-7 mb-24-sm">
                     <div className="d-flex mb-2 align-items-center">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold text-middle">
+                      <p className="item-title fw-bold fs-16-md text-middle">
                         想替毛孩加強什麼保健需求？
                       </p>
                     </div>
@@ -755,7 +802,7 @@ function PetInfo() {
                       最近毛孩有沒有哪個部分想特別照顧的呢？我們會貼心幫你挑選對應的營養品
                     </p>
 
-                    <div className="d-grid d-block-sm gap-5 card-grid">
+                    <div className="d-grid d-block-lg gap-5 card-grid">
                       {/* 關節保健 */}
                       <HealthCard
                         healthId="joint"
@@ -789,7 +836,7 @@ function PetInfo() {
                   <div className="pet-play mb-7 mb-48-sm">
                     <div className="d-flex mb-2 align-items-center">
                       <p className="icon-dog fs-24 fs-20-sm me-3"></p>
-                      <p className="item-title fw-bold text-middle">
+                      <p className="item-title fw-bold fs-16-md text-middle">
                         毛孩平常最喜歡哪種互動方式？
                       </p>
                     </div>
@@ -797,7 +844,7 @@ function PetInfo() {
                       你平常都怎麼與毛孩互動的呢？讓我們更了解牠的個性與喜好！
                     </p>
 
-                    <div className="d-grid d-block-sm gap-5 card-grid">
+                    <div className="d-grid d-block-lg gap-5 card-grid">
                       <PlayCard
                         playId="brainpower"
                         playImg={playImg1}
@@ -842,7 +889,7 @@ function PetInfo() {
             {/* 儲存按鈕電腦版 */}
             <div className="text-center d-none-min-sm">
               <button
-                className="btn btn-primary rounded-pill btn-subscribe fs-18-sm px-100 w-100-sm"
+                className="btn btn-primary rounded-pill btn-subscribe fs-20-md fs-18-sm px-100 w-100-sm"
                 to="/plan"
                 role="button"
                 type="submit"
@@ -856,7 +903,7 @@ function PetInfo() {
           {/* 儲存按鈕手機版 */}
           <div className="text-center d-none-sm">
             <button
-              className="btn btn-primary rounded-pill btn-subscribe fs-18-sm px-100 w-100-sm"
+              className="btn btn-primary rounded-pill btn-subscribe fs-20-md fs-18-sm px-100 w-100-sm"
               to="/plan"
               role="button"
               type="submit"

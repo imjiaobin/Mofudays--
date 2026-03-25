@@ -123,10 +123,10 @@ export default function MemberEvent3() {
           {/* 注意事項 + CTA */}
           <section className="mb-80">
             <div className="row justify-content-center">
-              <div className="col-12 col-lg-10">
+              <div className="col-lg-10">
                 <div className="mt-20 position-relative p-4 p-md-5">
                   <div className="row g-4 align-items-center auto-show-1">
-                    <div className="cta-wrap-3 col-12 col-md">
+                    <div className="cta-wrap-3 col-md">
                       <h3 className="h3 mb-16">【注意事項】</h3>
                       <ul>
                         <li className="mb-8">本活動僅限毛日和會員登記</li>
@@ -141,7 +141,7 @@ export default function MemberEvent3() {
                       </ul>
                     </div>
 
-                    <div className="col-12 col-md-auto text-md-end">
+                    <div className="col-md-auto text-md-end">
                       <div className="position-relative d-inline-block">
                         <a
                           href="#"

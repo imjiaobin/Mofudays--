@@ -1,9 +1,4 @@
-import {
-  createHashRouter,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { createHashRouter, Navigate, Outlet } from "react-router-dom";
 
 // layouts（ 這些檔案都要記得import並放 <Outlet /> ）
 import FrontLayout from "./layout/FrontEndLayout";
@@ -20,6 +15,7 @@ import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 import Plan from "./pages/FrontEndLayout/Plan/Plan";
 import Cart from "./pages/FrontEndLayout/Cart/Cart";
 import Checkout from "./pages/FrontEndLayout/Checkout/Checkout";
+import Payment from "./pages/FrontEndLayout/Checkout/Payment";
 import Finish from "./pages/FrontEndLayout/Finish/Finish";
 
 //usercenter
@@ -31,10 +27,7 @@ import MemberEvent1 from "./pages/FrontEndLayout/UserCenter/MemberEvent1";
 import MemberEvent2 from "./pages/FrontEndLayout/UserCenter/MemberEvent2";
 import MemberEvent3 from "./pages/FrontEndLayout/UserCenter/MemberEvent3";
 
-//再次訂閱 功能測試頁
-import ResubscribePreview from "./pages/FrontEndLayout/UserCenter/components/Resubscribepreview";
-
-// Auth pages（ 會員/後台共用同一個 Login 頁面 ）
+// Auth pages
 import Login from "./pages/FrontEndLayout/Login/Login";
 import Signup from "./pages/FrontEndLayout/Signup/Signup";
 
@@ -55,49 +48,11 @@ import {
 // 404
 import NotFound from "./layout/NotFound";
 
-// auth hooks
-import { useAuth } from "./contexts/AuthContext";
-
-// 前台會員權限守衛->利用AuthContext這支hook驅動
-function RequireAuth({ children }) {
-  const { isAuthed, isLoading } = useAuth();
-  // 1. 處理讀取中狀態：這是防止被踢回登入頁的最重要防線
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontSize: "1.2rem",
-          color: "#8d6e63", // 配合你的 brown 色系
-        }}
-      >
-        <div className="spinner-border me-2" role="status"></div>
-        身分驗證中...
-      </div>
-    );
-  }
-
-  // 2. 判斷是否登入：此時 isLoading 必為 false
-  // 如果 isAuthed 為 false，才執行跳轉
-  return isAuthed ? children : <Navigate to="/login" replace />;
-}
+//前台權限守衛
+import RequireAuth from "./components/RequireAuth";
 
 //後台管理員權限守衛
-import { useSelector } from "react-redux";
-import { selectIsAdminAuthed } from "./slices/adminAuthSlice";
-export default function RequireAdmin({ children }) {
-  const isAuthed = useSelector(selectIsAdminAuthed);
-  const location = useLocation();
-
-  if (!isAuthed) {
-    return <Navigate to="/admin/login" replace state={{ from: location }} />;
-  }
-
-  return children;
-}
+import RequireAdmin from "./components/RequireAdmin";
 
 export const router = createHashRouter([
   // 前台（ FrontLayout ）
@@ -149,6 +104,14 @@ export const router = createHashRouter([
         ),
       },
       {
+        path: "payment",
+        element: (
+          <RequireAuth>
+            <Payment />
+          </RequireAuth>
+        ),
+      },
+      {
         path: "finish",
         element: (
           <RequireAuth>
@@ -162,7 +125,7 @@ export const router = createHashRouter([
         path: "usercenter",
         element: (
           <RequireAuth>
-            <UserCenterLayout /> {/* 這是下方步驟 2 建立的新組件 */}
+            <UserCenterLayout />
           </RequireAuth>
         ),
         children: [
@@ -248,12 +211,6 @@ export const router = createHashRouter([
       },
     ],
   },
-  //API測試頁
-  // {
-  //   path: "/test",
-  //   element: <TestAuthPage />,
-  // },
-
   // 404
   { path: "*", element: <NotFound /> },
 ]);

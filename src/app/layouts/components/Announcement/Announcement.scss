@@ -1,19 +1,19 @@
-/* Announcement.scss */
-
 .announcement {
-  // 讓整個區塊在手機上有一點邊距，不貼死螢幕邊緣
   padding: 0 10px;
   margin-top: 10px;
 
   .container {
     background-color: $tertiary-500;
     color: white;
-    padding: 8px 15px; // 減少上下 padding，增加左右 padding
+    padding: 8px 15px;
     border-radius: 8px;
 
-    // 確保在極小螢幕下文字大小適中
+    @media (min-width: 577px) and (max-width: 991px) {
+      padding: 10px 15px;
+    }
+
     @media (max-width: 576px) {
-      padding: 12px 10px;
+      padding: 10px 10px;
     }
   }
 
@@ -23,12 +23,17 @@
     border: 2px solid white !important;
     border-radius: 8px;
 
-    // 手機版按鈕可以寬一點比較好按
-    @media (max-width: 576px) {
-      width: 100%;
-      margin-top: 5px;
-      padding: 4px 0;
+    @media (min-width: 577px) and (max-width: 991px) {
+      width: auto;
       font-size: 0.9rem;
+      padding: 4px 14px;
+    }
+
+    @media (max-width: 576px) {
+      width: auto;
+      margin-top: 0;
+      padding: 3px 16px;
+      font-size: 0.85rem;
     }
 
     &:hover {
@@ -38,11 +43,15 @@
     }
   }
 
-  // 調整 Close 按鈕在小螢幕的大小
   .btn-close {
+    @media (min-width: 577px) and (max-width: 991px) {
+      width: 0.75em;
+      height: 0.75em;
+    }
+
     @media (max-width: 576px) {
-      width: 0.5em;
-      height: 0.5em;
+      width: 0.6em;
+      height: 0.6em;
     }
   }
 }

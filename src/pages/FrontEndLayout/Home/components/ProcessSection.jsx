@@ -1,9 +1,8 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
 
-// --- 圖片引入  ---
-// 標題與裝飾
+// --- 圖片引入 ---
 import processHeadlineDesktop from "../../../../assets/images/index/04_process_headline_desktop.svg";
 import processHeadlineMobile from "../../../../assets/images/index/04_process_headline_mobile.svg";
 import boxHeadlineDesktop from "../../../../assets/images/index/05_box_headline_desktop.svg";
@@ -11,7 +10,6 @@ import boxHeadlineMobile from "../../../../assets/images/index/05_box_headline_m
 import openboxDecor from "../../../../assets/images/index/process_openbox_patten.svg";
 import petsSayDecor from "../../../../assets/images/index/pets_say.png";
 
-// 步驟圖與 Icon
 import step01Img from "../../../../assets/images/index/step_01.png";
 import step02Img from "../../../../assets/images/index/step_02.png";
 import step03Img from "../../../../assets/images/index/step_03.png";
@@ -20,7 +18,6 @@ import step02Icon from "../../../../assets/images/index/service_step_2.svg";
 import step03Icon from "../../../../assets/images/index/service_step_3.svg";
 import step04Icon from "../../../../assets/images/index/service_step_4.svg";
 
-// 盒子卡片圖
 import box01 from "../../../../assets/images/index/box_01.png";
 import box02 from "../../../../assets/images/index/box_02.png";
 import box03 from "../../../../assets/images/index/box_03.png";
@@ -30,41 +27,78 @@ import { checkLoginStatus } from "../../../../api/userApi";
 const ProcessSection = () => {
   const navigate = useNavigate();
 
-  // 處理「立即訂閱」的點擊事件(cookie版)
-  // const handleSubscribe = (e) => {
-  //   e.preventDefault();
+  useEffect(() => {
+    const styleId = "process-extra-styles";
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement("style");
+      style.id = styleId;
+      style.textContent = `
+        @keyframes openboxFloat {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-14px) rotate(2deg); }
+        }
+        @keyframes petsayFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        .process .decor.openbox {
+          animation: openboxFloat 5s ease-in-out infinite;
+        }
+        .process .decor.petsay {
+          animation: petsayFloat 4s ease-in-out infinite 0.5s;
+        }
+        .process .process-item.image-item img {
+          transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .process .process-item.image-item img:hover {
+          transform: scale(1.04) translateY(-4px);
+          box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+        .process .step-icon img {
+          transition: transform 0.3s ease;
+        }
+        .process .step-icon img:hover {
+          transform: scale(1.15) rotate(-5deg);
+        }
+        .process .product-card {
+          transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .process .product-card:hover {
+          transform: translateY(-6px) scale(1.02);
+          box-shadow: 0 14px 36px rgba(0,0,0,0.1);
+        }
+        .process .btn-subscribe {
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .process .btn-subscribe:hover {
+          transform: translateY(-3px) scale(1.04);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .process .btn-subscribe:active {
+          transform: translateY(0px) scale(0.98);
+        }
+        .process .icon-circle {
+          animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.2); opacity: 0.7; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }, []);
 
-  //   // 取得 document.cookie 中的 mofuToken
-  //   const getCookie = (name) => {
-  //     const value = `; ${document.cookie}`;
-  //     const parts = value.split(`; ${name}=`);
-  //     if (parts.length === 2) return parts.pop().split(";").shift();
-  //   };
-
-  //   const mofuToken = getCookie("mofuToken");
-
-  //   if (mofuToken) {
-  //     // 有 Token：跳轉到 PetInfo
-  //     navigate("/pet-info");
-  //   } else {
-  //     // 無 Token：提示並跳轉到 Signup
-  //     alert("請先註冊並登入會員，即可開始為毛孩訂閱專屬驚喜盒！");
-  //     navigate("/signup");
-  //   }
-  // };
-
-  // 處理「立即訂閱」的點擊事件
   const handleSubscribeClick = () => {
-    const isAuthed = checkLoginStatus(); // 為了測試路由先做第17行 2025/2/15 by 納森
-    // const isAuthed = true;
+    const isAuthed = checkLoginStatus();
     if (isAuthed) {
-      // 已登入：跳轉至寵物資訊頁 (依據你的需求)
       navigate("/petinfo");
     } else {
       toast.warn("請先登入以使用此功能！");
       navigate("/login");
     }
   };
+
   return (
     <section className="process position-relative">
       <div className="container py-9 py-md-11">
@@ -73,24 +107,40 @@ const ProcessSection = () => {
           src={processHeadlineDesktop}
           alt="process_headline"
           className="mb-3 d-none d-md-block mx-auto"
+          data-aos="fade-down"
+          data-aos-delay="100"
         />
         <img
           src={processHeadlineMobile}
           alt="process_headline_mobile"
           className="mb-3 d-block d-md-none mx-auto"
+          data-aos="fade-down"
+          data-aos-delay="100"
         />
-        <h3 className="mb-6 title-large text-center text-primary-500">
+        <h3
+          className="mb-6 title-large text-center text-primary-500"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           每月一盒讓他感受到你的心意
         </h3>
 
-        {/* --- 流程步驟 (4步) --- */}
+        {/* --- 流程步驟 --- */}
         <div className="process-steps">
-          {/* 步驟1: 圖左文右 */}
+          {/* 步驟1 */}
           <div className="row d-flex justify-content-center mb-md-5">
-            <div className="col-md-4 col-12 process-item image-item me-md-5 order-1 order-md-1">
+            <div
+              className="col-md-4 process-item image-item me-md-5 order-1 order-md-1"
+              data-aos="fade-right"
+              data-aos-delay="100"
+            >
               <img src={step01Img} alt="step1" />
             </div>
-            <div className="col-md-4 col-12 process-item text-item order-2 order-md-2">
+            <div
+              className="col-md-4 process-item text-item order-2 order-md-2"
+              data-aos="fade-left"
+              data-aos-delay="200"
+            >
               <div className="step-icon">
                 <img src={step01Icon} alt="foot_step1" />
               </div>
@@ -102,9 +152,13 @@ const ProcessSection = () => {
             </div>
           </div>
 
-          {/* 步驟2: 文左圖右 */}
+          {/* 步驟2 */}
           <div className="row d-flex justify-content-center mb-md-5">
-            <div className="col-md-4 col-12 process-item text-item me-md-5 order-2 order-md-1">
+            <div
+              className="col-md-4 process-item text-item me-md-5 order-2 order-md-1"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
               <div className="step-icon">
                 <img src={step02Icon} alt="foot_step2" />
               </div>
@@ -114,17 +168,29 @@ const ProcessSection = () => {
                 <p>專屬於你們的每日幸福</p>
               </div>
             </div>
-            <div className="col-md-4 col-12 process-item image-item order-1 order-md-2">
+            <div
+              className="col-md-4 process-item image-item order-1 order-md-2"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <img src={step02Img} alt="step2" />
             </div>
           </div>
 
-          {/* 步驟3: 圖左文右 */}
+          {/* 步驟3 */}
           <div className="row d-flex justify-content-center mb-md-5">
-            <div className="col-md-4 col-12 process-item image-item me-md-5 order-1 order-md-1">
+            <div
+              className="col-md-4 process-item image-item me-md-5 order-1 order-md-1"
+              data-aos="fade-right"
+              data-aos-delay="100"
+            >
               <img src={step03Img} alt="step3" />
             </div>
-            <div className="col-md-4 col-12 process-item text-item order-2 order-md-2">
+            <div
+              className="col-md-4 process-item text-item order-2 order-md-2"
+              data-aos="fade-left"
+              data-aos-delay="200"
+            >
               <div className="step-icon">
                 <img src={step03Icon} alt="foot_step3" />
               </div>
@@ -136,9 +202,13 @@ const ProcessSection = () => {
             </div>
           </div>
 
-          {/* 步驟4: 文左圖右 (註: 根據您的 HTML，這張圖用了 step_01) */}
+          {/* 步驟4 */}
           <div className="row d-flex justify-content-center mb-9 mb-md-11">
-            <div className="col-md-4 col-12 process-item text-item me-md-5 order-2 order-md-1">
+            <div
+              className="col-md-4 process-item text-item me-md-5 order-2 order-md-1"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
               <div className="step-icon">
                 <img src={step04Icon} alt="foot_step4" />
               </div>
@@ -148,7 +218,11 @@ const ProcessSection = () => {
                 <p>從吃、玩到健康都被照顧到</p>
               </div>
             </div>
-            <div className="col-md-4 col-12 process-item image-item order-1 order-md-2">
+            <div
+              className="col-md-4 process-item image-item order-1 order-md-2"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <img src={step01Img} alt="step4" />
             </div>
           </div>
@@ -160,43 +234,62 @@ const ProcessSection = () => {
             src={boxHeadlineDesktop}
             alt="05_box_headline"
             className="mb-6 d-none d-md-block mx-auto"
+            data-aos="zoom-in"
+            data-aos-delay="100"
           />
           <img
             src={boxHeadlineMobile}
             alt="05_box_headline_mobile"
             className="mb-6 d-block d-md-none mx-auto"
+            data-aos="zoom-in"
+            data-aos-delay="100"
           />
 
           <section className="product-section">
             <div className="product-layout">
-              {/* 第一張卡片 */}
-              <div className="product-card">
+              <div
+                className="product-card"
+                data-aos="flip-left"
+                data-aos-delay="100"
+              >
                 <div className="card-background">
                   <img src={box01} alt="box1" className="product-image" />
                 </div>
                 <div className="card-text">零食 1～2 包</div>
               </div>
 
-              {/* 第一個連接 icon */}
-              <div className="connect-icon">
+              <div
+                className="connect-icon"
+                data-aos="fade-in"
+                data-aos-delay="250"
+              >
                 <div className="icon-circle"></div>
               </div>
 
-              {/* 第二張卡片 */}
-              <div className="product-card">
+              <div
+                className="product-card"
+                data-aos="flip-left"
+                data-aos-delay="300"
+              >
                 <div className="card-background">
                   <img src={box02} alt="box2" className="product-image" />
                 </div>
                 <div className="card-text">玩具 1～2 個</div>
               </div>
 
-              {/* 第二個連接 icon */}
-              <div className="connect-icon">
+              <div
+                className="connect-icon"
+                data-aos="fade-in"
+                data-aos-delay="450"
+              >
                 <div className="icon-circle"></div>
               </div>
 
-              {/* 第三張卡片 */}
-              <div className="product-card">
+              <div
+                className="product-card"
+                data-aos="flip-left"
+                data-aos-delay="500"
+              >
                 <div className="card-background">
                   <img src={box03} alt="box3" className="product-image" />
                 </div>
@@ -214,11 +307,12 @@ const ProcessSection = () => {
           type="button"
           className="btn rounded-pill btn-primary btn-subscribe px-160 d-flex mx-auto"
           onClick={handleSubscribeClick}
+          data-aos="zoom-in"
+          data-aos-delay="100"
         >
           立即訂閱
         </button>
 
-        {/* --- 裝飾圖片 --- */}
         <img src={openboxDecor} alt="openbox" className="decor openbox" />
         <img src={petsSayDecor} alt="pets_say" className="decor petsay" />
       </div>

@@ -1,6 +1,3 @@
-// ════════════════════════════════════════════════════════════════
-// Design Tokens
-// ════════════════════════════════════════════════════════════════
 $primary: #fc762f;
 $primary-hover: #e8651e;
 $primary-light: #fff5f0;
@@ -34,9 +31,6 @@ $radius-card: 16px;
 $radius-pill: 40px;
 $radius-sm: 8px;
 
-// ════════════════════════════════════════════════════════════════
-// Mixins
-// ════════════════════════════════════════════════════════════════
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -49,14 +43,10 @@ $radius-sm: 8px;
   justify-content: space-between;
 }
 
-// ════════════════════════════════════════════════════════════════
-// OrderLists（父元件）
-// ════════════════════════════════════════════════════════════════
 .member-orderlist {
   font-family: $font-body;
   padding: 40px 0 0; // 上方留空給 header
 
-  // 頁首：標題 + Tabs（在橘框外）
   &__header {
     @include flex-between;
     gap: 120px;
@@ -73,7 +63,6 @@ $radius-sm: 8px;
     letter-spacing: 0.05em;
   }
 
-  // Tab 按鈕群
   &__tabs {
     display: flex;
     gap: 16px;
@@ -108,7 +97,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 欄位標題列 — 淡橘底容器內的文字標題
   &__table-header {
     display: flex;
     flex-direction: row;
@@ -137,7 +125,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 淡橘底大圓角容器（包住標題列 + 卡片 + 分頁）
   &__orange-box {
     width: 100%;
     background: #fff0e8;
@@ -146,14 +133,12 @@ $radius-sm: 8px;
     box-sizing: border-box;
   }
 
-  // 卡片清單內層
   &__card-list {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  // 空狀態 / 載入中
   &__empty,
   &__loading {
     text-align: center;
@@ -162,14 +147,12 @@ $radius-sm: 8px;
     font-size: 16px;
   }
 
-  // 分頁置中（在 orange-box 底部）
   &__footer {
     display: flex;
     justify-content: center;
     padding-top: 24px;
   }
 
-  // 分頁
   &__pagination {
     display: flex;
     gap: 8px;
@@ -214,16 +197,10 @@ $radius-sm: 8px;
   }
 }
 
-// ════════════════════════════════════════════════════════════════
-// SubscriptionCard wrapper
-// ════════════════════════════════════════════════════════════════
 .subscription-card {
   width: 100%;
 }
 
-// ════════════════════════════════════════════════════════════════
-// MemberOrderCardHeader
-// ════════════════════════════════════════════════════════════════
 .subscription-card-header {
   display: flex;
   flex-direction: row;
@@ -245,14 +222,12 @@ $radius-sm: 8px;
     background: #fffaf8;
   }
 
-  // 展開狀態：底部直角，無下間距
   &--expanded {
     border-radius: $radius-card $radius-card 0 0;
     margin-bottom: 0;
     background: $white;
   }
 
-  // 欄位
   &__col {
     flex: 1;
     font-family: $font-body;
@@ -280,7 +255,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 展開箭頭
   &__chevron {
     flex: 0 0 24px;
     display: flex;
@@ -294,7 +268,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 狀態 badge
   &__badge {
     display: inline-flex;
     align-items: center;
@@ -325,9 +298,6 @@ $radius-sm: 8px;
   }
 }
 
-// ════════════════════════════════════════════════════════════════
-// MemberOrderCardBody
-// ════════════════════════════════════════════════════════════════
 .subscription-card-body {
   background: $white;
   border: none;
@@ -337,7 +307,6 @@ $radius-sm: 8px;
   width: 100%;
   margin-bottom: 8px;
 
-  // 子標題列
   &__subheader {
     display: flex;
     flex-direction: row;
@@ -351,7 +320,6 @@ $radius-sm: 8px;
     letter-spacing: 0.05em;
   }
 
-  // 訂閱品項列
   &__row {
     display: flex;
     flex-direction: row;
@@ -365,7 +333,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 欄位共用
   &__col {
     flex: 1;
     font-family: $font-body;
@@ -386,7 +353,6 @@ $radius-sm: 8px;
     }
 
     &--desktop-only {
-      // 桌機預設顯示，手機版由 media query 隱藏
       display: flex;
       align-items: center;
       justify-content: center;
@@ -424,7 +390,6 @@ $radius-sm: 8px;
     }
   }
 
-  // 方案名稱
   &__plan-name {
     font-weight: 700;
     font-size: 16px;
@@ -439,7 +404,6 @@ $radius-sm: 8px;
     letter-spacing: 0.05em;
   }
 
-  // checkbox
   &__checkbox {
     width: 18px;
     height: 18px;
@@ -447,7 +411,6 @@ $radius-sm: 8px;
     cursor: pointer;
   }
 
-  // 操作按鈕區
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -456,7 +419,6 @@ $radius-sm: 8px;
     padding-right: 16px;
   }
 
-  // 按鈕共用
   &__btn {
     display: inline-flex;
     align-items: center;
@@ -475,7 +437,6 @@ $radius-sm: 8px;
       opacity 0.2s ease;
     border: none;
 
-    // 實心橘
     &--primary {
       background: $primary;
       color: $white;
@@ -486,7 +447,6 @@ $radius-sm: 8px;
       }
     }
 
-    // 空心橘
     &--outline {
       background: transparent;
       color: $primary;
@@ -496,7 +456,6 @@ $radius-sm: 8px;
       }
     }
 
-    // 灰色（返回）
     &--ghost {
       background: transparent;
       color: $brown-300;
@@ -506,7 +465,6 @@ $radius-sm: 8px;
       }
     }
 
-    // 寬版（確認取消）
     &--wide {
       padding: 8px 40px;
     }
@@ -519,9 +477,6 @@ $radius-sm: 8px;
   }
 }
 
-// ════════════════════════════════════════════════════════════════
-// 再次訂閱 Modal
-// ════════════════════════════════════════════════════════════════
 .resubscribe-modal {
   position: fixed;
   inset: 0;
@@ -534,10 +489,14 @@ $radius-sm: 8px;
   &__dialog {
     background: $white;
     border-radius: 24px;
-    padding: 32px;
+    padding: 24px;
     width: 100%;
     max-width: 480px;
+    max-height: 85vh;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   &__title {
@@ -546,19 +505,25 @@ $radius-sm: 8px;
     font-size: 18px;
     color: $brown-500;
     margin-bottom: 4px;
+    flex-shrink: 0;
   }
 
   &__subtitle {
     font-size: 14px;
     color: $brown-300;
     margin-bottom: 20px;
+    flex-shrink: 0;
   }
 
   &__dog-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 4px;
   }
 
   &__dog-item {
@@ -607,16 +572,11 @@ $radius-sm: 8px;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    flex-shrink: 0;
   }
 }
 
-// (no keyframes needed)
-
-// ════════════════════════════════════════════════════════════════
-// RWD — 手機版 (≤ 768px)
-// ════════════════════════════════════════════════════════════════
 @media (max-width: 768px) {
-  // ── 整頁 padding ──────────────────────────────────────────────
   .member-orderlist {
     padding: 0;
 
@@ -635,7 +595,6 @@ $radius-sm: 8px;
       text-align: center;
     }
 
-    // Tabs 換行成 2×2 grid
     &__tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -661,13 +620,11 @@ $radius-sm: 8px;
       }
     }
 
-    // 橘框：上圓角 80px，左右 padding 12px
     &__orange-box {
       border-radius: 80px 80px 0 0;
       padding: 80px 12px 32px;
     }
 
-    // 桌機欄位標題列隱藏
     &__table-header {
       display: none;
     }
@@ -677,7 +634,6 @@ $radius-sm: 8px;
     }
   }
 
-  // ── Card Header ───────────────────────────────────────────────
   .subscription-card-header {
     height: auto;
     padding: 16px;
@@ -688,12 +644,10 @@ $radius-sm: 8px;
       border-radius: $radius-sm $radius-sm 0 0;
     }
 
-    // 桌機版隱藏
     &__desktop {
       display: none;
     }
 
-    // 手機版顯示
     &__mobile {
       display: flex;
       flex-direction: column;
@@ -731,7 +685,6 @@ $radius-sm: 8px;
       }
     }
 
-    // 展開/收合 文字按鈕
     &__mobile-toggle {
       display: flex;
       align-items: center;
@@ -750,16 +703,13 @@ $radius-sm: 8px;
     }
   }
 
-  // ── Card Body ─────────────────────────────────────────────────
   .subscription-card-body {
     padding: 0 16px 16px;
 
-    // 子標題列隱藏（手機版直排，不需要 header）
     &__subheader {
       display: none;
     }
 
-    // 品項列改直排
     &__row {
       flex-direction: column;
       align-items: flex-start;
@@ -767,17 +717,14 @@ $radius-sm: 8px;
       padding: 16px 0;
     }
 
-    // checkbox 欄調整
     &__col--checkbox {
       flex: 0 0 auto;
     }
 
-    // 桌機版單價/數量/小計隱藏
     &__col--desktop-only {
       display: none;
     }
 
-    // 手機版直排價格顯示
     &__mobile-prices {
       display: flex;
       flex-direction: column;
@@ -800,7 +747,6 @@ $radius-sm: 8px;
       letter-spacing: 0.05em;
     }
 
-    // 按鈕區：平分兩欄
     &__actions {
       padding-right: 0;
       gap: 16px;
@@ -812,13 +758,71 @@ $radius-sm: 8px;
     }
   }
 
-  // ── Subscription Card wrapper ─────────────────────────────────
   .subscription-card {
     margin-bottom: 16px;
   }
+
+  .resubscribe-modal {
+    align-items: flex-end;
+    padding: 0 12px 12px;
+
+    &__dialog {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 16px;
+      max-height: 88vh;
+      padding: 16px;
+    }
+
+    &__dog-list {
+      max-height: 45vh;
+      margin-bottom: 12px;
+    }
+
+    &__footer {
+      margin-top: auto;
+      border-top: 1px solid $neutral-100;
+      padding-top: 10px;
+    }
+  }
 }
 
-// ── 桌機版：手機 layout 元素隱藏 ──────────────────────────────
+@media (max-width: 375px) {
+  .resubscribe-modal {
+    align-items: flex-end;
+    padding: 0 8px 8px;
+
+    &__dialog {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 14px;
+      max-height: 90vh;
+      padding: 14px;
+    }
+
+    &__dog-list {
+      max-height: 48vh;
+      margin-bottom: 10px;
+    }
+
+    &__footer {
+      margin-top: auto;
+      border-top: 1px solid $neutral-100;
+      padding-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .subscription-card-body__btn {
+        font-size: 13px;
+        padding: 7px 14px;
+        height: 34px;
+        min-width: 0;
+      }
+    }
+  }
+}
+
 @media (min-width: 769px) {
   .subscription-card-header {
     &__mobile {
@@ -838,6 +842,103 @@ $radius-sm: 8px;
     }
     &__col--desktop-only {
       display: flex;
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .member-orderlist {
+    &__header {
+      padding-left: 40px;
+      padding-right: 40px;
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+
+    &__orange-box {
+      padding: 0 20px 24px;
+      border-radius: 40px;
+    }
+
+    &__table-header {
+      gap: 12px;
+      span {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .subscription-card-header {
+    padding: 16px 12px;
+    gap: 12px;
+
+    &__col {
+      font-size: 14px;
+
+      &--id {
+        font-size: 12px;
+      }
+    }
+
+    &__badge {
+      padding: 4px 10px;
+      font-size: 13px;
+    }
+  }
+
+  .subscription-card-body {
+    &__col {
+      font-size: 14px;
+    }
+    &__actions {
+      padding-right: 0;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .member-orderlist {
+    &__header {
+      padding-left: 40px;
+      padding-right: 40px;
+      gap: 32px;
+      margin-bottom: 32px;
+      justify-content: space-between;
+    }
+
+    &__title {
+      white-space: nowrap;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    &__tabs {
+      gap: 12px;
+      flex-wrap: nowrap;
+    }
+
+    &__tab-btn {
+      padding: 8px 20px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .member-orderlist {
+    &__header {
+      padding-left: 24px;
+      padding-right: 24px;
+      gap: 20px;
+    }
+
+    &__tabs {
+      overflow-x: auto;
+      padding-bottom: 4px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 }

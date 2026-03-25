@@ -54,7 +54,7 @@ export default function MemberEvent2() {
           <section className="row section-spacer">
             <div className="speaker-card bg-orange-1">
               <div className="row g-4 align-items-center auto-show-1">
-                <div className="col-12 col-md-5 text-center">
+                <div className="col-md-5 text-center">
                   <img
                     src={speakerAvatar}
                     alt="講師頭像"
@@ -62,7 +62,7 @@ export default function MemberEvent2() {
                   />
                 </div>
 
-                <div className="col-12 col-md">
+                <div className="col-md">
                   <h2 className="h2 mb-12">講師介紹</h2>
                   <h3 className="h3 mb-20">PAYA 佩芽（寵物溝通師）</h3>
 
@@ -88,7 +88,7 @@ export default function MemberEvent2() {
           <section className="section-spacer auto-show">
             <h2 className="h2 mb-16 text-center text-brown-500">活動流程</h2>
             <div className="row justify-content-center">
-              <div className="col-12 col-md-10 col-lg-8">
+              <div className="col-md-10 col-lg-8">
                 <ul className="timeline">
                   <li>
                     <strong>13:00–13:20</strong> 報到入場
@@ -115,10 +115,10 @@ export default function MemberEvent2() {
           {/* 活動資訊 + CTA */}
           <section className="mb-80">
             <div className="row justify-content-center">
-              <div className="col-12 col-lg-10">
+              <div className="col-lg-10">
                 <div className="cta-wrap-2 position-relative p-4 p-md-5 fade-up">
                   <div className="row g-4 align-items-center">
-                    <div className="col-12 col-md">
+                    <div className="col-md">
                       <h3 className="h3 mb-16">活動時間</h3>
 
                       <p className="mb-8 fw-500 ps-4">
@@ -145,7 +145,7 @@ export default function MemberEvent2() {
                       </p>
                     </div>
 
-                    <div className="col-12 col-md-auto text-md-end">
+                    <div className="col-md-auto text-md-end">
                       <div className="position-relative d-inline-block">
                         <a
                           href="#"

@@ -1,0 +1,142 @@
+.payment-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.payment-content {
+  text-align: center;
+  padding: 48px 0;
+}
+
+.payment-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.payment-phase--processing {
+  animation: payFadeIn 0.4s ease-out;
+}
+
+.payment-phase--confirmed {
+  animation: payFadeIn 0.5s ease-out;
+}
+
+// 轉圈動畫
+.payment-spinner {
+  width: 72px;
+  height: 72px;
+  border: 5px solid $primary-200;
+  border-top-color: $primary-500;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// 文字
+.payment-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $brown-500;
+  letter-spacing: 0.08em;
+}
+
+.payment-text--confirmed {
+  color: $primary-500;
+  font-size: 1.5rem;
+}
+
+.payment-subtext {
+  font-size: 0.875rem;
+  color: $brown-300;
+  letter-spacing: 0.05em;
+}
+
+// 三點動畫
+.payment-dots::after {
+  content: "";
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+// 打勾 SVG
+.payment-check-svg {
+  width: 80px;
+  height: 80px;
+}
+
+.payment-check-circle {
+  fill: none;
+  stroke: $primary-500;
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-linecap: round;
+  animation: drawCircle 0.6s ease-out forwards;
+}
+
+.payment-check-path {
+  fill: none;
+  stroke: $primary-500;
+  stroke-width: 3;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: drawCheck 0.4s ease-out 0.5s forwards;
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes payFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .payment-card {
+    min-height: 300px;
+  }
+  .payment-check-svg {
+    width: 64px;
+    height: 64px;
+  }
+}

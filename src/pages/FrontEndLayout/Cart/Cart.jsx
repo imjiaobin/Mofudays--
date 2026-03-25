@@ -72,14 +72,14 @@ function Cart() {
           <ProgressBar2 title="購物車" step={1} />
 
           {/* 訂閱內容卡片 */}
-          <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">
+          <div className="card-bg py-9 px-110 px-60-lg px-12-sm mb-6 mb-0-sm">
             <div className="row-table">
               {/* 訂閱內容表格 */}
-              <div className="col-table-10 mb-7">
-                <h5 className="mb-5 ls-5 text-center-sm">訂閱內容</h5>
+              <div className="col-table-10 mb-7 mb-48-md">
+                <h5 className="mb-5 ls-5 text-center-md">訂閱內容</h5>
 
                 {/* 表格標題列 */}
-                <div className="table-title-bg d-flex py-2 mb-2 d-none-sm">
+                <div className="table-title-bg d-flex py-2 mb-2 d-none-lg">
                   <p className="col-table-2 text-center"></p>
                   <p className="col-table-3 text-center">品項</p>
                   <p className="col-table-1 text-center">單價</p>
@@ -122,11 +122,11 @@ function Cart() {
               </div>
 
               {/* 選擇訂閱期數 */}
-              <div className="col-table-6 col-12-sm mb-56-sm">
+              <div className="col-table-6 col-12-md mb-48-md mb-56-sm">
                 <div className="px-16-sm">
-                  <h5 className="mb-5 ls-5 text-center-sm">選擇訂閱期數</h5>
+                  <h5 className="mb-5 ls-5 text-center-md">選擇訂閱期數</h5>
                   <div
-                    className="px-0 py-0 w-100 d-flex d-block-sm gap-4"
+                    className="px-0 py-0 w-100 d-flex d-block-sm gap-4 gap-8-lg"
                     role="group"
                     aria-label="Basic radio toggle button group"
                   >
@@ -206,7 +206,7 @@ function Cart() {
               </div>
 
               {/* 訂單合計網頁版 */}
-              <div className="col-table-4 d-none-sm">
+              <div className="col-table-4 d-none-md">
                 <h5 className="mb-5 ls-5 text-center-sm">訂單合計</h5>
                 <div
                   className="total-bg px-5 py-9-5"
@@ -222,7 +222,7 @@ function Cart() {
               </div>
 
               {/* 訂單合計手機版 */}
-              <div className="col-12-sm d-none-min-sm mb-24-sm">
+              <div className="col-12-md d-none-min-md mb-48-sm">
                 <div className="px-16-sm">
                   <div className="total-bg d-flex justify-content-between align-items-center px-5 py-4">
                     <h6 className="ls-5">訂單合計</h6>
@@ -239,10 +239,8 @@ function Cart() {
 
             {/* 儲存按鈕手機版 */}
             <ActiveButtonPhone
-              active1="回上一步"
               active2="確認結帳"
               active3="加入新的訂閱"
-              onBack={() => navigate(-1)}
               onExtra={() => navigate("/petinfo")}
               onSubmit={async () => {
                 if (!selectedPeriod) {
@@ -261,10 +259,8 @@ function Cart() {
 
         {/* 儲存按鈕網頁版 */}
         <ActiveButtonWeb
-          active1="回上一步"
           active2="確認結帳"
           active3="加入新的訂閱"
-          onBack={() => navigate(-1)}
           onExtra={() => navigate("/petinfo")}
           onSubmit={async () => {
             if (!selectedPeriod) {

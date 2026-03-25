@@ -1,3 +1,10 @@
+/* 確保所有元素預設不撐開寬度 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* noto字體 */
 body {
   font-family: "Noto Sans TC", sans-serif;
@@ -630,8 +637,8 @@ body::before {
 .openbox {
   right: 0%;
   bottom: 0%;
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 200px;
 
   @media (max-width: 768px) {
     display: none;
@@ -640,9 +647,9 @@ body::before {
 
 .petsay {
   left: 4.17%;
-  bottom: 20.28%;
-  width: 548.06px;
-  height: 293px;
+  bottom: 27%;
+  width: 361px;
+  height: 193px;
 
   @media (max-width: 768px) {
     display: none;
@@ -685,35 +692,6 @@ body::before {
   font-size: 1.2rem; /* 星星大小 */
 }
 
-.carousel-inner .row {
-  margin-left: 0;
-  margin-right: 0;
-}
-.carousel-item .col-12 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (max-width: 767.98px) {
-  .carousel-item:first-child .col-12:not(:nth-child(1)) {
-    display: none !important;
-  }
-  .carousel-item:nth-child(2) .col-12 {
-    display: block !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .carousel-item > .row > .col-12 {
-    display: block !important;
-  }
-  /* 移除 col-md-3 的左右內邊距，提供更好的並排視覺效果 */
-  .carousel-item .col-md-3 {
-    padding-left: 1rem; /* 可根據您的設計調整間距 */
-    padding-right: 1rem;
-  }
-}
-
 /* 客服中心按鈕樣式 */
 .customer-service-btn {
   position: fixed;
@@ -736,6 +714,11 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 375px) {
+    padding: 15px 8px; // 縮小側邊按鈕大小以免佔據太多螢幕
+    font-size: 14px;
+  }
 }
 
 .customer-service-btn:hover {
@@ -761,6 +744,7 @@ body::before {
   right: 90px;
   bottom: 30px;
   width: 350px;
+  max-height: 85vh;
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -769,6 +753,17 @@ body::before {
   transform: scale(0.8) translateY(20px);
   transition: all 0.3s ease;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    right: 20px;
+    bottom: 110px;
+    width: calc(100vw - 40px);
+    max-width: 335px;
+    max-height: 90vh;
+  }
 }
 
 .customer-service-chat.show {
@@ -780,12 +775,30 @@ body::before {
 .chat-header {
   text-align: center;
   color: $brown-500;
+  padding: 12px 16px 0;
+  min-height: 64px;
 }
 
 .chat-subtitle {
   font-size: 14px;
   color: #6c757d;
   margin: 0;
+}
+
+.chat-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+}
+
+.chat-body > .px-4 {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .chat-button {
@@ -1044,4 +1057,182 @@ body::before {
 .modal-content
   > *:not(.modal-header):not(.modal-footer)::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+// Swiper 修正
+.comment {
+  .swiper {
+    padding-bottom: 8px;
+  }
+
+  .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
+
+  .review-card,
+  .review-card-pink {
+    min-height: 329px; // 統一用較大的高度
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .p2 {
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+  }
+}
+
+/* --- 平板專屬 Patch (768px - 1024px) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero {
+    .container {
+      padding-top: 4rem !important;
+      padding-bottom: 4rem !important;
+    }
+
+    // 縮小標題圖片，避免佔據太多垂直空間
+    .hero-headline {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    // 調整裝飾圖位置，避免跟內容打架
+    .bone {
+      left: 80%;
+      bottom: 5%;
+      width: 50px;
+    }
+    .yellow_patten {
+      left: 3%;
+      top: 15%;
+      width: 50px;
+    }
+  }
+
+  /* 看看盒子有什麼 - 平板寬度時橫向會太擠，縮小圓形 */
+  .product-layout {
+    gap: 10px;
+
+    .card-background {
+      width: 220px;
+      height: 220px;
+    }
+
+    .product-image {
+      width: 140px;
+      height: 140px;
+    }
+
+    .connect-icon {
+      flex: 0 0 40px;
+      margin: 0 5px;
+    }
+  }
+
+  /* 流程步驟 - 平板寬度時建議維持 2x2 或 縮小 padding */
+  .process-item.text-item {
+    padding: 20px;
+    h4 {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+/* 額外修正：關於我們在平板的圖片比例 */
+@media (max-width: 992px) {
+  .about {
+    .row {
+      flex-direction: column;
+      text-align: center;
+    }
+    .col-5 {
+      width: 100% !important;
+      margin-bottom: 2rem;
+    }
+    .about-headline-desktop {
+      max-width: 80%; // 避免標題圖片在平板版位塞太滿
+      height: auto;
+    }
+    .img-fluid {
+      margin-bottom: 2rem; // 增加上方圖片與下方文字的間距
+    }
+  }
+}
+
+/* --- About Section 平板優化 --- */
+.about {
+  // 確保在平板寬度時內容不會貼邊
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+      padding-top: 5rem !important;
+      padding-bottom: 5rem !important;
+    }
+
+    .p1 {
+      font-size: 20px; // 比手機版大一點，增加閱讀感
+      margin-bottom: 0.5rem;
+    }
+
+    // 平板時腳印位置稍微挪動，避免被文字壓到
+    .footprint {
+      width: 60px;
+      height: 84px;
+      left: 85%;
+      top: 15%;
+      opacity: 0.6; // 平板版位稍微淡化避免干擾
+    }
+  }
+}
+
+/* 修正：如果 AboutSection 的 h3 文字在平板還是太擠 */
+.about .p1 {
+  @media (max-width: 992px) {
+    line-height: 1.8;
+    white-space: normal; // 確保平板寬度不足時能自動換行
+  }
+}
+
+.comment {
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0; // 給 hover 抬升預留空間
+  }
+
+  /* 平板專屬優化 */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .review-card,
+    .review-card-pink {
+      min-height: 280px; // 稍微縮短高度適配平板
+      padding: 2rem 1.2rem; // 縮小內邊距防止文字爆開
+
+      .p2 {
+        font-size: 15px; // 平板字體微調
+        line-height: 1.4;
+      }
+
+      .p3 {
+        font-size: 13px;
+      }
+    }
+  }
+
+  /* 針對卡片背景圖在不同比例下的適配 */
+  .review-card,
+  .review-card-pink {
+    background-size: 100% 100% !important; // 強制拉伸背景以符合容器（如果背景圖允許）
+    // 或者保持 contain 但確保容器寬高比正確
+  }
 }

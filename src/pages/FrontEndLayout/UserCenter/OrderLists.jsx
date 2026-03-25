@@ -1,19 +1,29 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 import MemberOrderCard from "./components/MemberOrderCard";
-import { filterOrdersByTab } from "./components/subscriptionHelpers";
 import {
-  getUserOrders,
-  cancelSubscriptions,
-  getUserDogs,
-  addToCart,
-} from "../../../api/Subscriptionapi";
+  filterOrdersByTab,
+  deriveOrderStatus,
+} from "./components/subscriptionHelpers";
+
+import {
+  fetchUserOrders,
+  cancelOrderSubscriptions,
+  fetchUserDogs,
+  resubscribeToCart,
+  selectOrders,
+  selectDogs,
+  selectOrderStatus,
+  selectDogsStatus,
+  selectResubStatus,
+} from "../../../slices/orderSlice";
 
 import "./OrderLists.scss";
 
-// ── 常數 ─────────────────────────────────────────────────────────
 const TABS = [
   { key: "all", label: "訂閱總覽" },
   { key: "completed", label: "已完成" },
@@ -23,52 +33,63 @@ const TABS = [
 
 const PAGE_SIZE = 5;
 
-// ════════════════════════════════════════════════════════════════
 export default function OrderLists() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // ── 資料 state ──────────────────────────────────────────────
-  const [orders, setOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // ── Redux state ──────────────────────────────────────────────
+  const orders = useSelector(selectOrders);
+  const dogs = useSelector(selectDogs);
+  const orderStatus = useSelector(selectOrderStatus);
+  const dogsStatus = useSelector(selectDogsStatus);
+  const resubStatus = useSelector(selectResubStatus);
 
-  // ── UI state ────────────────────────────────────────────────
+  const isLoading = orderStatus === "loading";
+  const isResubmitting = resubStatus === "loading";
+
+  // ── Local UI state ───────────────────────────────────────────
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedId, setExpandedId] = useState(null);
   const [cancellingId, setCancellingId] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-
-  // ── 再次訂閱 Modal state ─────────────────────────────────────
   const [resubscribeOrder, setResubscribeOrder] = useState(null);
-  const [dogs, setDogs] = useState([]);
   const [selectedDogId, setSelectedDogId] = useState(null);
-  const [isResubmitting, setIsResubmitting] = useState(false);
 
-  // ── 取得訂單 ─────────────────────────────────────────────────
+  // ── 初始載入訂單 ─────────────────────────────────────────────
   useEffect(() => {
-    (async () => {
+    const loadOrders = async () => {
       try {
-        setIsLoading(true);
-        const data = await getUserOrders();
-        setOrders(data);
-      } catch (err) {
-        toast.error(`載入失敗：${err.message || "請稍後再試"}`);
-      } finally {
-        setIsLoading(false);
+        await dispatch(fetchUserOrders()).unwrap();
+      } catch (msg) {
+        toast.error(`載入失敗：${msg}`);
       }
-    })();
-  }, []);
+    };
+
+    loadOrders();
+  }, [dispatch]);
 
   // ── Tab 篩選 + 分頁 ──────────────────────────────────────────
-  const filteredOrders = useMemo(
-    () => filterOrdersByTab(orders, activeTab),
-    [orders, activeTab],
+  const enrichedOrders = useMemo(
+    () =>
+      orders.map((order) => ({
+        ...order,
+        derivedStatus: deriveOrderStatus(order.subscriptions),
+      })),
+    [orders],
   );
 
-  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE) || 1;
+  const filteredOrders = useMemo(
+    () => filterOrdersByTab(enrichedOrders, activeTab),
+    [enrichedOrders, activeTab],
+  );
+
+  const totalPages = Math.max(Math.ceil(filteredOrders.length / PAGE_SIZE), 1);
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
   const currentItems = filteredOrders.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+    (safeCurrentPage - 1) * PAGE_SIZE,
+    safeCurrentPage * PAGE_SIZE,
   );
 
   // ── Handlers ─────────────────────────────────────────────────
@@ -109,68 +130,74 @@ export default function OrderLists() {
   const handleConfirmCancel = async (orderId) => {
     if (!selectedItems.length) return;
     try {
-      const updated = await cancelSubscriptions(orderId, selectedItems);
-      setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+      await dispatch(
+        cancelOrderSubscriptions({ orderId, subscriptionIds: selectedItems }),
+      ).unwrap();
       setCancellingId(null);
       setSelectedItems([]);
-    } catch (err) {
-      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
     }
   };
 
-  // 再次訂閱：開啟 modal
   const handleResubscribe = async (order) => {
+    if (dogs.length > 0) {
+      setSelectedDogId(dogs.length === 1 ? dogs[0].id : null);
+      setResubscribeOrder(order);
+      return;
+    }
+
     try {
-      const dogList = await getUserDogs();
+      const dogList = await dispatch(fetchUserDogs()).unwrap();
       if (!dogList?.length) {
         alert("找不到寵物資料，請先建立寵物檔案。");
         return;
       }
-      setDogs(dogList);
       setSelectedDogId(dogList.length === 1 ? dogList[0].id : null);
       setResubscribeOrder(order);
-    } catch (err) {
-      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
     }
   };
 
-  // 再次訂閱：確認加入購物車
   const handleConfirmResubscribe = async () => {
     if (!selectedDogId || !resubscribeOrder) return;
     const dog = dogs.find((d) => d.id === selectedDogId);
     if (!dog) return;
 
-    setIsResubmitting(true);
     try {
-      const activeSubs = resubscribeOrder.subscriptions.filter(
-        (s) => s.subscriptionStatus !== "已取消",
-      );
-      await Promise.all(
-        activeSubs.map((sub) => addToCart(sub, dog, resubscribeOrder.month)),
-      );
+      await dispatch(
+        resubscribeToCart({ order: resubscribeOrder, dog }),
+      ).unwrap();
       setResubscribeOrder(null);
       setSelectedDogId(null);
       navigate("/cart");
-    } catch (err) {
-      toast.error(`操作失敗：${err.message || "請稍後再試"}`);
-    } finally {
-      setIsResubmitting(false);
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
     }
   };
 
   const handleCloseModal = () => {
     setResubscribeOrder(null);
     setSelectedDogId(null);
-    setDogs([]);
   };
+
+  useEffect(() => {
+    if (!resubscribeOrder) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [resubscribeOrder]);
 
   // ── Render ───────────────────────────────────────────────────
   return (
     <div className="member-orderlist mt-32">
-      {/* 標題 + Tab 列（橘框外） */}
       <div className="member-orderlist__header">
         <h2 className="member-orderlist__title h2">訂閱管理</h2>
-
         <div className="member-orderlist__tabs">
           {TABS.map((tab) => (
             <button
@@ -184,9 +211,7 @@ export default function OrderLists() {
         </div>
       </div>
 
-      {/* 橘底圓角大框：欄位標題 + 卡片清單 + 分頁 */}
       <div className="member-orderlist__orange-box">
-        {/* 欄位標題列 */}
         <div className="member-orderlist__table-header">
           <span>訂閱時間</span>
           <span>訂單編號</span>
@@ -196,7 +221,6 @@ export default function OrderLists() {
           <span className="chevron-spacer" />
         </div>
 
-        {/* 卡片清單 */}
         <div className="member-orderlist__card-list">
           {isLoading && (
             <div className="member-orderlist__loading">載入中...</div>
@@ -225,13 +249,12 @@ export default function OrderLists() {
             ))}
         </div>
 
-        {/* 分頁（置中，在橘框內底部） */}
         <div className="member-orderlist__footer">
           <div className="member-orderlist__pagination">
             <button
               className="member-orderlist__page-btn member-orderlist__page-btn--arrow"
-              onClick={() => setCurrentPage((p) => p - 1)}
-              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={safeCurrentPage === 1}
             >
               ‹
             </button>
@@ -239,7 +262,7 @@ export default function OrderLists() {
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
-                className={`member-orderlist__page-btn ${currentPage === i + 1 ? "member-orderlist__page-btn--active" : ""}`}
+                className={`member-orderlist__page-btn ${safeCurrentPage === i + 1 ? "member-orderlist__page-btn--active" : ""}`}
                 onClick={() => setCurrentPage(i + 1)}
               >
                 {i + 1}
@@ -248,8 +271,8 @@ export default function OrderLists() {
 
             <button
               className="member-orderlist__page-btn member-orderlist__page-btn--arrow"
-              onClick={() => setCurrentPage((p) => p + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={safeCurrentPage === totalPages}
             >
               ›
             </button>
@@ -270,6 +293,7 @@ export default function OrderLists() {
             </p>
 
             <div className="resubscribe-modal__dog-list">
+              {dogsStatus === "loading" && <div>載入寵物資料中...</div>}
               {dogs.map((dog) => (
                 <label
                   key={dog.id}

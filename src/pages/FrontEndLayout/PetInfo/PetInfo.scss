@@ -19,6 +19,7 @@
   .btn-check:checked + .btn-diet svg path {
     stroke: $primary-500;
   }
+
   @media (max-width: 576px) {
     .item-title {
       font-size: 1rem;
@@ -30,14 +31,21 @@
     color: $brown-500;
   }
   .health-img {
-    width: 120px;
-    height: auto;
+    width: 100%;
+    max-width: 120px;
   }
-  .diet .btn {
-    width: 204px;
+  .diet {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    .btn {
+      width: 100%;
+    }
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
   }
   .card-grid {
-    grid-template-columns: 168px 168px 168px 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   // 定位圖
@@ -46,16 +54,16 @@
   }
   .dog-illustration {
     position: absolute;
-    bottom: -164px;
-    left: -184px;
-    width: 480px;
-    height: 480px;
+    bottom: clamp(-164px, -8vw, -50px);
+    left: clamp(-184px, -13vw, -80px);
+    width: clamp(280px, 33vw, 480px);
+    height: clamp(280px, 33vw, 480px);
   }
   .feed-illustration {
     position: absolute;
-    top: -57px;
-    right: -72px;
-    width: 280px;
-    height: 245px;
+    top: clamp(-57px, -4vw, -20px);
+    right: clamp(-72px, -5vw, -20px);
+    width: clamp(170px, 19vw, 280px);
+    height: clamp(142px, 17vw, 245px);
   }
 }

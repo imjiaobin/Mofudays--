@@ -132,7 +132,7 @@ export default function UserProfile({ onSave }) {
     try {
       const payload = mapFormToUser(formData);
       const result = await updateUserProfile(payload);
-      console.log("[UserProfile] 儲存成功:", result);
+      // console.log("[UserProfile] 儲存成功:", result);
       onSave?.(result);
       toast.success("會員資料已更新！");
       setWasValidated(false);
@@ -171,7 +171,6 @@ export default function UserProfile({ onSave }) {
             <h2 className="h h2 fs-6 mb-32">
               <i className="bi bi-newspaper me-2"></i>基本資訊
             </h2>
-
             {/* 姓名 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="user-name" className="col-md-2 form-label p1">
@@ -193,7 +192,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">姓名不得為空或是超過20個字!</div>
             </div>
-
             {/* 暱稱 */}
             <div className="row mb-56 position-relative">
               <label
@@ -214,7 +212,6 @@ export default function UserProfile({ onSave }) {
                 />
               </div>
             </div>
-
             {/* 生日 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="birthday" className="col-md-2 form-label p1">
@@ -227,6 +224,7 @@ export default function UserProfile({ onSave }) {
                   id="birthday"
                   name="birthday"
                   required
+                  style={{ height: "38px" }}
                   max={new Date().toISOString().split("T")[0]}
                   value={formData.birthday}
                   onChange={handleChange}
@@ -235,7 +233,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">請選擇生日!</div>
             </div>
-
             {/* Email */}
             <div className="row mb-56 position-relative">
               <label htmlFor="email" className="col-md-2 form-label p1">
@@ -258,7 +255,6 @@ export default function UserProfile({ onSave }) {
               <div className="valid-tooltip">正確!</div>
               <div className="invalid-tooltip">請輸入正確電子信箱!</div>
             </div>
-
             {/* 手機 */}
             <div className="row mb-56 position-relative">
               <label htmlFor="phone" className="col-md-2 form-label p1">
@@ -284,62 +280,62 @@ export default function UserProfile({ onSave }) {
                 請輸入正確的手機號碼（09 開頭，共10碼）!
               </div>
             </div>
-
             {/* 住家地址 */}
             <div className="row mb-56 position-relative">
-              <label htmlFor="city" className="col-md-2 form-label p1 mb-2">
+              <label htmlFor="city" className="col-md-2 col-form-label p1">
                 住家地址
               </label>
-              <div className="row g-3 col-md-10">
-                {/* 縣市 */}
-                <div className="col-4 col-md-3">
-                  <select
-                    className="form-select"
-                    id="city"
-                    name="city"
-                    required
-                    value={formData.city}
-                    onChange={handleChange}
-                  >
-                    {taiwanRegions.map((city) => (
-                      <option key={city.name} value={city.name}>
-                        {city.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="col-md-10">
+                <div className="row g-3">
+                  <div className="col-6">
+                    <select
+                      className="form-select"
+                      id="city"
+                      name="city"
+                      required
+                      value={formData.city}
+                      onChange={handleChange}
+                    >
+                      {taiwanRegions.map((city) => (
+                        <option key={city.name} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                {/* 區域 */}
-                <div className="col-4 col-md-3">
-                  <select
-                    className="form-select"
-                    id="district"
-                    name="district"
-                    required
-                    value={formData.district}
-                    onChange={handleChange}
-                  >
-                    {homeDistricts.map((dist) => (
-                      <option key={dist} value={dist}>
-                        {dist}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                  <div className="col-6">
+                    <select
+                      className="form-select"
+                      id="district"
+                      name="district"
+                      required
+                      value={formData.district}
+                      onChange={handleChange}
+                    >
+                      {homeDistricts.map((dist) => (
+                        <option key={dist} value={dist}>
+                          {dist}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                {/* 詳細地址 */}
-                <div className="col-12 col-md-6">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="address"
-                    name="address"
-                    placeholder="請輸入詳細地址"
-                    required
-                    value={formData.address}
-                    onChange={handleChange}
-                  />
-                  <div className="invalid-tooltip">請輸入詳細地址!</div>
+                  {/* 詳細地址 */}
+                  <div className="col-12">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="address"
+                      name="address"
+                      placeholder="請輸入詳細地址"
+                      required
+                      style={{ height: "38px" }}
+                      value={formData.address}
+                      onChange={handleChange}
+                    />
+                    <div className="invalid-tooltip">請輸入詳細地址!</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -377,7 +373,7 @@ export default function UserProfile({ onSave }) {
 
               <div className="row g-3 mb-2 col-md-10">
                 {/* 送貨縣市 */}
-                <div className="col-4 col-md-3">
+                <div className="col-6 col-md-6">
                   <select
                     className="form-select"
                     id="shippingCity"
@@ -399,7 +395,7 @@ export default function UserProfile({ onSave }) {
                 </div>
 
                 {/* 送貨區域 */}
-                <div className="col-4 col-md-3">
+                <div className="col-6 col-md-6">
                   <select
                     className="form-select"
                     id="shippingDistrict"
@@ -421,7 +417,7 @@ export default function UserProfile({ onSave }) {
                 </div>
 
                 {/* 送貨詳細地址 */}
-                <div className="col-12 col-md-6">
+                <div className="col-12">
                   <input
                     type="text"
                     className="form-control"
@@ -429,6 +425,7 @@ export default function UserProfile({ onSave }) {
                     name="shippingAddress"
                     placeholder="詳細地址"
                     required
+                    style={{ height: "38px" }}
                     disabled={sameAsHome}
                     value={formData.shippingAddress}
                     onChange={handleChange}
@@ -438,9 +435,9 @@ export default function UserProfile({ onSave }) {
               </div>
 
               {/* 同住家地址 Checkbox */}
-              <div className="row">
-                <div className="col-2"></div>
-                <div className="form-check mb-0 col-10">
+              <div className="row mt-2">
+                <div className="col-md-2 d-none d-md-block"></div>
+                <div className="form-check mb-0 col-12 col-md-10">
                   <input
                     className="form-check-input"
                     type="checkbox"

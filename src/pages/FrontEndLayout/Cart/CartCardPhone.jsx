@@ -12,9 +12,9 @@ const CartCardPhone = ({
   return (
     <>
       <div className="px-16-sm">
-        <div className="table-container-bg p-16-sm mb-8-sm d-none-min-sm">
+        <div className="table-container-bg p-16-lg mb-8-sm d-none-min-lg">
           {/* 圖片+品項+關閉+單價 */}
-          <div className="d-flex justify-content-between align-items-center mb-16-sm">
+          <div className="d-flex justify-content-between align-items-start">
             {/* 圖片+品項 */}
             <div className="d-flex align-items-center">
               <img
@@ -23,7 +23,7 @@ const CartCardPhone = ({
                 className="table-img rounded-4 me-5"
               />
               <div className="py-8-sm">
-                <p className="table-title fw-bold mb-8-sm">{title}</p>
+                <p className="table-title fs-16-sm fw-bold mb-8-sm">{title}</p>
                 <p className="table-text fw-normal">
                   零食 x {content?.snacks?.length ?? 0}
                 </p>
@@ -36,21 +36,23 @@ const CartCardPhone = ({
               </div>
             </div>
 
-            {/* 刪除+單價 */}
-            <div className="d-flex flex-column align-items-center">
+            {/* 刪除 */}
+            <div className="py-8-sm">
               <button
                 type="button"
-                className="btn-close p-14-sm mb-24-sm"
+                className="btn-close p-14-sm"
                 aria-label="Close"
                 onClick={onDelete}
               ></button>
-              <p className="text-center text-brown-300 mb-3">${price}</p>
             </div>
           </div>
 
+          {/* 單價 */}
+          <p className="text-end text-brown-300 mb-3">${price}</p>
+
           {/* 數量+小計 */}
           <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center w-40-sm">
+            <div className="d-flex align-items-center w-30-lg w-50-md">
               <div className="input-group">
                 <button
                   className="btn btn-quantity px-3 py-3"
@@ -61,7 +63,7 @@ const CartCardPhone = ({
                 </button>
                 <input
                   type="text"
-                  className="form-control text-center input-number fs-14-sm px-0"
+                  className="form-control text-center input-number radius-0 fs-14-sm px-0"
                   value={quantity}
                   readOnly
                   tabIndex="-1"

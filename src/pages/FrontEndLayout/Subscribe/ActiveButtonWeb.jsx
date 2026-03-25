@@ -10,22 +10,24 @@ const ActiveButtonWeb = ({
     <div className="text-center d-none-sm">
       {active3 && (
         <button
-          className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
+          className="btn btn-primary rounded-pill btn-active-white fs-20-md fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
           role="button"
           onClick={onExtra}
         >
           {active3}
         </button>
       )}
+      {active1 && (
+        <button
+          className="btn btn-primary rounded-pill btn-active-white fs-20-md fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
+          role="button"
+          onClick={onBack}
+        >
+          {active1}
+        </button>
+      )}
       <button
-        className="btn btn-primary rounded-pill btn-active-white fs-18-sm fw-medium-sm ls-10-sm px-40 me-6 me-24-sm"
-        role="button"
-        onClick={onBack}
-      >
-        {active1}
-      </button>
-      <button
-        className="btn btn-primary rounded-pill btn-active fs-18-sm fw-medium-sm ls-10-sm px-40"
+        className="btn btn-primary rounded-pill btn-active fs-20-md fw-medium-sm ls-10-sm px-40"
         role="button"
         onClick={onSubmit}
       >

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE;
 
 export const getCurrentUserId = () => {
   return localStorage.getItem("userId") || sessionStorage.getItem("userId");
@@ -23,6 +23,16 @@ export const getDogsByOwnerId = async (ownerId) => {
     return response.data;
   } catch (error) {
     throw error.response?.data || "取得毛孩資料失敗";
+  }
+};
+
+// 更新毛孩資料
+export const updateDog = async (dogId, dogData) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/dogs/${dogId}`, dogData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || "更新毛孩失敗";
   }
 };
 

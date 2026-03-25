@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getOrderById } from "../../../api/planApi";
 
 import "./Finish.scss";
 import ProgressBar2 from "../Subscribe/ProgressBar2";
 import FinishOrder from "./FinishOrder";
+import ActiveButtonPhone from "../Subscribe/ActiveButtonPhone.jsx";
+import ActiveButtonWeb from "../Subscribe/ActiveButtonWeb.jsx";
 
 import finishIllustration from "../../../assets/images/subscribe/Illustration-finish.png";
 import balloonIllustration from "../../../assets/images/subscribe/Illustration-balloon.png";
@@ -13,6 +15,7 @@ function Finish() {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (orderId) {
@@ -31,13 +34,14 @@ function Finish() {
             title="訂閱成功！"
             subtitle="謝謝你成為毛日和的夥伴"
             step={3}
+            className="finish-progress"
           />
 
           {/* 訂單內容卡片 */}
-          <div className="card-bg py-9 px-110 px-12-sm mb-6 mb-0-sm">
+          <div className="card-bg py-9 px-110 px-60-lg px-12-sm mb-6 mb-0-sm">
             <div className="px-16-sm">
               {/* 感謝訂閱文字 */}
-              <div className="fs-14-sm text-center-sm px-12-sm mb-6 mb-24-sm">
+              <div className="fs-14-sm text-center-lg px-12-sm mb-6 mb-24-sm">
                 <p className="text-brown-300 mb-1">
                   親愛的客戶您好，您的訂單我們已經收到，感謝您訂閱毛日盒!
                 </p>
@@ -52,20 +56,25 @@ function Finish() {
                 <div className="col-table-10">
                   <h5 className="mb-5 ls-5 text-center-sm">訂單明細</h5>
 
-                  {/* 表格標題 */}
-                  <div className="table-title-bg fs-14-sm d-flex py-2 px-4-sm mb-2">
-                    {/* 網頁版 */}
-                    <p className="col-table-1-5 text-center d-none-sm">
+                  {/* 表格標題網頁版 */}
+                  <div className="table-title-bg d-flex py-2 mb-2 d-none-sm">
+                    <p className="col-table-1-5 text-center d-none-lg">
                       訂閱期數
                     </p>
-                    {/* 手機版 */}
-                    <p className="col-table-1-5 text-center p-nowrap d-none-min-sm">
+                    <p className="col-table-1-5 text-center d-none-min-lg">
                       期數
                     </p>
                     <p className="col-table-4 p-nowrap text-center">品項</p>
                     <p className="col-table-1-5 p-nowrap text-center">單價</p>
                     <p className="col-table-1-5 p-nowrap text-center">數量</p>
                     <p className="col-table-1-5 p-nowrap text-center">小計</p>
+                  </div>
+
+                  {/* 表格標題手機版 */}
+                  <div className="table-title-bg d-flex py-2 mb-2 d-none-min-sm">
+                    <p className="col-table-6 p-nowrap text-center">品項</p>
+                    <p className="col-table-2 p-nowrap text-center">數量</p>
+                    <p className="col-table-2 p-nowrap text-center">單價</p>
                   </div>
 
                   {order?.subscriptions.map((sub) => (
@@ -96,13 +105,30 @@ function Finish() {
                 </div>
               </div>
 
-              {/* 說明文字 */}
-              <p className="fs-14-sm text-center px-12-sm mb-48-sm">
+              {/* 說明文字電腦版 */}
+              <p className="fs-14-sm text-center d-none-lg">
                 您可至
                 <Link to="/usercenter/orders" className="text-primary-500">
                   訂單管理頁面
                 </Link>
                 查看訂購紀錄，如有任何問題或其他意見，歡迎
+                <a
+                  href="mailto:service.maorihe@gmail.com"
+                  className="text-primary-500"
+                >
+                  聯繫我們
+                </a>
+                ，謝謝!
+              </p>
+              {/* 說明文字平板版 */}
+              <p className="fs-14-sm text-center px-12-sm mb-48-sm d-none-min-lg">
+                您可至
+                <Link to="/usercenter/orders" className="text-primary-500">
+                  訂單管理頁面
+                </Link>
+                查看訂購紀錄，
+                <br />
+                如有任何問題或其他意見，歡迎
                 <a
                   href="mailto:service.maorihe@gmail.com"
                   className="text-primary-500"
@@ -126,47 +152,21 @@ function Finish() {
             />
 
             {/* 儲存按鈕手機版 */}
-            <div className="text-center d-none-min-sm px-5-5-sm">
-              <div className="row">
-                <div className="col-6-sm">
-                  <Link
-                    className="btn btn-primary rounded-pill btn-active-white ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    to="/"
-                    role="button"
-                  >
-                    返回首頁
-                  </Link>
-                </div>
-                <div className="col-6-sm">
-                  <Link
-                    className="btn btn-primary rounded-pill btn-active ls-5 fs-18-sm fw-medium-sm px-38-sm"
-                    to="/petinfo"
-                    role="button"
-                  >
-                    新增訂單
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ActiveButtonPhone
+              active1="返回首頁"
+              active2="新增訂單"
+              onBack={() => navigate("/")}
+              onSubmit={() => navigate("/petinfo")}
+            />
           </div>
 
           {/* 儲存按鈕網頁版 */}
-          <div className="text-center d-none-sm">
-            <Link
-              className="btn btn-primary rounded-pill btn-active-white px-40 me-6"
-              to="/"
-              role="button"
-            >
-              返回首頁
-            </Link>
-            <Link
-              className="btn btn-primary rounded-pill btn-active px-40"
-              to="/petinfo"
-              role="button"
-            >
-              新增訂單
-            </Link>
-          </div>
+          <ActiveButtonWeb
+            active1="返回首頁"
+            active2="新增訂單"
+            onBack={() => navigate("/")}
+            onSubmit={() => navigate("/petinfo")}
+          />
         </div>
       </main>
     </>
