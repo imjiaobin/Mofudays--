@@ -437,7 +437,7 @@ export default function UserProfile({ onSave }) {
               {/* 同住家地址 Checkbox */}
               <div className="row mt-2">
                 <div className="col-md-2 d-none d-md-block"></div>
-                <div className="form-check mb-0 col-12 col-md-10">
+                <div className="form-check mb-0 col-md-10">
                   <input
                     className="form-check-input"
                     type="checkbox"

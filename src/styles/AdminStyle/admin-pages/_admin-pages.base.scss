@@ -74,7 +74,6 @@
   &__panelBody {
     padding: 1rem;
 
-
     @media (min-width: 992px) {
       padding: 1.25rem 1.25rem 1.1rem;
     }
@@ -83,7 +82,7 @@
   &__panelFooter {
     padding: 0.85rem 1rem;
     background: #fff;
-    border-radius:0 0 1rem 1rem;
+    border-radius: 0 0 1rem 1rem;
 
     @media (min-width: 992px) {
       padding: 0.95rem 1.25rem;
@@ -148,7 +147,7 @@
     border-color: $neutral-300 !important;
   }
 
- &__pagination {
+  &__pagination {
     flex-direction: row;
   }
 
@@ -158,7 +157,7 @@
   }
 
   &__paginationNav .pagination {
-    flex-wrap: wrap;           
+    flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 0;
   }
@@ -170,7 +169,7 @@
 
   &__pageSizeText {
     display: inline-flex;
-    white-space: nowrap;      
+    white-space: nowrap;
     flex-shrink: 0;
     writing-mode: horizontal-tb;
     text-orientation: mixed;

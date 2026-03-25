@@ -1,7 +1,6 @@
 /* ===== 進場動畫 ===== */
 
 .admin-pages {
-  
   @keyframes admin-page-fade-up {
     from {
       opacity: 0;
@@ -69,7 +68,6 @@
       opacity 360ms ease,
       transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
-    
   }
 
   &__collapse.is-open .admin-pages__collapseContent {
@@ -105,7 +103,8 @@
     transform-origin: center;
   }
 
-  .admin-pages__collapseToggle[aria-expanded="true"] .admin-pages__collapseCaret {
+  .admin-pages__collapseToggle[aria-expanded="true"]
+    .admin-pages__collapseCaret {
     transform: rotate(90deg);
   }
 

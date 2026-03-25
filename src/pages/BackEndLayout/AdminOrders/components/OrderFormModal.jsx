@@ -122,150 +122,150 @@ export default function OrderFormModal({
               )}
 
               {/* {orderSectionOpen && ( */}
-                <div className="row g-4">
-                  {/* 訂單編號 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">訂單編號</label>
-                    <input
-                      className="form-control form-control-sm"
-                      disabled
-                      {...register("orderNo")}
-                    />
-                    <input type="hidden" {...register("id")} />
-                  </div>
-                  {/* 付款狀態 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">付款狀態</label>
-                    <select
-                      className="form-select form-select-sm"
-                      value={paymentStatus ?? "待付款"}
-                      disabled
-                    >
-                      <option value="待付款">待付款</option>
-                      <option value="已付款">已付款</option>
-                      <option value="付款失敗">付款失敗</option>
-                      <option value="退款中">退款中</option>
-                      <option value="已退款">已退款</option>
-                    </select>
-                    <input type="hidden" {...register("paymentStatus")} />
-                  </div>
-                  {/* 訂單狀態 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">訂單狀態</label>
-                    <select
-                      className="form-select form-select-sm"
-                      {...register("orderStatus")}
-                    >
-                      <option value="待確認">待確認</option>
-                      <option value="處理中">處理中</option>
-                      <option value="已出貨">已出貨</option>
-                      <option value="已完成">已完成</option>
-                      <option value="已取消">已取消</option>
-                    </select>
-                  </div>
-                  {/* 訂單總金額 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">訂單總金額</label>
-                    <input
-                      type="number"
-                      min="0"
-                      disabled
-                      className="form-control form-control-sm"
-                      {...register("orderTotalAmount", { valueAsNumber: true })}
-                    />
-                    <input type="hidden" {...register("orderTotalAmount")} />
-                  </div>
-                  {/* 訂單日期 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">訂單日期</label>
-                    <input
-                      type="datetime-local"
-                      disabled
-                      className={`form-control form-control-sm ${
-                        errors.orderDate ? "is-invalid" : ""
-                      }`}
-                      {...register("orderDate", { required: "請輸入訂單日期" })}
-                    />
-                    <input type="hidden" {...register("orderDate")} />
-                    {errors.orderDate && (
-                      <div className="invalid-feedback">
-                        {errors.orderDate.message}
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-xl-4" />
-                  {/* 客戶名稱 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">客戶名稱</label>
-                    <input
-                      className="form-control form-control-sm"
-                      {...register("buyerName")}
-                    />
-                  </div>
-                  {/* 客戶 Email */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">客戶Email</label>
-                    <input
-                      className={`form-control form-control-sm ${
-                        errors.buyerEmail ? "is-invalid" : ""
-                      }`}
-                      {...register("buyerEmail", {
-                        pattern: {
-                          value: /^\S+@\S+\.\S+$/,
-                          message: "Email 格式不正確",
-                        },
-                      })}
-                    />
-                    {errors.buyerEmail && (
-                      <div className="invalid-feedback">
-                        {errors.buyerEmail.message}
-                      </div>
-                    )}
-                  </div>
-                  {/* 客戶電話 */}
-                  <div className="col-xl-4">
-                    <label className="form-label small">客戶電話</label>
-                    <input
-                      className="form-control form-control-sm"
-                      {...register("buyerPhone")}
-                    />
-                  </div>
-                  {/* 客戶地址 */}
-                  <div className="col-xl-12">
-                    <label className="form-label small">客戶地址</label>
-                    <input
-                      className="form-control form-control-sm"
-                      {...register("buyerAddress")}
-                    />
-                  </div>
-                  <div className="col-xl-12">
-                    <label className="form-label small">備註</label>
-                    <textarea
-                      rows={3}
-                      className="form-control form-control-sm"
-                      {...register("note")}
-                    />
-                  </div>
+              <div className="row g-4">
+                {/* 訂單編號 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">訂單編號</label>
+                  <input
+                    className="form-control form-control-sm"
+                    disabled
+                    {...register("orderNo")}
+                  />
+                  <input type="hidden" {...register("id")} />
+                </div>
+                {/* 付款狀態 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">付款狀態</label>
+                  <select
+                    className="form-select form-select-sm"
+                    value={paymentStatus ?? "待付款"}
+                    disabled
+                  >
+                    <option value="待付款">待付款</option>
+                    <option value="已付款">已付款</option>
+                    <option value="付款失敗">付款失敗</option>
+                    <option value="退款中">退款中</option>
+                    <option value="已退款">已退款</option>
+                  </select>
+                  <input type="hidden" {...register("paymentStatus")} />
+                </div>
+                {/* 訂單狀態 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">訂單狀態</label>
+                  <select
+                    className="form-select form-select-sm"
+                    {...register("orderStatus")}
+                  >
+                    <option value="待確認">待確認</option>
+                    <option value="處理中">處理中</option>
+                    <option value="已出貨">已出貨</option>
+                    <option value="已完成">已完成</option>
+                    <option value="已取消">已取消</option>
+                  </select>
+                </div>
+                {/* 訂單總金額 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">訂單總金額</label>
+                  <input
+                    type="number"
+                    min="0"
+                    disabled
+                    className="form-control form-control-sm"
+                    {...register("orderTotalAmount", { valueAsNumber: true })}
+                  />
+                  <input type="hidden" {...register("orderTotalAmount")} />
+                </div>
+                {/* 訂單日期 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">訂單日期</label>
+                  <input
+                    type="datetime-local"
+                    disabled
+                    className={`form-control form-control-sm ${
+                      errors.orderDate ? "is-invalid" : ""
+                    }`}
+                    {...register("orderDate", { required: "請輸入訂單日期" })}
+                  />
+                  <input type="hidden" {...register("orderDate")} />
+                  {errors.orderDate && (
+                    <div className="invalid-feedback">
+                      {errors.orderDate.message}
+                    </div>
+                  )}
+                </div>
+                <div className="col-xl-4" />
+                {/* 客戶名稱 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">客戶名稱</label>
+                  <input
+                    className="form-control form-control-sm"
+                    {...register("buyerName")}
+                  />
+                </div>
+                {/* 客戶 Email */}
+                <div className="col-xl-4">
+                  <label className="form-label small">客戶Email</label>
+                  <input
+                    className={`form-control form-control-sm ${
+                      errors.buyerEmail ? "is-invalid" : ""
+                    }`}
+                    {...register("buyerEmail", {
+                      pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: "Email 格式不正確",
+                      },
+                    })}
+                  />
+                  {errors.buyerEmail && (
+                    <div className="invalid-feedback">
+                      {errors.buyerEmail.message}
+                    </div>
+                  )}
+                </div>
+                {/* 客戶電話 */}
+                <div className="col-xl-4">
+                  <label className="form-label small">客戶電話</label>
+                  <input
+                    className="form-control form-control-sm"
+                    {...register("buyerPhone")}
+                  />
+                </div>
+                {/* 客戶地址 */}
+                <div className="col-xl-12">
+                  <label className="form-label small">客戶地址</label>
+                  <input
+                    className="form-control form-control-sm"
+                    {...register("buyerAddress")}
+                  />
+                </div>
+                <div className="col-xl-12">
+                  <label className="form-label small">備註</label>
+                  <textarea
+                    rows={3}
+                    className="form-control form-control-sm"
+                    {...register("note")}
+                  />
+                </div>
 
-                  <div className="col-xl-4">
-                    <label className="form-label small">建立日</label>
-                    <input
-                      className="form-control form-control-sm"
-                      value={displayMeta.createdAt}
-                      disabled
-                    />
-                  </div>
+                <div className="col-xl-4">
+                  <label className="form-label small">建立日</label>
+                  <input
+                    className="form-control form-control-sm"
+                    value={displayMeta.createdAt}
+                    disabled
+                  />
+                </div>
 
-                  <div className="col-xl-4">
-                    <label className="form-label small">更新日</label>
-                    <input
-                      className="form-control form-control-sm"
-                      value={displayMeta.updatedAt}
-                      disabled
-                    />
-                  </div>
+                <div className="col-xl-4">
+                  <label className="form-label small">更新日</label>
+                  <input
+                    className="form-control form-control-sm"
+                    value={displayMeta.updatedAt}
+                    disabled
+                  />
+                </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">更新日</label>
                   <input
                     className="form-control form-control-sm"

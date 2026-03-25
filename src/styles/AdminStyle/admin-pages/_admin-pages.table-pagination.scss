@@ -12,7 +12,6 @@
     border-radius: 1rem;
   }
 
-
   &__table {
     /* 覆蓋 Bootstrap table 內建變數 */
     --bs-table-bg: #{$white};
@@ -143,10 +142,10 @@
     background-color: $tertiary-300 !important;
   }
 
-  .badge-bg-notActive{
+  .badge-bg-notActive {
     background-color: $secondary-500;
   }
-  .badge-bg-isActive{
+  .badge-bg-isActive {
     background-color: $tertiary-500;
   }
 }

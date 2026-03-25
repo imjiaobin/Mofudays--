@@ -94,7 +94,7 @@ export default function Signup() {
         isActive: true,
       };
 
-      const res = await axios.post(`${API_BASE_URL}/register`, registerData);
+      await axios.post(`${API_BASE_URL}/register`, registerData);
 
       toast.success("註冊成功！");
       navigate("/login");

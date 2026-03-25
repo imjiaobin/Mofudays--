@@ -204,7 +204,7 @@ export default function UnboxCarousel() {
 
 function UnboxFlipCard({ card }) {
   return (
-    <div className="col-12 col-sm-6 col-md-3">
+    <div className="col-sm-6 col-md-3">
       <div className="flip-card h-100">
         <div className="flip-inner">
           <div className="flip-face flip-front">

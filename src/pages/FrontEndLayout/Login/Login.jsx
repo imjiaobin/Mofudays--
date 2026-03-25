@@ -160,7 +160,7 @@ export default function Login() {
               </section>
 
               {/* 登入表單 */}
-              <section className="col-12 col-lg-6 p-0">
+              <section className="col-lg-6 p-0">
                 <div className="login-form">
                   <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="text-center mb-7">

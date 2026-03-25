@@ -152,7 +152,7 @@ export default function PlanGeneratorTest() {
       setResultPlans(plans);
     } catch (e) {
       alert(`generatePlans 發生錯誤：${e?.message ?? e}`);
-      console.log(e);
+      // console.log(e);
     }
   };
 

@@ -134,11 +134,10 @@ export default function AdminSubscriptions() {
       setTreats(Array.isArray(treatRes.data) ? treatRes.data : []);
       setToys(Array.isArray(toyRes.data) ? toyRes.data : []);
       setHousehold(Array.isArray(householdRes.data) ? householdRes.data : []);
-    } catch (e) {
+    } catch {
       setTreats([]);
       setToys([]);
       setHousehold([]);
-      console.log(e);
     }
   };
 

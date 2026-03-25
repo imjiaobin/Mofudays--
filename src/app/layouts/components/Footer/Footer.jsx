@@ -30,7 +30,7 @@ export default function Footer() {
 function FooterLeft() {
   return (
     <div className="container">
-      <div className="col-12 col-xl-6 d-flex flex-column flex-xl-row align-items-center gap-3">
+      <div className="col-xl-6 d-flex flex-column flex-xl-row align-items-center gap-3">
         <div className="d-flex align-items-center gap-2 mb-0">
           <a href="index.html">
             <img src={footerLogo} alt="logo" className="footer-logo" />
@@ -108,7 +108,7 @@ function SocialLinks() {
 function FooterRight() {
   return (
     <div className="container">
-      <div className="col-12 col-xl-6 ms-xl-auto">
+      <div className="col-xl-6 ms-xl-auto">
         <div className="d-flex flex-column flex-xl-row align-items-center justify-content-md-evenly gap-4 gap-lg-0">
           <FooterLinkList
             title="外部資源"
