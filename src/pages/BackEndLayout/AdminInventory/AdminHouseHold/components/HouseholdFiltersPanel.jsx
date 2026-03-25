@@ -24,10 +24,10 @@ export default function HouseholdFiltersPanel({
 
         <div className="admin-pages__panelBody">
           <div className="row g-4">
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">關鍵字</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">關鍵字</label>
+                <div className=" col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.keyword}
@@ -38,10 +38,10 @@ export default function HouseholdFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
+                <div className=" col-sm-10">
                   <select className="form-select form-select-sm" value={filters.category} onChange={setFilter("category")}>
                     <option value="">全部</option>
                     {HOUSEHOLD_CATEGORY_OPTIONS.map((opt) => (
@@ -52,10 +52,10 @@ export default function HouseholdFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
+                <div className=" col-sm-10">
                   <select className="form-select form-select-sm" value={filters.petSize} onChange={setFilter("petSize")}>
                     <option value="">全部</option>
                     {PET_SIZE_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -64,10 +64,10 @@ export default function HouseholdFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
+                <div className=" col-sm-10">
                   <select className="form-select form-select-sm" value={filters.dietStage} onChange={setFilter("dietStage")}>
                     <option value="">全部</option>
                     {DIET_STAGE_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -76,19 +76,19 @@ export default function HouseholdFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
+                <div className=" col-sm-10">
                   <input className="form-control form-control-sm" value={filters.tag} onChange={setFilter("tag")} placeholder="" />
                 </div>
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">建立日</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">建立日</label>
+                <div className=" col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input type="date" className="form-control form-control-sm" value={filters.createdAtStart} onChange={setFilter("createdAtStart")} />
                     <span className="small text-muted">~</span>
@@ -98,10 +98,10 @@ export default function HouseholdFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className=" col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">啟用</label>
-                <div className="col-12 col-sm-10">
+                <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">啟用</label>
+                <div className=" col-sm-10">
                   <div className="admin-pages__radioGroup">
                     <div className="form-check form-check-inline m-0">
                       <input className="form-check-input" type="radio" name="household_isActive" value="" checked={filters.isActive === ""} onChange={setFilter("isActive")} />
@@ -124,8 +124,8 @@ export default function HouseholdFiltersPanel({
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4" />
-            <div className="col-12 col-md-4">
+            <div className=" col-md-4" />
+            <div className=" col-md-4">
               <div className="d-flex justify-content-center gap-4">
                 <button className="btn btn-style btn-sm text-nowrap" type="button" onClick={onCreate}>
                   <Plus size={16} className="me-2" />
@@ -141,7 +141,7 @@ export default function HouseholdFiltersPanel({
                 </button>
               </div>
             </div>
-            <div className="col-12 col-md-4" />
+            <div className=" col-md-4" />
           </div>
         </div>
       </div>

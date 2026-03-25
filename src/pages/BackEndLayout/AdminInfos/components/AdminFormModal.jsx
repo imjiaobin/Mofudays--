@@ -2,9 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { X } from "lucide-react";
 
-import {formatDateTimeDisplay, nowDateTimeDisplay} from "../../utils/date"
-
-
+import { formatDateTimeDisplay, nowDateTimeDisplay } from "../../utils/date";
 
 export default function AdminFormModal({
   open, // 開啟或關閉
@@ -126,12 +124,12 @@ export default function AdminFormModal({
 
               <div className="row g-4">
                 {/* 姓名 */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       姓名
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.name ? "is-invalid" : ""}`}
                         {...register("name", { required: "請輸入姓名" })}
@@ -146,12 +144,12 @@ export default function AdminFormModal({
                 </div>
 
                 {/* 英文名 */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       英文名
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         {...register("nickname")}
@@ -162,12 +160,12 @@ export default function AdminFormModal({
 
                 {/* 密碼（新增時才顯示） */}
                 {mode === "create" && (
-                  <div className="col-12 col-xl-4">
+                  <div className=" col-xl-4">
                     <div className="row g-2 align-items-center admin-pages__field">
-                      <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                      <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                         密碼
                       </label>
-                      <div className="col-12 col-sm-10">
+                      <div className=" col-sm-10">
                         <input
                           type="password"
                           className={`form-control form-control-sm ${errors.password ? "is-invalid" : ""}`}
@@ -188,12 +186,12 @@ export default function AdminFormModal({
                 )}
 
                 {/* Email */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       Email
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.email ? "is-invalid" : ""}`}
                         {...register("email", {
@@ -214,12 +212,12 @@ export default function AdminFormModal({
                 </div>
 
                 {/* phone */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       Phone
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         {...register("phone")}
@@ -229,12 +227,12 @@ export default function AdminFormModal({
                 </div>
 
                 {/* birthday */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       生日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         type="date"
                         className="form-control form-control-sm"
@@ -245,13 +243,13 @@ export default function AdminFormModal({
                 </div>
 
                 {/* isActive */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       啟用
                     </label>
 
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <div className="admin-pages__radioGroup">
                         <div className="form-check form-check-inline m-0">
                           <input
@@ -290,12 +288,12 @@ export default function AdminFormModal({
                 </div>
 
                 {/* 時間資訊（唯讀顯示） */}
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       建立日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.createdAt}
@@ -306,12 +304,12 @@ export default function AdminFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       更新日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.updatedAt}
@@ -323,12 +321,12 @@ export default function AdminFormModal({
                 </div>
 
                 {/* avatar 新增欄位 */}
-                {/* <div className="col-12">
+                {/* <div className="">
                   <div className="row admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       圖片
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         placeholder="請輸入 avatar 圖片 URL"

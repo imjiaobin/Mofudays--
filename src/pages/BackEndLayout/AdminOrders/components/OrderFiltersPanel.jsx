@@ -26,12 +26,12 @@ export default function OrderFiltersPanel({
         <div className="admin-pages__panelBody">
           <div className="row g-4">
             {/* 訂單編號 */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂單編號
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.orderNo}
@@ -43,12 +43,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* 客戶名稱 */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   客戶名稱
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.buyerName}
@@ -60,12 +60,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* email */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   Email
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.buyerEmail}
@@ -77,12 +77,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* 付款狀態 */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   付款狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <select
                     className="form-select form-select-sm admin-pages__select"
                     value={filters.paymentStatus}
@@ -100,12 +100,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* 訂單狀態 */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂單狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <select
                     className="form-select form-select-sm admin-pages__select"
                     value={filters.orderStatus}
@@ -123,12 +123,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* 出貨狀態 */}
-            {/* <div className="col-12 col-md-6 col-xl-4">
+            {/* <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   出貨狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.shippingStatus}
@@ -140,12 +140,12 @@ export default function OrderFiltersPanel({
             </div> */}
 
             {/* 訂閱狀態 */}
-            {/* <div className="col-12 col-md-6 col-xl-4">
+            {/* <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂閱狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <select
                     className="form-select form-select-sm admin-pages__select"
                     value={filters.subscriptionStatus}
@@ -163,12 +163,12 @@ export default function OrderFiltersPanel({
             </div> */}
 
             {/* 啟用 */}
-            {/* <div className="col-12 col-md-6 col-xl-4">
+            {/* <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   啟用
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <div className="admin-pages__radioGroup">
                     <div className="form-check form-check-inline m-0">
                       <input
@@ -220,12 +220,12 @@ export default function OrderFiltersPanel({
             </div> */}
 
             {/* 金額區間 */}
-            {/* <div className="col-12 col-md-6 col-xl-4">
+            {/* <div className="col-md-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂單總額
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="number"
@@ -250,12 +250,12 @@ export default function OrderFiltersPanel({
             </div> */}
 
             {/* 訂單日期區間 */}
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂單日期
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -276,12 +276,12 @@ export default function OrderFiltersPanel({
             </div>
 
             {/* 建立日 */}
-            {/* <div className="col-12 col-md-6 col-xl-6">
+            {/* <div className="col-md-6 col-xl-6">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   建立日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -302,12 +302,12 @@ export default function OrderFiltersPanel({
             </div> */}
 
             {/* 更新日 */}
-            {/* <div className="col-12 col-md-6 col-xl-6">
+            {/* <div className="col-md-6 col-xl-6">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   更新日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -331,8 +331,8 @@ export default function OrderFiltersPanel({
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4" />
-            <div className="col-12 col-md-4">
+            <div className="col-md-4" />
+            <div className="col-md-4">
               <div className="d-flex flex-wrap justify-content-center gap-4">
                 <button className="btn btn-style btn-sm" type="button" onClick={onCreate}>
                   <Plus size={16} className="me-2" />
@@ -360,7 +360,7 @@ export default function OrderFiltersPanel({
                 </button>
               </div>
             </div>
-            <div className="col-12 col-md-4 d-none d-md-block" />
+            <div className="col-md-4 d-none d-md-block" />
           </div>
         </div>
       </div>

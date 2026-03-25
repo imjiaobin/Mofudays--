@@ -22,12 +22,12 @@ export default function AdminFiltersPanel({
         <div className="admin-pages__panelBody">
           <div className="row g-4">
             {/* Email */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   Email
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.email}
@@ -39,12 +39,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 姓名 */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   姓名
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.name}
@@ -56,12 +56,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 暱稱（原本角色） */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   暱稱
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.nickname}
@@ -73,12 +73,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 生日（區間） */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   生日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -99,12 +99,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 建立日（區間） */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   建立日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -125,12 +125,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 更新日（區間） */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   更新日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -151,12 +151,12 @@ export default function AdminFiltersPanel({
             </div>
 
             {/* 啟用（radio） */}
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4">
+            <div className="col-md-6 col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   啟用
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="admin-pages__radioGroup">
                     <div className="form-check form-check-inline m-0">
                       <input
@@ -207,19 +207,19 @@ export default function AdminFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-lg-6 col-xl-4 d-none d-lg-block" />
+            <div className="col-md-6 col-lg-6 col-xl-4 d-none d-lg-block" />
           </div>
         </div>
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4">
+            <div className="col-md-4">
               {/* <div className="small text-muted text-center text-md-start">
                 目前顯示 <span className="fw-bold">{visibleCount}</span> 筆
               </div> */}
             </div>
 
-            <div className="col-12 col-md-4">
+            <div className="col-md-4">
               <div className="d-flex flex-wrap justify-content-center gap-4">
                 <button className="btn btn-style btn-sm" type="button" onClick={onCreate}>
                   <Plus size={16} className="me-2" />
@@ -248,7 +248,7 @@ export default function AdminFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-4 d-none d-md-block" />
+            <div className="col-md-4 d-none d-md-block" />
           </div>
         </div>
       </div>

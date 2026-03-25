@@ -277,23 +277,33 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <div className="row g-3 mb-3">
-        <div className="col-12 col-lg-4">
-          <StatCard title="本日訂單數" value={stats.todayOrders} unit="筆" />
-        </div>
-        <div className="col-12 col-lg-4">
-          <StatCard
-            title="待處理訂單數"
-            value={stats.pendingOrders}
-            unit="筆"
-          />
-        </div>
-        <div className="col-12 col-lg-4">
-          <StatCard
-            title="本月新增會員"
-            value={stats.monthNewMembers}
-            unit="名"
-          />
+        {errorMsg && (
+          <div
+            className="alert alert-warning rounded-4 border-0 mb-3"
+            role="alert"
+          >
+            {errorMsg}
+          </div>
+        )}
+
+        <div className="row g-3 mb-3">
+          <div className="col-lg-4">
+            <StatCard title="本日訂單數" value={stats.todayOrders} unit="筆" />
+          </div>
+          <div className="col-lg-4">
+            <StatCard
+              title="代處理訂單數"
+              value={stats.pendingOrders}
+              unit="筆"
+            />
+          </div>
+          <div className="col-lg-4">
+            <StatCard
+              title="本月新增會員"
+              value={stats.monthNewMembers}
+              unit="名"
+            />
+          </div>
         </div>
       </div>
 

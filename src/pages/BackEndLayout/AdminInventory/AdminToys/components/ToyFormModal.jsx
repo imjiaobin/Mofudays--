@@ -144,12 +144,12 @@ export default function ToyFormModal({
               )}
 
               <div className="row g-4">
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       玩具名稱
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.toyName ? "is-invalid" : ""}`}
                         {...register("toyName", { required: "請輸入玩具名稱" })}
@@ -162,12 +162,12 @@ export default function ToyFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       描述
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <textarea
                         className="form-control form-control-sm"
                         {...register("description")}
@@ -175,12 +175,12 @@ export default function ToyFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       啟用
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <div className="admin-pages__radioGroup">
                         <div className="form-check form-check-inline m-0">
                           <input
@@ -217,12 +217,12 @@ export default function ToyFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       體型
                     </label>
-                    <div className="col-12 col-sm-10 align-items-center pt-sm-3">
+                    <div className="col-sm-10 align-items-center pt-sm-3">
                       <CheckboxGroup
                         name="petSize"
                         options={PET_SIZE_OPTIONS}
@@ -234,12 +234,12 @@ export default function ToyFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       年齡
                     </label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <div className="col-sm-10 pt-sm-3">
                       <CheckboxGroup
                         name="dietStage"
                         options={DIET_STAGE_OPTIONS}
@@ -251,12 +251,12 @@ export default function ToyFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       玩法
                     </label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <div className="col-sm-10 pt-sm-3">
                       <CheckboxGroup
                         name="playStyle"
                         options={PLAY_STYLE_OPTIONS}
@@ -268,12 +268,12 @@ export default function ToyFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       建立日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.createdAt}
@@ -284,12 +284,12 @@ export default function ToyFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       更新日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.updatedAt}
