@@ -11,7 +11,7 @@ export default function Footer() {
       {/* footer info */}
       <div className="footer-info">
         <div className="container">
-          <div className="d-md-flex text-center text-md-start align-items-center">
+          <div className="d-xl-flex text-center text-md-start align-items-center">
             <FooterLeft />
             <FooterRight />
           </div>
@@ -30,20 +30,23 @@ export default function Footer() {
 function FooterLeft() {
   return (
     <div className="container">
-      <div className="col-12 col-md-6 d-flex flex-column flex-md-row align-items-center gap-3">
+      <div className="col-12 col-xl-6 d-flex flex-column flex-xl-row align-items-center gap-3">
         <div className="d-flex align-items-center gap-2 mb-0">
           <a href="index.html">
             <img src={footerLogo} alt="logo" className="footer-logo" />
           </a>
         </div>
 
-        <div className="d-inline-flex flex-column align-items-center align-items-md-start text-start gap-3 footer-contact">
+        <div className="d-inline-flex flex-column align-items-center align-items-lg-start text-start gap-3 footer-contact">
           {/* Desktop contact */}
           <div>
-            <p className="mb-md-4 d-none d-md-flex">
+            <a
+              href="tel:0227341788"
+              className="d-none d-lg-flex align-items-center footer-link mb-lg-4"
+            >
               <IconMessageCircle className="me-4 ms-2" />
               02-27341788
-            </p>
+            </a>
 
             <a
               href="mailto:service.maorihe@gmail.com"
@@ -57,14 +60,17 @@ function FooterLeft() {
           <SocialLinks />
 
           {/* Mobile contact */}
-          <div className="d-inline-flex d-md-none flex-column align-items-start text-start gap-3 mx-auto footer-contact mb-40">
-            <p className="d-flex align-items-center gap-2 mb-0">
+          <div className="d-lg-none">
+            <a
+              href="tel:0227341788"
+              className="d-flex align-items-center gap-2 footer-link mb-2"
+            >
               <IconMessageCircle className="me-4 ms-2" />
               <span>02-27341788</span>
-            </p>
+            </a>
             <a
               href="mailto:service.maorihe@gmail.com"
-              className="d-flex align-items-center gap-2 footer-link"
+              className="d-flex align-items-center gap-2 footer-link mb-2"
             >
               <IconMail className="me-4 ms-2" />
               <span>service.maorihe@gmail.com</span>
@@ -78,7 +84,7 @@ function FooterLeft() {
 
 function SocialLinks() {
   return (
-    <div className="mb-md-0 mb-32 d-flex gap-2">
+    <div className="mb-lg-0 mb-32 d-flex gap-2">
       <a
         href="#"
         className="btn social-btn"
@@ -102,26 +108,28 @@ function SocialLinks() {
 function FooterRight() {
   return (
     <div className="container">
-      <div className="d-flex flex-column flex-md-row align-items-center justify-content-md-evenly gap-4 gap-md-0">
-        <FooterLinkList
-          title="外部資源"
-          items={[
-            { label: "寵物殯葬", href: "#" },
-            { label: "寵物醫療", href: "#" },
-            { label: "寵物保險", href: "#" },
-            { label: "浪浪援助", href: "#" },
-          ]}
-        />
+      <div className="col-12 col-xl-6 ms-xl-auto">
+        <div className="d-flex flex-column flex-xl-row align-items-center justify-content-md-evenly gap-4 gap-lg-0">
+          <FooterLinkList
+            title="外部資源"
+            items={[
+              { label: "寵物殯葬", href: "#" },
+              { label: "寵物醫療", href: "#" },
+              { label: "寵物保險", href: "#" },
+              { label: "浪浪援助", href: "#" },
+            ]}
+          />
 
-        <FooterLinkList
-          title="常見問題"
-          items={[
-            { label: "FAQ", to: "/faq" },
-            { label: "物流配送", to: "/faq" },
-            { label: "退換貨政策", to: "/faq" },
-            { label: "細則與條款", to: "/faq" },
-          ]}
-        />
+          <FooterLinkList
+            title="常見問題"
+            items={[
+              { label: "FAQ", to: "/faq" },
+              { label: "物流配送", to: "/faq" },
+              { label: "退換貨政策", to: "/faq" },
+              { label: "細則與條款", to: "/faq" },
+            ]}
+          />
+        </div>
       </div>
     </div>
   );
@@ -129,7 +137,7 @@ function FooterRight() {
 
 function FooterLinkList({ title, items }) {
   return (
-    <div className="col-4">
+    <div className="col-5 col-md-auto">
       <ul className="footer-list text-center">
         <li className="zen-maru-gothic-regular py-2 border-bottom mb-3">
           {title}
