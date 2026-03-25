@@ -70,7 +70,7 @@ const HeroSection = () => {
     <section className="hero position-relative">
       <div className="container py-11">
         <div className="row justify-content-center g-5">
-          <div className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center">
+          <div className="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-center text-center">
             <img
               src={heroHeadlineDesktop}
               alt="headline"
@@ -111,7 +111,7 @@ const HeroSection = () => {
           </div>
 
           <div
-            className="col-md-6 col-12 hero-image-col"
+            className="col-lg-6 col-12 hero-image-col"
             data-aos="fade-left"
             data-aos-delay="200"
           >

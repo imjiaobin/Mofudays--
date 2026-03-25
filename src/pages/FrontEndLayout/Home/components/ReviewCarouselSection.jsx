@@ -79,10 +79,28 @@ const ReviewCarouselSection = () => {
           modules={[Autoplay]}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           loop
-          slidesPerView={1}
-          spaceBetween={24}
+          slidesPerView={1.3}
+          centeredSlides={true}
+          spaceBetween={20}
           breakpoints={{
-            768: { slidesPerView: 4 },
+            // 當螢幕大於 576px
+            576: {
+              slidesPerView: 2.2,
+              spaceBetween: 24,
+              centeredSlides: false,
+            },
+            // 當螢幕大於 768px (平板)
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 24,
+              centeredSlides: false,
+            },
+            // 當螢幕大於 1024px (桌面)
+            1200: {
+              slidesPerView: 4,
+              spaceBetween: 24,
+              centeredSlides: false,
+            },
           }}
         >
           {reviews.map((r, i) => (

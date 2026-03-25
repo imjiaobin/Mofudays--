@@ -40,29 +40,36 @@ const AboutSection = () => {
     <section className="about position-relative bg-secondary-300">
       <div className="container py-9">
         <div className="row justify-content-center g-5">
-          <div className="col-5" data-aos="fade-right" data-aos-delay="100">
+          <div
+            className="col-12 col-md-10 col-lg-5 mb-4 mb-lg-0"
+            data-aos="fade-right"
+            data-aos-delay="100"
+          >
             <img src={aboutImg} alt="about" className="img-fluid w-100" />
           </div>
 
-          <div className="col-5 d-flex flex-column justify-content-center align-items-start">
+          <div className="col-12 col-md-10 col-lg-5 d-flex flex-column justify-content-center  align-items-center align-items-lg-start mx-auto mx-lg-0">
             <img
               src={aboutHeadline}
               alt="about_headline"
-              className="mb-4 about-headline-desktop"
+              className="mb-4 about-headline-desktop mx-auto mx-lg-0"
+              style={{ maxWidth: "100%", height: "auto" }}
               data-aos="fade-down"
               data-aos-delay="200"
             />
-            <h3 className="p1" data-aos="fade-up" data-aos-delay="300">
-              毛日和，靈感來自日文的「OO日和」
-            </h3>
-            <h3 className="p1" data-aos="fade-up" data-aos-delay="400">
-              意指最適合做某件事的好日子
-            </h3>
-            <h3 className="p1" data-aos="fade-up" data-aos-delay="500">
-              我們相信，毛孩是家人，
-              <br className="mobile-br" />
-              每一天都該是他們的幸福日子
-            </h3>
+            <div className="text-center text-lg-start w-100">
+              <h3 className="p1" data-aos="fade-up" data-aos-delay="300">
+                毛日和，靈感來自日文的「OO日和」
+              </h3>
+              <h3 className="p1" data-aos="fade-up" data-aos-delay="400">
+                意指最適合做某件事的好日子
+              </h3>
+              <h3 className="p1" data-aos="fade-up" data-aos-delay="500">
+                我們相信，毛孩是家人，
+                <br className="mobile-br" />
+                每一天都該是他們的幸福日子
+              </h3>
+            </div>
           </div>
         </div>
       </div>

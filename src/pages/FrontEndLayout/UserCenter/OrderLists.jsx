@@ -58,9 +58,15 @@ export default function OrderLists() {
 
   // ── 初始載入訂單 ─────────────────────────────────────────────
   useEffect(() => {
-    dispatch(fetchUserOrders())
-      .unwrap()
-      .catch((msg) => toast.error(`載入失敗：${msg}`));
+    const loadOrders = async () => {
+      try {
+        await dispatch(fetchUserOrders()).unwrap();
+      } catch (msg) {
+        toast.error(`載入失敗：${msg}`);
+      }
+    };
+
+    loadOrders();
   }, [dispatch]);
 
   // ── Tab 篩選 + 分頁 ──────────────────────────────────────────
@@ -123,15 +129,15 @@ export default function OrderLists() {
 
   const handleConfirmCancel = async (orderId) => {
     if (!selectedItems.length) return;
-    dispatch(
-      cancelOrderSubscriptions({ orderId, subscriptionIds: selectedItems }),
-    )
-      .unwrap()
-      .then(() => {
-        setCancellingId(null);
-        setSelectedItems([]);
-      })
-      .catch((msg) => toast.error(`操作失敗：${msg}`));
+    try {
+      await dispatch(
+        cancelOrderSubscriptions({ orderId, subscriptionIds: selectedItems }),
+      ).unwrap();
+      setCancellingId(null);
+      setSelectedItems([]);
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
+    }
   };
 
   const handleResubscribe = async (order) => {
@@ -141,32 +147,34 @@ export default function OrderLists() {
       return;
     }
 
-    dispatch(fetchUserDogs())
-      .unwrap()
-      .then((dogList) => {
-        if (!dogList?.length) {
-          alert("找不到寵物資料，請先建立寵物檔案。");
-          return;
-        }
-        setSelectedDogId(dogList.length === 1 ? dogList[0].id : null);
-        setResubscribeOrder(order);
-      })
-      .catch((msg) => toast.error(`操作失敗：${msg}`));
+    try {
+      const dogList = await dispatch(fetchUserDogs()).unwrap();
+      if (!dogList?.length) {
+        alert("找不到寵物資料，請先建立寵物檔案。");
+        return;
+      }
+      setSelectedDogId(dogList.length === 1 ? dogList[0].id : null);
+      setResubscribeOrder(order);
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
+    }
   };
 
-  const handleConfirmResubscribe = () => {
+  const handleConfirmResubscribe = async () => {
     if (!selectedDogId || !resubscribeOrder) return;
     const dog = dogs.find((d) => d.id === selectedDogId);
     if (!dog) return;
 
-    dispatch(resubscribeToCart({ order: resubscribeOrder, dog }))
-      .unwrap()
-      .then(() => {
-        setResubscribeOrder(null);
-        setSelectedDogId(null);
-        navigate("/cart");
-      })
-      .catch((msg) => toast.error(`操作失敗：${msg}`));
+    try {
+      await dispatch(
+        resubscribeToCart({ order: resubscribeOrder, dog }),
+      ).unwrap();
+      setResubscribeOrder(null);
+      setSelectedDogId(null);
+      navigate("/cart");
+    } catch (msg) {
+      toast.error(`操作失敗：${msg}`);
+    }
   };
 
   const handleCloseModal = () => {
