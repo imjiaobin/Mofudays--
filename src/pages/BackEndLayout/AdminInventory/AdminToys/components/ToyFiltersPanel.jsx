@@ -23,12 +23,12 @@ export default function ToyFiltersPanel({
 
         <div className="admin-pages__panelBody">
           <div className="row g-4">
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   關鍵字
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.keyword}
@@ -39,12 +39,12 @@ export default function ToyFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   體型
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <select
                     className="form-select form-select-sm"
                     value={filters.petSize}
@@ -61,12 +61,12 @@ export default function ToyFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   年齡
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <select
                     className="form-select form-select-sm"
                     value={filters.dietStage}
@@ -83,12 +83,12 @@ export default function ToyFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   玩法
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <select
                     className="form-select form-select-sm"
                     value={filters.playStyle}
@@ -105,12 +105,12 @@ export default function ToyFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   建立日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -130,12 +130,12 @@ export default function ToyFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-xl-4">
+            <div className="col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   啟用
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="admin-pages__radioGroup">
                     <div className="form-check form-check-inline m-0">
                       <input
@@ -179,8 +179,8 @@ export default function ToyFiltersPanel({
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4" />
-            <div className="col-12 col-md-4">
+            <div className="col-md-4" />
+            <div className="col-md-4">
               <div className="d-flex justify-content-center gap-4">
                 <button
                   className="btn btn-style btn-sm text-nowrap"
@@ -210,7 +210,7 @@ export default function ToyFiltersPanel({
                 </button>
               </div>
             </div>
-            <div className="col-12 col-md-4" />
+            <div className="col-md-4" />
           </div>
         </div>
       </div>

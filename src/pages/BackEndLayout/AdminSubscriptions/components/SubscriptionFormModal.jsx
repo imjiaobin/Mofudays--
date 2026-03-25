@@ -153,7 +153,7 @@ export default function SubscriptionFormModal({
               )}
 
               <div className="row g-4">
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">訂閱編號</label>
                   <input
                     className="form-control form-control-sm"
@@ -163,7 +163,7 @@ export default function SubscriptionFormModal({
                   <input type="hidden" {...register("id")} />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">訂單編號</label>
                   <input
                     className="form-control form-control-sm"
@@ -171,7 +171,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">方案名稱</label>
                   <input
                     className={`form-control form-control-sm ${
@@ -188,7 +188,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">期數</label>
                   <input
                     type="number"
@@ -206,7 +206,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">目前期數</label>
                   <input
                     type="number"
@@ -220,7 +220,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">總期數</label>
                   <input
                     className="form-control form-control-sm"
@@ -229,7 +229,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">開始日</label>
                   <input
                     type="date"
@@ -247,7 +247,7 @@ export default function SubscriptionFormModal({
                   )}
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">下次出貨日</label>
                   <input
                     type="date"
@@ -256,9 +256,9 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4"></div>
+                <div className="col-xl-4"></div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">出貨狀態</label>
                   <input
                     className="form-control form-control-sm"
@@ -266,7 +266,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">訂閱狀態</label>
                   <select
                     className="form-select form-select-sm"
@@ -280,9 +280,9 @@ export default function SubscriptionFormModal({
                   </select>
                 </div>
 
-                <div className="col-12 col-xl-4"></div>
+                <div className="col-xl-4"></div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">建立日</label>
                   <input
                     className="form-control form-control-sm"
@@ -291,7 +291,7 @@ export default function SubscriptionFormModal({
                   />
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <label className="form-label small">更新日</label>
                   <input
                     className="form-control form-control-sm"

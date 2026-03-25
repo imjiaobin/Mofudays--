@@ -119,10 +119,10 @@ export default function HouseholdFormModal({
 
               <div className="row g-4">
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">品項名稱</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">品項名稱</label>
+                    <div className=" col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.itemName ? "is-invalid" : ""}`}
                         {...register("itemName", { required: "請輸入品項名稱" })}
@@ -132,19 +132,19 @@ export default function HouseholdFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">描述</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">描述</label>
+                    <div className=" col-sm-10">
                       <textarea className="form-control form-control-sm" {...register("description")} />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">啟用</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">啟用</label>
+                    <div className=" col-sm-10">
                       <div className="admin-pages__radioGroup">
                         <div className="form-check form-check-inline m-0">
                           <input id="household_active_true" type="radio" value="true" className="form-check-input" {...register("isActive")} />
@@ -159,10 +159,10 @@ export default function HouseholdFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">分類</label>
+                    <div className=" col-sm-10">
                       <select
                         className={`form-select form-select-sm ${errors.category ? "is-invalid" : ""}`}
                         {...register("category", { required: "請選擇分類" })}
@@ -177,10 +177,10 @@ export default function HouseholdFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">標籤</label>
+                    <div className=" col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         placeholder="例如：walk, daily, travel"
@@ -191,49 +191,49 @@ export default function HouseholdFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">圖片</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">圖片</label>
+                    <div className=" col-sm-10">
                       <input className="form-control form-control-sm" placeholder="請輸入圖片 URL" {...register("imageUrl")} />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">體型</label>
+                    <div className=" col-sm-10 pt-sm-3">
                       <CheckboxGroup name="petSize" options={PET_SIZE_OPTIONS} register={register} error={errors.petSize} baseId="household_petSize" />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">年齡</label>
+                    <div className=" col-sm-10 pt-sm-3">
                       <CheckboxGroup name="dietStage" options={DIET_STAGE_OPTIONS} register={register} error={errors.dietStage} baseId="household_dietStage" />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4"></div>
+                <div className=" col-xl-4"></div>
                 
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">建立日</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">建立日</label>
+                    <div className=" col-sm-10">
                       <input className="form-control form-control-sm" value={displayMeta.createdAt} readOnly disabled />
                     </div>
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className=" col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">更新日</label>
-                    <div className="col-12 col-sm-10">
+                    <label className=" col-sm-2 col-form-label col-form-label-sm admin-pages__label">更新日</label>
+                    <div className=" col-sm-10">
                       <input className="form-control form-control-sm" value={displayMeta.updatedAt} readOnly disabled />
                     </div>
                   </div>

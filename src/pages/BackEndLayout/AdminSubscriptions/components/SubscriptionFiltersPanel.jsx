@@ -21,12 +21,12 @@ export default function SubscriptionFiltersPanel({
 
         <div className="admin-pages__panelBody">
           <div className="row g-4">
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂閱編號
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.subscriptionId}
@@ -37,12 +37,12 @@ export default function SubscriptionFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂單編號
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.orderId}
@@ -53,12 +53,12 @@ export default function SubscriptionFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   方案名稱
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.planName}
@@ -69,12 +69,12 @@ export default function SubscriptionFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   出貨狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <input
                     className="form-control form-control-sm"
                     value={filters.shippingStatus}
@@ -85,12 +85,12 @@ export default function SubscriptionFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   訂閱狀態
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <select
                     className="form-select form-select-sm admin-pages__select"
                     value={filters.subscriptionStatus}
@@ -107,12 +107,12 @@ export default function SubscriptionFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-md-6 col-xl-4">
+            <div className="col-md-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-3 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-3 col-form-label col-form-label-sm admin-pages__label">
                   開始日期
                 </label>
-                <div className="col-12 col-sm-9">
+                <div className="col-sm-9">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -136,8 +136,8 @@ export default function SubscriptionFiltersPanel({
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4" />
-            <div className="col-12 col-md-4">
+            <div className="col-md-4" />
+            <div className="col-md-4">
               <div className="d-flex flex-wrap justify-content-center gap-4">
                 {/* 訂閱原則上不可以隨意新增, 因此先disabled, 目前先保留, 供大家後續有需要再調整 */}
                 <button className="btn btn-style btn-sm" type="button" onClick={onCreate} disabled>
@@ -166,7 +166,7 @@ export default function SubscriptionFiltersPanel({
                 </button>
               </div>
             </div>
-            <div className="col-12 col-md-4 d-none d-md-block" />
+            <div className="col-md-4 d-none d-md-block" />
           </div>
         </div>
       </div>

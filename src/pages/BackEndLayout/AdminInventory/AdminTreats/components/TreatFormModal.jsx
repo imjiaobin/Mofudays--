@@ -138,12 +138,12 @@ export default function TreatFormModal({
               )}
 
               <div className="row g-4">
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       零食名稱
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className={`form-control form-control-sm ${errors.treatName ? "is-invalid" : ""}`}
                         {...register("treatName", {
@@ -158,12 +158,12 @@ export default function TreatFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       描述
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <textarea
                         className="form-control form-control-sm"
                         {...register("description")}
@@ -171,12 +171,12 @@ export default function TreatFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       啟用
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <div className="admin-pages__radioGroup">
                         <div className="form-check form-check-inline m-0">
                           <input
@@ -213,12 +213,12 @@ export default function TreatFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       體型
                     </label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <div className="col-sm-10 pt-sm-3">
                       <CheckboxGroup
                         name="petSize"
                         options={PET_SIZE_OPTIONS}
@@ -230,12 +230,12 @@ export default function TreatFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       年齡
                     </label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <div className="col-sm-10 pt-sm-3">
                       <CheckboxGroup
                         name="dietStage"
                         options={DIET_STAGE_OPTIONS}
@@ -246,14 +246,14 @@ export default function TreatFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4"></div>
+                <div className="col-xl-4"></div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       保健
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <CheckboxGroup
                         name="healthCare"
                         options={HEALTH_CARE_OPTIONS}
@@ -265,12 +265,12 @@ export default function TreatFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       成分
                     </label>
-                    <div className="col-12 col-sm-10 pt-sm-3">
+                    <div className="col-sm-10 pt-sm-3">
                       <CheckboxGroup
                         name="ingredients"
                         options={INGREDIENT_OPTIONS}
@@ -281,13 +281,13 @@ export default function TreatFormModal({
                     </div>
                   </div>
                 </div>
-                <div className="col-12 col-xl-4"></div>
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4"></div>
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       口感
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <select
                         className={`form-select form-select-sm ${errors.texture ? "is-invalid" : ""}`}
                         {...register("texture", { required: "請選擇口感" })}
@@ -308,12 +308,12 @@ export default function TreatFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       建立日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.createdAt}
@@ -324,12 +324,12 @@ export default function TreatFormModal({
                   </div>
                 </div>
 
-                <div className="col-12 col-xl-4">
+                <div className="col-xl-4">
                   <div className="row g-2 align-items-center admin-pages__field">
-                    <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                    <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                       更新日
                     </label>
-                    <div className="col-12 col-sm-10">
+                    <div className="col-sm-10">
                       <input
                         className="form-control form-control-sm"
                         value={displayMeta.updatedAt}

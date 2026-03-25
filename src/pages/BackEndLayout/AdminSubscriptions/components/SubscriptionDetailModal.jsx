@@ -71,7 +71,7 @@ export default function SubscriptionDetailModal({
             </div> */}
 
             <div className="row g-3 mb-3">
-              <div className="col-12 col-md-4">
+              <div className="col-md-4">
                 <div className="admin-pages__detailCard">
                   <div className="admin-pages__detailLabel">訂閱編號</div>
                   <div className="admin-pages__detailValue">
@@ -80,7 +80,7 @@ export default function SubscriptionDetailModal({
                 </div>
               </div>
 
-              <div className="col-12 col-md-4">
+              <div className="col-md-4">
                 <div className="admin-pages__detailCard">
                   <div className="admin-pages__detailLabel">方案名稱</div>
                   <div className="admin-pages__detailValue">
@@ -89,7 +89,7 @@ export default function SubscriptionDetailModal({
                 </div>
               </div>
 
-              <div className="col-12 col-md-4">
+              <div className="col-md-4">
                 <div className="admin-pages__detailCard">
                   <div className="admin-pages__detailLabel">目前進度</div>
                   <div className="admin-pages__detailValue">

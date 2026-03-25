@@ -21,12 +21,12 @@ export default function PlanFiltersPanel({
         <div className="admin-pages__panelBody">
           <div className="row g-4">
             {/* 關鍵字 */}
-            <div className="col-12 col-lg-6 col-xl-4">
+            <div className="col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   關鍵字
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <input
                     className="form-control form-control-sm"
                     value={filters.keyword}
@@ -38,12 +38,12 @@ export default function PlanFiltersPanel({
             </div>
 
             {/* 月數 */}
-            <div className="col-12 col-lg-6 col-xl-4">
+            <div className="col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   月數
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <select
                     className="form-select form-select-sm"
                     value={filters.months}
@@ -59,12 +59,12 @@ export default function PlanFiltersPanel({
             </div>
 
             {/* 啟用 */}
-            <div className="col-12 col-lg-6 col-xl-4">
+            <div className="col-lg-6 col-xl-4">
               <div className="row g-2 align-items-center admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   啟用
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="admin-pages__radioGroup">
                     <div className="form-check form-check-inline m-0">
                       <input
@@ -107,12 +107,12 @@ export default function PlanFiltersPanel({
             </div>
 
             {/* 價格區間 */}
-            <div className="col-12 col-lg-6 col-xl-4">
+            <div className="col-lg-6 col-xl-4">
               <div className="row g-2 admin-pages__field">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   價格
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="number"
@@ -135,12 +135,12 @@ export default function PlanFiltersPanel({
             </div>
 
             {/* 建立日 */}
-            <div className="col-12 col-lg-6 col-xl-4">
+            <div className="col-lg-6 col-xl-4">
               <div className="row g-2 admin-pages__field admin-pages__field__date">
-                <label className="col-12 col-sm-2 col-form-label col-form-label-sm admin-pages__label">
+                <label className="col-sm-2 col-form-label col-form-label-sm admin-pages__label">
                   建立日
                 </label>
-                <div className="col-12 col-sm-10">
+                <div className="col-sm-10">
                   <div className="d-flex align-items-center gap-2">
                     <input
                       type="date"
@@ -160,14 +160,14 @@ export default function PlanFiltersPanel({
               </div>
             </div>
 
-            <div className="col-12 col-lg-6 col-xl-4 d-none d-xl-block" />
+            <div className="col-lg-6 col-xl-4 d-none d-xl-block" />
           </div>
         </div>
 
         <div className="admin-pages__panelFooter">
           <div className="row align-items-center g-3">
-            <div className="col-12 col-md-4" />
-            <div className="col-12 col-md-4">
+            <div className="col-md-4" />
+            <div className="col-md-4">
               <div className="d-flex justify-content-center gap-4 ">
                 <button className="btn btn-style btn-sm text-nowrap" type="button" onClick={onCreate}>
                   <Plus size={16} className="me-2" />
@@ -195,7 +195,7 @@ export default function PlanFiltersPanel({
                 </button>
               </div>
             </div>
-            <div className="col-12 col-md-4 d-none d-md-block" />
+            <div className="col-md-4 d-none d-md-block" />
           </div>
         </div>
       </div>
