@@ -9,7 +9,8 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
-  base: "/mofudays-react/",
+  // base: "/mofudays-react/", 2026/03/31 改用 Vercel 部屬前端
+  base: "/",
   css: {
     preprocessorOptions: {
       scss: {
