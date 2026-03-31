@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TAIWAN_DISTRICTS } from "./taiwanDistricts";
+import { TAIWAN_DISTRICTS } from "./TaiwanDistricts";
 
 const CheckoutInfo = ({
   form,
