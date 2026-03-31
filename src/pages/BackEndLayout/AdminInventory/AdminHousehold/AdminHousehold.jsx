@@ -12,7 +12,7 @@ import PaginationBar from "../../PaginationBar";
 import { authHeaders } from "../../utils/auth";
 import { nowISO } from "../../utils/date";
 import { usePagination } from "../../hooks/usePagination";
-import { useHouseholdFilters } from "../../hooks/useHouseholdFilters";
+import { useHouseholdFilters } from "../../hooks/useHouseholdfilters";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const toArray = (v) => (Array.isArray(v) ? v : v ? [v] : []);
