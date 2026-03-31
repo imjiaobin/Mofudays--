@@ -9,7 +9,7 @@ import AdminAuthLayout from "./layout/AdminAuthLayout";
 
 // FrontLayout
 import Home from "./pages/FrontEndLayout/Home/Home";
-import FAQ from "./pages/FrontEndLayout/FAQ/FAQ";
+import FAQ from "./pages/FrontEndLayout/FAQ/Faq";
 import Blog from "./pages/FrontEndLayout/Blog/Blog";
 import PetInfo from "./pages/FrontEndLayout/PetInfo/PetInfo";
 import Plan from "./pages/FrontEndLayout/Plan/Plan";
